@@ -39,7 +39,7 @@ const groups = courseGroups
       {
         groups.map(({ group, items }) => (
           <section class="catalogue" id={group.id} aria-labelledby={`${group.id}-heading`}>
-            <div class="section-head">
+            <div class="section-head section-head-split">
               <h2 id={`${group.id}-heading`}>{group.label}</h2>
               <p class="section-intro">{group.intro}</p>
             </div>

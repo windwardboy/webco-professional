@@ -32,16 +32,6 @@ const image = site.heroImage;
         <p class="example-caption">
           Bristol, Taunton, Exeter and {site.phoneDisplay} are placeholders. This is not a real training business.
         </p>
-        <svg class="hero-vehicle" viewBox="0 0 280 72" aria-hidden="true">
-          <rect x="6" y="18" width="132" height="30" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"></rect>
-          <path d="M138 30h40l26 18v8H138V30z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path>
-          <path d="M178 30v18" stroke="currentColor" stroke-width="2.5"></path>
-          <circle cx="36" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
-          <circle cx="78" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
-          <circle cx="112" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
-          <circle cx="168" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
-          <circle cx="204" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
-        </svg>
       </div>
       <div class="hero-side">
         {
@@ -53,18 +43,13 @@ const image = site.heroImage;
         }
         <aside class="glance" aria-label="Training locations">
           <h2>Training locations</h2>
-          <ul class="glance-board glance-locations">
+          <ul class="glance-board">
             {
-              locations.map((location, index) => (
+              locations.map((location) => (
                 <li>
                   <a href={`/locations/${location.slug}/`}>
-                    <span class="glance-index" aria-hidden="true">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span>
-                      <span class="glance-title">{location.name}</span>
-                      <span class="glance-region">{location.region}</span>
-                    </span>
+                    <span class="glance-title">{location.name}</span>
+                    <span class="glance-region">{location.region}</span>
                   </a>
                 </li>
               ))
@@ -77,7 +62,7 @@ const image = site.heroImage;
 
   <section class="block band" aria-labelledby="courses-heading">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head section-head-split">
         <h2 id="courses-heading">{homepage.coursesTitle}</h2>
         <p class="section-intro">{homepage.coursesIntro}</p>
       </div>
@@ -89,7 +74,7 @@ const image = site.heroImage;
 
   <section class="block" aria-labelledby="locations-heading">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head section-head-split">
         <h2 id="locations-heading">{homepage.locationsTitle}</h2>
         <p class="section-intro">{homepage.locationsIntro}</p>
       </div>
@@ -101,7 +86,7 @@ const image = site.heroImage;
 
   <section class="block band" aria-labelledby="trust-heading">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head section-head-split">
         <h2 id="trust-heading">{homepage.trustTitle}</h2>
         <p class="section-intro">{homepage.trustIntro}</p>
       </div>
@@ -109,7 +94,6 @@ const image = site.heroImage;
         {
           trustPoints.map((point) => (
             <li>
-              <span class="trust-index" aria-hidden="true"></span>
               <h3>{point.title}</h3>
               <p>{point.text}</p>
             </li>
@@ -121,7 +105,7 @@ const image = site.heroImage;
 
   <section class="block" aria-labelledby="testimonials-heading">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head section-head-split">
         <h2 id="testimonials-heading">{homepage.testimonialsTitle}</h2>
         <p class="section-intro">{homepage.testimonialsIntro}</p>
       </div>

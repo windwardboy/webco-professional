@@ -36,7 +36,7 @@ const structuredData = [website, ...extraJsonLd];
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#17324d" />
+    <meta name="theme-color" content="#17344d" />
     {noindex && <meta name="robots" content="noindex" />}
     {
       site.googleSiteVerification ? (
@@ -72,7 +72,7 @@ const structuredData = [website, ...extraJsonLd];
       ) : null
     }
   </head>
-  <body>
+  <body class="site-professional">
     <Header />
     <main id="content">
       <slot />
