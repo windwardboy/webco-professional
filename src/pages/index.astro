@@ -1,0 +1,145 @@
+---
+import CourseCard from "../components/CourseCard.astro";
+import CtaBand from "../components/CtaBand.astro";
+import LocationCard from "../components/LocationCard.astro";
+import ResponsiveImage from "../components/ResponsiveImage.astro";
+import { homepage } from "../content/homepage";
+import { courses } from "../content/courses";
+import { locations } from "../content/locations";
+import { testimonials } from "../content/testimonials";
+import { trustPoints } from "../content/trust";
+import { site } from "../config/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const image = site.heroImage;
+---
+
+<BaseLayout
+  title="Multi-site HGV training demonstration"
+  description="Demonstration of a Webco Professional website: dedicated pages for several HGV courses and training locations, with a structured enquiry path."
+>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">{homepage.eyebrow}</p>
+        <h1>{homepage.title}</h1>
+        <p class="lede">{homepage.lede}</p>
+        <div class="actions">
+          <a class="button" href="/contact/#enquiry">Enquire now</a>
+          <a class="button button-quiet" href="/courses/">View courses</a>
+          <a class="button button-text" href="/locations/">View locations</a>
+        </div>
+        <p class="example-caption">
+          Bristol, Taunton, Exeter and {site.phoneDisplay} are placeholders. This is not a real training business.
+        </p>
+        <svg class="hero-vehicle" viewBox="0 0 280 72" aria-hidden="true">
+          <rect x="6" y="18" width="132" height="30" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"></rect>
+          <path d="M138 30h40l26 18v8H138V30z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path>
+          <path d="M178 30v18" stroke="currentColor" stroke-width="2.5"></path>
+          <circle cx="36" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
+          <circle cx="78" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
+          <circle cx="112" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
+          <circle cx="168" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
+          <circle cx="204" cy="54" r="8" fill="#17324d" stroke="#e0b15a" stroke-width="2.5"></circle>
+        </svg>
+      </div>
+      <div class="hero-side">
+        {
+          image.src ? (
+            <div class="hero-photo">
+              <ResponsiveImage image={image} />
+            </div>
+          ) : null
+        }
+        <aside class="glance" aria-label="Training locations">
+          <h2>Training locations</h2>
+          <ul class="glance-board glance-locations">
+            {
+              locations.map((location, index) => (
+                <li>
+                  <a href={`/locations/${location.slug}/`}>
+                    <span class="glance-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span>
+                      <span class="glance-title">{location.name}</span>
+                      <span class="glance-region">{location.region}</span>
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="block band" aria-labelledby="courses-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="courses-heading">{homepage.coursesTitle}</h2>
+        <p class="section-intro">{homepage.coursesIntro}</p>
+      </div>
+      <ul class="cards">
+        {courses.map((course) => <CourseCard course={course} />)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="locations-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="locations-heading">{homepage.locationsTitle}</h2>
+        <p class="section-intro">{homepage.locationsIntro}</p>
+      </div>
+      <ul class="cards">
+        {locations.map((location) => <LocationCard location={location} />)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="block band" aria-labelledby="trust-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="trust-heading">{homepage.trustTitle}</h2>
+        <p class="section-intro">{homepage.trustIntro}</p>
+      </div>
+      <ul class="trust">
+        {
+          trustPoints.map((point) => (
+            <li>
+              <span class="trust-index" aria-hidden="true"></span>
+              <h3>{point.title}</h3>
+              <p>{point.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="testimonials-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="testimonials-heading">{homepage.testimonialsTitle}</h2>
+        <p class="section-intro">{homepage.testimonialsIntro}</p>
+      </div>
+      <ul class="quotes">
+        {
+          testimonials.map((item) => (
+            <li>
+              <p class="quote-flag">Sample</p>
+              <blockquote>
+                <p>{item.quote}</p>
+                <footer>{item.attribution}</footer>
+              </blockquote>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand title={homepage.ctaTitle} lede={homepage.ctaLede} />
+</BaseLayout>

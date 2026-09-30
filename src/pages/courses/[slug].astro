@@ -1,0 +1,124 @@
+---
+import CtaBand from "../../components/CtaBand.astro";
+import FaqList from "../../components/FaqList.astro";
+import LocationCard from "../../components/LocationCard.astro";
+import PageHero from "../../components/PageHero.astro";
+import { courses, type Course } from "../../content/courses";
+import { site } from "../../config/site";
+import { categoryLabel, locationsForCourse, relatedCourses } from "../../lib/catalogue";
+import { breadcrumbJsonLd, canonicalUrl, enquireHref } from "../../lib/links";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return courses.map((course) => ({
+    params: { slug: course.slug },
+    props: { course },
+  }));
+}
+
+interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+const offeredAt = locationsForCourse(course);
+const related = relatedCourses(course);
+const crumbs = [
+  { name: "Home", path: "/" },
+  { name: "Courses", path: "/courses/" },
+  { name: course.title, path: `/courses/${course.slug}/` },
+];
+const courseLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: course.title,
+  description: course.summary,
+  url: canonicalUrl(`/courses/${course.slug}/`),
+  provider: {
+    "@type": "Organization",
+    name: site.name,
+    url: site.url,
+  },
+};
+---
+
+<BaseLayout
+  title={course.title}
+  description={`${course.summary} Sample course page on the Webco Professional demonstration.`}
+  jsonLd={[breadcrumbJsonLd(crumbs), courseLd]}
+>
+  <PageHero
+    eyebrow={`${categoryLabel(course.category)} · Sample course`}
+    title={course.title}
+    lede={course.summary}
+    crumbs={crumbs.map((crumb) => ({
+      label: crumb.name,
+      href: crumb.path,
+    }))}
+  />
+  <div class="block block-follow">
+    <div class="wrap detail-layout">
+      <article class="detail-main">
+        <section class="detail-section" aria-labelledby="audience">
+          <h2 id="audience">Who it is for</h2>
+          <p class="measure">{course.audience}</p>
+        </section>
+        <section class="detail-section" aria-labelledby="prerequisites">
+          <h2 id="prerequisites">Prerequisites</h2>
+          <ul class="prose-list">
+            {course.prerequisites.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+        <section class="detail-section" aria-labelledby="format">
+          <h2 id="format">Training format</h2>
+          <p class="measure">{course.format}</p>
+          <h3>What the training covers</h3>
+          <ul class="prose-list">
+            {course.includes.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+        <section class="detail-section" aria-labelledby="licence">
+          <h2 id="licence">Licence and test</h2>
+          <p class="measure">{course.licenceInfo}</p>
+        </section>
+        <section class="detail-section" aria-labelledby="offered-at">
+          <h2 id="offered-at">Where this course runs</h2>
+          <p class="measure">Listed only at the sample sites that offer it. Open a location for the address, facilities and directions.</p>
+          <ul class="cards">
+            {offeredAt.map((location) => <LocationCard location={location} courseSlug={course.slug} />)}
+          </ul>
+        </section>
+        <FaqList faqs={course.faqs} />
+        {
+          related.length > 0 ? (
+            <section class="detail-section" aria-labelledby="related">
+              <h2 id="related">Related courses</h2>
+              <ul class="related-links">
+                {related.map((item) => (
+                  <li>
+                    <a href={`/courses/${item.slug}/`}>{item.title}</a>
+                    <span>{item.summary}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null
+        }
+      </article>
+      <aside class="detail-aside" aria-labelledby="enquire-heading">
+        <h2 id="enquire-heading">Enquire</h2>
+        <p>Ask about {course.title}. You can choose a preferred location on the form.</p>
+        <div class="actions">
+          <a class="button" href={enquireHref({ course: course.slug })}>Enquire about this course</a>
+          <a class="button button-quiet" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+        </div>
+        <p class="example-caption">{site.phoneDisplay} is an example number.</p>
+      </aside>
+    </div>
+  </div>
+  <CtaBand
+    title={`Ask about ${course.title}`}
+    lede="Say which site you prefer, and how you would like to be contacted."
+    courseSlug={course.slug}
+  />
+</BaseLayout>

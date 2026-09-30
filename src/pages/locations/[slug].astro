@@ -1,0 +1,111 @@
+---
+import CourseCard from "../../components/CourseCard.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import FaqList from "../../components/FaqList.astro";
+import MapPlaceholder from "../../components/MapPlaceholder.astro";
+import PageHero from "../../components/PageHero.astro";
+import ResponsiveImage from "../../components/ResponsiveImage.astro";
+import { locations, type TrainingLocation } from "../../content/locations";
+import { site } from "../../config/site";
+import { coursesForLocation } from "../../lib/catalogue";
+import { breadcrumbJsonLd, enquireHref } from "../../lib/links";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return locations.map((location) => ({
+    params: { slug: location.slug },
+    props: { location },
+  }));
+}
+
+interface Props {
+  location: TrainingLocation;
+}
+
+const { location } = Astro.props;
+const offered = coursesForLocation(location);
+const crumbs = [
+  { name: "Home", path: "/" },
+  { name: "Locations", path: "/locations/" },
+  { name: location.name, path: `/locations/${location.slug}/` },
+];
+---
+
+<BaseLayout
+  title={`${location.name} training`}
+  description={`${location.summary} Example location page on the Webco Professional demonstration. Not a real training site.`}
+  jsonLd={[breadcrumbJsonLd(crumbs)]}
+>
+  <PageHero
+    eyebrow={`${location.region} · Example location`}
+    title={location.name}
+    lede={location.summary}
+    crumbs={crumbs.map((crumb) => ({
+      label: crumb.name,
+      href: crumb.path,
+    }))}
+  />
+  <div class="block block-follow">
+    <div class="wrap detail-layout">
+      <article class="detail-main">
+        <section class="detail-section" aria-labelledby="about-site">
+          <h2 id="about-site">This site</h2>
+          <p class="measure">{location.context}</p>
+        </section>
+        <section class="detail-section" aria-labelledby="address">
+          <h2 id="address">Address and directions</h2>
+          <div class="place-grid">
+            <div>
+              <p class="address">
+                {location.addressLines.map((line) => (
+                  <>
+                    {line}
+                    <br />
+                  </>
+                ))}
+              </p>
+              <p class="example-caption">Example address. Not a real training site.</p>
+              <h3>Getting there</h3>
+              <p class="measure">{location.directions}</p>
+            </div>
+            {
+              location.image?.src ? (
+                <ResponsiveImage image={location.image} sizes="(min-width: 56rem) 32rem, 100vw" />
+              ) : (
+                <MapPlaceholder />
+              )
+            }
+          </div>
+        </section>
+        <section class="detail-section" aria-labelledby="facilities">
+          <h2 id="facilities">Facilities</h2>
+          <ul class="prose-list">
+            {location.facilities.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+        <section class="detail-section" aria-labelledby="courses-here">
+          <h2 id="courses-here">Courses at {location.name}</h2>
+          <p class="measure">Only the courses linked to this site. Other courses in the catalogue run elsewhere.</p>
+          <ul class="cards">
+            {offered.map((course) => <CourseCard course={course} locationSlug={location.slug} />)}
+          </ul>
+        </section>
+        <FaqList faqs={location.faqs} />
+      </article>
+      <aside class="detail-aside" aria-labelledby="enquire-heading">
+        <h2 id="enquire-heading">Enquire about {location.name}</h2>
+        <p>The form can be set to this site. The same example phone number is used for every location on this demonstration.</p>
+        <div class="actions">
+          <a class="button" href={enquireHref({ location: location.slug })}>Enquire about this location</a>
+          <a class="button button-quiet" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+        </div>
+        <p class="example-caption">{site.phoneDisplay} is an example number.</p>
+      </aside>
+    </div>
+  </div>
+  <CtaBand
+    title={`Ask about training at ${location.name}`}
+    lede="Choose a course offered at this site, and how you would like to be contacted."
+    locationSlug={location.slug}
+  />
+</BaseLayout>

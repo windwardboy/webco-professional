@@ -1,0 +1,39 @@
+---
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  lede: string;
+  eyebrow?: string;
+  crumbs?: readonly Crumb[];
+}
+
+const { title, lede, eyebrow, crumbs = [] } = Astro.props;
+---
+
+<header class="page-hero">
+  <div class="wrap">
+    {
+      crumbs.length > 0 ? (
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <ol>
+            {crumbs.map((crumb, index) => {
+              const current = index === crumbs.length - 1;
+              return (
+                <li>
+                  {crumb.href && !current ? <a href={crumb.href}>{crumb.label}</a> : <span aria-current="page">{crumb.label}</span>}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      ) : null
+    }
+    {eyebrow ? <p class="eyebrow">{eyebrow}</p> : null}
+    <h1>{title}</h1>
+    <p class="lede">{lede}</p>
+  </div>
+</header>

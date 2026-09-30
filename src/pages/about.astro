@@ -1,0 +1,115 @@
+---
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import { aboutSections, fleet, instructors } from "../content/about";
+import { locations } from "../content/locations";
+import { breadcrumbJsonLd } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const crumbs = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about/" },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="Example about page for an established HGV training provider, covering coverage, instruction and accreditation without invented claims."
+  jsonLd={[breadcrumbJsonLd(crumbs)]}
+>
+  <PageHero
+    eyebrow="Sample page"
+    title="About this training"
+    lede="How an established provider can introduce the business, the people, the vehicles and the sites. Every paragraph below is example copy."
+    crumbs={crumbs.map((crumb) => ({ label: crumb.name, href: crumb.path }))}
+  />
+  <div class="block block-follow">
+    <div class="wrap">
+      <div class="measure">
+        {
+          aboutSections.map((section) => (
+            <section class="about-section" aria-labelledby={section.id}>
+              <h2 id={section.id}>{section.heading}</h2>
+              {section.paragraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </section>
+          ))
+        }
+      </div>
+
+      <section class="about-section" aria-labelledby="team">
+        <div class="section-head">
+          <h2 id="team">Instructor team</h2>
+          <p class="section-intro">
+            Example roles for the layout. Photographs and real names would replace them on a client site. Nobody pictured here is a real instructor.
+          </p>
+        </div>
+        <ul class="trust">
+          {
+            instructors.map((person) => (
+              <li>
+                <p class="card-kicker">Sample role</p>
+                <h3>{person.title}</h3>
+                <p>{person.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="about-section" aria-labelledby="fleet">
+        <div class="section-head">
+          <h2 id="fleet">Fleet and facilities</h2>
+          <p class="section-intro">
+            The kinds of vehicle and space a provider would describe. This demonstration does not state a fleet size.
+          </p>
+        </div>
+        <ul class="trust">
+          {
+            fleet.map((item) => (
+              <li>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="about-section" aria-labelledby="coverage">
+        <div class="section-head">
+          <h2 id="coverage">Operational coverage</h2>
+          <p class="section-intro">
+            Three example training sites. Each has its own page. Towns that are only driven through do not get a page.
+          </p>
+        </div>
+        <ul class="coverage-list">
+          {
+            locations.map((location) => (
+              <li>
+                <a href={`/locations/${location.slug}/`}>
+                  <span>{location.name}</span>
+                  <span>{location.region}</span>
+                </a>
+                <p>{location.summary}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="panel" aria-labelledby="accreditation">
+        <h2 id="accreditation">Accreditation</h2>
+        <p>
+          Logos and approval statements belong here only when they are true for that provider. This
+          demonstration does not show DVSA, JAUPT, ADR approval or any other accreditation.
+        </p>
+      </section>
+    </div>
+  </div>
+  <CtaBand
+    title="Ask about a course"
+    lede="Choose a course and a preferred location. The form does not make a booking."
+  />
+</BaseLayout>

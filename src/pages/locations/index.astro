@@ -1,0 +1,28 @@
+---
+import LocationCard from "../../components/LocationCard.astro";
+import PageHero from "../../components/PageHero.astro";
+import { locations } from "../../content/locations";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Training locations"
+  description="Example training locations at Bristol, Taunton and Exeter. Each site lists only the sample courses offered there."
+>
+  <PageHero
+    eyebrow="Example sites"
+    title="Training locations"
+    lede="One page for each training site. The course list on the card is the list on the page — nothing is added to catch a nearby town."
+    crumbs={[
+      { label: "Home", href: "/" },
+      { label: "Locations" },
+    ]}
+  />
+  <div class="block block-follow">
+    <div class="wrap">
+      <ul class="cards">
+        {locations.map((location) => <LocationCard location={location} />)}
+      </ul>
+    </div>
+  </div>
+</BaseLayout>

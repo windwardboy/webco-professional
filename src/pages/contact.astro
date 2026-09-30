@@ -1,0 +1,59 @@
+---
+import EnquiryForm from "../components/EnquiryForm.astro";
+import PageHero from "../components/PageHero.astro";
+import { site } from "../config/site";
+import { breadcrumbJsonLd } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const crumbs = [
+  { name: "Home", path: "/" },
+  { name: "Contact", path: "/contact/" },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Example phone, email and an enquiry form that asks for a course, a preferred location and a contact method. Messages are not sent."
+  jsonLd={[breadcrumbJsonLd(crumbs)]}
+>
+  <PageHero
+    eyebrow="Example contact"
+    title="Contact"
+    lede="A course, a preferred location and how you would like to be contacted. The details on this page are placeholders, and the form does not send a message."
+    crumbs={crumbs.map((crumb) => ({ label: crumb.name, href: crumb.path }))}
+  />
+  <div class="block block-follow">
+    <div class="wrap contact-layout">
+      <address class="contact-card">
+        <h2>Example contact details</h2>
+        <p>One example number for every sample site. A provider with separate site numbers would list them on each location page.</p>
+        <ul class="contact-list">
+          <li>
+            <a href={site.phoneHref}>{site.phoneDisplay}</a>
+            <span class="example-tag">Example number</span>
+          </li>
+          <li>
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+            <span class="example-tag">Example address</span>
+          </li>
+          {
+            site.showWhatsApp ? (
+              <li>
+                <a href={site.whatsappHref} rel="noopener noreferrer">
+                  WhatsApp {site.whatsappDisplay}
+                </a>
+                <span class="example-tag">Example number</span>
+              </li>
+            ) : null
+          }
+        </ul>
+      </address>
+      <section aria-labelledby="enquiry">
+        <h2 id="enquiry">Enquiry form</h2>
+        <div class="enquiry-offset">
+          <EnquiryForm />
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

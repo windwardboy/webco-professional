@@ -1,0 +1,38 @@
+---
+import NavLinks from "./NavLinks.astro";
+import { site } from "../config/site";
+
+const [lead, ...rest] = site.name.split(" ");
+const remainder = rest.join(" ");
+---
+
+<a class="skip" href="#content">Skip to content</a>
+<div class="top-stack">
+  <div class="demo-bar">
+    <p class="wrap">
+      Demonstration website by{" "}
+      {site.webcoMediaUrl ? <a href={site.webcoMediaUrl}>Webco Media</a> : "Webco Media"}. Sample content only.
+    </p>
+  </div>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="/">
+        <img src="/favicon.svg" width="32" height="32" alt="" />
+        <span class="logo-word">
+          <span class="logo-strong">{lead}</span>{remainder ? ` ${remainder}` : ""}
+        </span>
+      </a>
+      <details class="nav-mobile">
+        <summary class="nav-summary">Menu</summary>
+        <div class="nav-panel">
+          <nav aria-label="Primary">
+            <NavLinks />
+          </nav>
+        </div>
+      </details>
+      <nav class="nav-desktop" aria-label="Primary">
+        <NavLinks />
+      </nav>
+    </div>
+  </header>
+</div>

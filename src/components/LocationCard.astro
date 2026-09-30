@@ -1,0 +1,23 @@
+---
+import type { TrainingLocation } from "../content/locations";
+import { coursesForLocation } from "../lib/catalogue";
+import { enquireHref, joinList } from "../lib/links";
+
+interface Props {
+  location: TrainingLocation;
+  courseSlug?: string;
+}
+
+const { location, courseSlug } = Astro.props;
+const courseNames = coursesForLocation(location).map((course) => course.shortTitle);
+---
+
+<li class="card">
+  <p class="card-kicker">{location.region}</p>
+  <h3><a href={`/locations/${location.slug}/`}>{location.name}</a></h3>
+  <p>{location.summary}</p>
+  <p class="card-meta">{joinList(courseNames)}</p>
+  <a class="text-link" href={enquireHref({ course: courseSlug, location: location.slug })}>
+    Enquire about this location
+  </a>
+</li>

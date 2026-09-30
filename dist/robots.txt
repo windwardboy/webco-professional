@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://webco-professional.co.uk/sitemap-index.xml

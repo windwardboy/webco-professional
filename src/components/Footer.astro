@@ -1,0 +1,76 @@
+---
+import { site } from "../config/site";
+import { courses } from "../content/courses";
+import { locations } from "../content/locations";
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="footer-brand">{site.name}</p>
+      <p>{site.demoLine}. {site.footerSummary}</p>
+      {
+        site.webcoMediaUrl ? (
+          <p>
+            <a href={site.webcoMediaUrl}>Webco Media</a>
+          </p>
+        ) : (
+          <p>Webco Media</p>
+        )
+      }
+    </div>
+    <div>
+      <p class="footer-label">Courses</p>
+      <ul class="footer-nav">
+        {
+          courses.map((course) => (
+            <li>
+              <a href={`/courses/${course.slug}/`}>{course.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <p class="footer-label">Locations</p>
+      <ul class="footer-nav">
+        {
+          locations.map((location) => (
+            <li>
+              <a href={`/locations/${location.slug}/`}>{location.name}</a>
+            </li>
+          ))
+        }
+        <li>
+          <a href="/about/">About</a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-label">Example contact</p>
+      <ul class="footer-nav">
+        <li>
+          <a href="/contact/#enquiry">Enquiry form</a>
+        </li>
+        <li>
+          <a href={site.phoneHref}>{site.phoneDisplay}</a>
+          <span class="example-tag">Example number</span>
+        </li>
+        <li>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <span class="example-tag">Example address</span>
+        </li>
+        {
+          site.showWhatsApp ? (
+            <li>
+              <a href={site.whatsappHref} rel="noopener noreferrer">
+                WhatsApp
+              </a>
+              <span class="example-tag">Example number</span>
+            </li>
+          ) : null
+        }
+      </ul>
+    </div>
+  </div>
+</footer>

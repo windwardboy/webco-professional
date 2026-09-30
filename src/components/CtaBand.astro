@@ -1,0 +1,24 @@
+---
+import { site } from "../config/site";
+import { enquireHref } from "../lib/links";
+
+interface Props {
+  title: string;
+  lede: string;
+  courseSlug?: string;
+  locationSlug?: string;
+}
+
+const { title, lede, courseSlug, locationSlug } = Astro.props;
+---
+
+<section class="cta-band" aria-labelledby="cta-heading">
+  <div class="wrap">
+    <h2 id="cta-heading">{title}</h2>
+    <p>{lede}</p>
+    <div class="actions">
+      <a class="button" href={enquireHref({ course: courseSlug, location: locationSlug })}>Enquire now</a>
+      <a class="button button-quiet" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+    </div>
+  </div>
+</section>

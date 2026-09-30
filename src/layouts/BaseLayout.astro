@@ -1,0 +1,82 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { site } from "../config/site";
+import "../lib/catalogue";
+import { analyticsMeasurementId, canonicalUrl, jsonLd } from "../lib/links";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  jsonLd?: unknown[];
+}
+
+const { title, description, noindex = false, jsonLd: extraJsonLd = [] } = Astro.props;
+const pageTitle = title === site.name ? site.name : `${title} — ${site.name}`;
+const canonical = canonicalUrl(Astro.url.pathname);
+const analyticsId = analyticsMeasurementId(site.analyticsId);
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  url: site.url,
+  description: site.description,
+};
+const structuredData = [website, ...extraJsonLd];
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#17324d" />
+    {noindex && <meta name="robots" content="noindex" />}
+    {
+      site.googleSiteVerification ? (
+        <meta name="google-site-verification" content={site.googleSiteVerification} />
+      ) : null
+    }
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_GB" />
+    {
+      structuredData.map((entry) => (
+        <script type="application/ld+json" set:html={jsonLd(entry)} />
+      ))
+    }
+    {
+      analyticsId ? (
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`} />
+      ) : null
+    }
+    {
+      analyticsId ? (
+        <script is:inline define:vars={{ analyticsId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag("js", new Date());
+          gtag("config", analyticsId);
+        </script>
+      ) : null
+    }
+  </head>
+  <body>
+    <Header />
+    <main id="content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

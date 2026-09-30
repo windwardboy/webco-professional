@@ -1,0 +1,25 @@
+---
+import type { Faq } from "../content/types";
+
+interface Props {
+  faqs: readonly Faq[];
+  heading?: string;
+  headingId?: string;
+}
+
+const { faqs, heading = "Questions", headingId = "questions" } = Astro.props;
+---
+
+{
+  faqs.length > 0 ? (
+    <section class="faq" aria-labelledby={headingId}>
+      <h2 id={headingId}>{heading}</h2>
+      {faqs.map((faq) => (
+        <details>
+          <summary>{faq.question}</summary>
+          <p>{faq.answer}</p>
+        </details>
+      ))}
+    </section>
+  ) : null
+}
