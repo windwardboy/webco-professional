@@ -1,8 +1,6 @@
 ---
-interface Crumb {
-  label: string;
-  href?: string;
-}
+import Breadcrumbs from "./Breadcrumbs.astro";
+import type { Crumb } from "../lib/links";
 
 interface Props {
   title: string;
@@ -11,29 +9,15 @@ interface Props {
   crumbs?: readonly Crumb[];
 }
 
-const { title, lede, eyebrow, crumbs = [] } = Astro.props;
+const { title, lede, eyebrow, crumbs } = Astro.props;
 ---
 
 <header class="page-hero">
   <div class="wrap">
-    {
-      crumbs.length > 0 ? (
-        <nav class="crumbs" aria-label="Breadcrumb">
-          <ol>
-            {crumbs.map((crumb, index) => {
-              const current = index === crumbs.length - 1;
-              return (
-                <li>
-                  {crumb.href && !current ? <a href={crumb.href}>{crumb.label}</a> : <span aria-current="page">{crumb.label}</span>}
-                </li>
-              );
-            })}
-          </ol>
-        </nav>
-      ) : null
-    }
+    {crumbs && crumbs.length > 0 ? <Breadcrumbs crumbs={crumbs} /> : null}
     {eyebrow ? <p class="eyebrow">{eyebrow}</p> : null}
     <h1>{title}</h1>
     <p class="lede">{lede}</p>
+    <slot />
   </div>
 </header>

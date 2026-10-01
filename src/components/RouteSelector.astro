@@ -1,0 +1,33 @@
+---
+import { routeChoices } from "../content/routes";
+
+interface Props {
+  id?: string;
+  title: string;
+  intro?: string;
+  band?: boolean;
+}
+
+const { id = "routes", title, intro, band = false } = Astro.props;
+---
+
+<section class:list={["block", band && "band"]} aria-labelledby={id}>
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id={id}>{title}</h2>
+      {intro ? <p class="section-intro">{intro}</p> : null}
+    </div>
+    <ul class="choices">
+      {
+        routeChoices.map((choice) => (
+          <li>
+            <a href={choice.href}>
+              <span class="choice-title">{choice.title}</span>
+              <span class="choice-text">{choice.text}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

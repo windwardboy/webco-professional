@@ -1,0 +1,28 @@
+---
+import Catalogue from "../../components/Catalogue.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import PageHero from "../../components/PageHero.astro";
+import { pageCrumbs } from "../../lib/links";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "Training", href: "/training/" }]);
+---
+
+<BaseLayout
+  title="Training courses"
+  description="Category C, Category C+E, Driver CPC, ADR and Operator CPC. Example bases at Bristol, Taunton and Exeter. Not every course runs at every base."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Training"
+    title="Training courses"
+    lede="HGV licence routes, Driver CPC, and further courses. Each card links to its own page, and shows the example bases that offer it."
+  />
+  <div class="block block-follow">
+    <div class="wrap">
+      <Catalogue />
+    </div>
+  </div>
+  <CtaBand title="Ask about a course" lede="Choose a course and an example base, or say that you are not sure yet." />
+</BaseLayout>

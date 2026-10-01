@@ -1,0 +1,21 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  intro?: string;
+  band?: boolean;
+  narrow?: boolean;
+}
+
+const { id, title, intro, band = false, narrow = false } = Astro.props;
+---
+
+<section class:list={["block", band && "band"]} aria-labelledby={id}>
+  <div class:list={["wrap", narrow && "measure"]}>
+    <div class="section-head">
+      <h2 id={id}>{title}</h2>
+      {intro ? <p class="section-intro">{intro}</p> : null}
+    </div>
+    <slot />
+  </div>
+</section>

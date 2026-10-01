@@ -1,17 +1,49 @@
 ---
 import { nav } from "../config/site";
-import { isNavCurrent } from "../lib/links";
+import { isCurrentPath, isNavCurrent } from "../lib/links";
+
+const pathname = Astro.url.pathname;
 ---
 
 <ul class="nav">
   {
-    nav.map((item) => (
-      <li>
-        <a href={item.href} aria-current={isNavCurrent(Astro.url.pathname, item.href) ? "page" : undefined}>
-          {item.label}
-        </a>
-      </li>
-    ))
+    nav.map((item) => {
+      const children = item.children ?? [];
+      const exact = isCurrentPath(pathname, item.href);
+      const inSection =
+        isNavCurrent(pathname, item.href) || children.some((child) => isNavCurrent(pathname, child.href));
+      return (
+        <li class:list={[children.length > 0 && "nav-sub"]}>
+          <a
+            href={item.href}
+            aria-current={exact ? "page" : undefined}
+            aria-haspopup={children.length > 0 ? "true" : undefined}
+            class:list={[inSection && !exact && "is-section"]}
+          >
+            {item.label}
+          </a>
+          {children.length > 0 ? (
+            <ul class="submenu">
+              {children.map((child) => {
+                const childExact = isCurrentPath(pathname, child.href);
+                const childSection = isNavCurrent(pathname, child.href) && !childExact;
+                return (
+                  <li>
+                    <a
+                      href={child.href}
+                      aria-current={childExact ? "page" : undefined}
+                      class:list={[childSection && "is-section"]}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
+        </li>
+      );
+    })
   }
-  <li><a class="button" href="/contact/#enquiry">Enquire now</a></li>
+  <li><a class="button" href="/contact/#enquiry">Enquire</a></li>
 </ul>

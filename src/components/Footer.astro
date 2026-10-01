@@ -1,7 +1,6 @@
 ---
 import { site } from "../config/site";
-import { courses } from "../content/courses";
-import { locations } from "../content/locations";
+import { additionalCourses, coreCourses, featuredGuides, publishedLocations } from "../lib/catalogue";
 ---
 
 <footer class="site-footer">
@@ -20,38 +19,59 @@ import { locations } from "../content/locations";
       }
     </div>
     <div>
-      <p class="footer-label">Courses</p>
+      <p class="footer-label">Training</p>
       <ul class="footer-nav">
+        <li><a href="/hgv-training/">HGV training</a></li>
         {
-          courses.map((course) => (
+          coreCourses().map((course) => (
             <li>
-              <a href={`/courses/${course.slug}/`}>{course.title}</a>
+              <a href={course.path}>{course.navLabel}</a>
             </li>
           ))
         }
+        {
+          additionalCourses().map((course) => (
+            <li>
+              <a href={course.path}>{course.navLabel}</a>
+            </li>
+          ))
+        }
+        <li><a href="/training/">All training</a></li>
       </ul>
     </div>
     <div>
       <p class="footer-label">Locations</p>
       <ul class="footer-nav">
         {
-          locations.map((location) => (
+          publishedLocations().map((location) => (
             <li>
               <a href={`/locations/${location.slug}/`}>{location.name}</a>
             </li>
           ))
         }
-        <li>
-          <a href="/about/">About</a>
-        </li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/team/">Team</a></li>
+        <li><a href="/reviews/">Reviews</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-label">Guides</p>
+      <ul class="footer-nav">
+        {
+          featuredGuides().map((guide) => (
+            <li>
+              <a href={guide.path}>{guide.title}</a>
+            </li>
+          ))
+        }
+        <li><a href="/guides/">All guides</a></li>
+        <li><a href="/faqs/">FAQs</a></li>
       </ul>
     </div>
     <div>
       <p class="footer-label">Example contact</p>
       <ul class="footer-nav">
-        <li>
-          <a href="/contact/#enquiry">Enquiry form</a>
-        </li>
+        <li><a href="/contact/#enquiry">Enquiry form</a></li>
         <li>
           <a href={site.phoneHref}>{site.phoneDisplay}</a>
           <span class="example-tag">Example number</span>
@@ -63,9 +83,7 @@ import { locations } from "../content/locations";
         {
           site.showWhatsApp ? (
             <li>
-              <a href={site.whatsappHref} rel="noopener noreferrer">
-                WhatsApp
-              </a>
+              <a href={site.whatsappHref} rel="noopener noreferrer">WhatsApp</a>
               <span class="example-tag">Example number</span>
             </li>
           ) : null

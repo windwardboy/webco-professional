@@ -1,21 +1,25 @@
+import { trainingNav } from "../content/courses";
+import { publishedLocations } from "../content/locations";
+
 /**
  * Site-wide facts for a Professional client site.
  *
  * This repository is the Webco Professional demonstration. Leave unknown
- * values empty, and replace the example phone, email and locations when
- * cloning for a real provider. Do not invent a street address,
- * accreditation, testimonial or company name.
+ * values empty. Do not invent a street address, accreditation, rating,
+ * fee, duration or testimonial.
  *
  * `url` is baked into canonical links and the sitemap at build time.
+ * Course pages are controlled by `published` on each course. The public
+ * site lists only published courses.
  */
 export const site = {
   name: "Webco Professional",
   url: "https://webco-professional.co.uk",
   description:
-    "Demonstration of a Webco Professional website for an established HGV training provider, with dedicated course pages, several training locations and a structured enquiry path.",
+    "Demonstration of a Webco Professional website for an HGV and transport training provider: Category C, Category C+E, Driver CPC, ADR and Operator CPC, with example bases at Bristol, Taunton and Exeter.",
   demoLine: "Demonstration website by Webco Media",
   footerSummary:
-    "Sample content for an established provider with several courses and more than one training site.",
+    "Category C, Category C+E, Driver CPC, ADR and Operator CPC, with example bases at Bristol, Taunton and Exeter.",
   webcoMediaUrl: "",
   phoneDisplay: "01632 960214",
   phoneHref: "tel:+441632960214",
@@ -25,6 +29,17 @@ export const site = {
   showWhatsApp: true,
   /** POST URL for a small PHP form handler. Empty on this demonstration. */
   enquiryEndpoint: "",
+  hours: [
+    { label: "Monday to Friday", value: "Example hours" },
+    { label: "Saturday and Sunday", value: "Example hours" },
+  ],
+  hoursNote: "Example hours. Not a real opening schedule.",
+  areasServed: ["Bristol", "Taunton", "Exeter"],
+  areasNote: "Example bases only. Nearby towns do not have their own pages.",
+  /** HTTPS map embed URL. Empty on this demonstration: no pin is shown. */
+  mapEmbedUrl: "",
+  /** Empty until a real Google reviews URL is supplied. No rating is stored. */
+  googleReviewsUrl: "",
   /** Google Search Console verification token. Leave empty until issued. */
   googleSiteVerification: "",
   /** GA4 measurement id, such as G-XXXXXXXX. Leave empty until issued. */
@@ -39,10 +54,20 @@ export const site = {
   },
 } as const;
 
-export const nav = [
-  { href: "/", label: "Home" },
-  { href: "/courses/", label: "Courses" },
-  { href: "/locations/", label: "Locations" },
+export type NavItem = {
+  href: string;
+  label: string;
+  children?: readonly { href: string; label: string }[];
+};
+
+const locationNav: readonly NavItem[] =
+  publishedLocations().length > 1 ? [{ href: "/locations/", label: "Locations" }] : [];
+
+export const nav: readonly NavItem[] = [
+  { href: "/hgv-training/", label: "Training", children: trainingNav },
+  ...locationNav,
   { href: "/about/", label: "About" },
+  { href: "/reviews/", label: "Reviews" },
+  { href: "/guides/", label: "Guides" },
   { href: "/contact/", label: "Contact" },
-] as const;
+];

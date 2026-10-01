@@ -1,0 +1,41 @@
+---
+import CtaBand from "../components/CtaBand.astro";
+import LearnerProof from "../components/LearnerProof.astro";
+import PageHero from "../components/PageHero.astro";
+import { site } from "../config/site";
+import { testimonials } from "../lib/catalogue";
+import { httpsUrl, pageCrumbs } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "Reviews", href: "/reviews/" }]);
+const reviewsUrl = httpsUrl(site.googleReviewsUrl);
+---
+
+<BaseLayout
+  title="Reviews"
+  description="Example learner feedback for the Webco Professional demonstration. No rating, review count or review schema is shown."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Example feedback"
+    title="Reviews"
+    lede="Example learner comments for the layout. These are not real reviews. No score and no review count are shown."
+  />
+  <LearnerProof id="quotes" title="What learners say" items={testimonials} />
+  <section class="block band" aria-labelledby="external-reviews">
+    <div class="wrap measure">
+      <h2 id="external-reviews">Google reviews</h2>
+      {
+        reviewsUrl ? (
+          <p>
+            <a href={reviewsUrl}>Read the reviews on Google</a>
+          </p>
+        ) : (
+          <p>No Google reviews link is shown on this demonstration.</p>
+        )
+      }
+    </div>
+  </section>
+  <CtaBand title="Ask about training" lede="Say which course you want, or say that you are not sure yet." />
+</BaseLayout>

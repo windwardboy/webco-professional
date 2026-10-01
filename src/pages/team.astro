@@ -1,0 +1,32 @@
+---
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import TeamCard from "../components/TeamCard.astro";
+import { visibleTeam } from "../lib/catalogue";
+import { pageCrumbs } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "Team", href: "/team/" }]);
+const people = visibleTeam();
+---
+
+<BaseLayout
+  title="Instructors and team"
+  description="Example instructor profiles for rigid, articulated and classroom training. No names, photographs or qualifications are shown."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Example profiles"
+    title="Instructors and team"
+    lede="Training is delivered from the Bristol, Taunton and Exeter example bases. The profiles below are examples. Nobody named here is a real instructor, because no name is shown."
+  />
+  <div class="block block-follow">
+    <div class="wrap">
+      <ul class="cards">
+        {people.map((person) => <TeamCard person={person} />)}
+      </ul>
+    </div>
+  </div>
+  <CtaBand title="Ask about training" lede="Say which course you are interested in, and which example base you prefer." />
+</BaseLayout>

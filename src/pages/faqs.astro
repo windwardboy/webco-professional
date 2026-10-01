@@ -1,0 +1,37 @@
+---
+import PageHero from "../components/PageHero.astro";
+import { faqsByTopic } from "../lib/catalogue";
+import { pageCrumbs } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "FAQs", href: "/faqs/" }]);
+const topics = faqsByTopic();
+---
+
+<BaseLayout
+  title="FAQs"
+  description="Questions about HGV licences, medicals, theory, tests, prices and this demonstration. No FAQ schema is published."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="FAQs"
+    title="Questions about HGV training"
+    lede="Licences, medicals, the practical test, prices and what this demonstration does and does not claim."
+  />
+  {
+    topics.map((topic, index) => (
+      <section class:list={["block", "faq", index % 2 === 1 && "band"]} aria-labelledby={topic.id}>
+        <div class="wrap">
+          <h2 id={topic.id}>{topic.label}</h2>
+          {topic.items.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</BaseLayout>

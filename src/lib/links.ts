@@ -5,6 +5,12 @@ export function canonicalUrl(pathname: string): string {
   return new URL(path, site.url).href;
 }
 
+export function isCurrentPath(pathname: string, href: string): boolean {
+  const current = pathname.replace(/\/$/, "") || "/";
+  const target = href.replace(/\/$/, "") || "/";
+  return current === target;
+}
+
 export function isNavCurrent(pathname: string, href: string): boolean {
   const current = pathname.replace(/\/$/, "") || "/";
   const target = href.replace(/\/$/, "") || "/";
@@ -21,6 +27,12 @@ export function enquiryAction(endpoint: string): string | null {
 /** GA4 measurement ids only. Anything else is ignored so the layout stays script-free. */
 export function analyticsMeasurementId(id: string): string | null {
   return /^G-[A-Z0-9]+$/.test(id) ? id : null;
+}
+
+/** HTTPS URLs only, for optional map and review links supplied in config. */
+export function httpsUrl(value: string): string | null {
+  if (value.startsWith("https://")) return value;
+  return null;
 }
 
 export function enquireHref(options?: { course?: string; location?: string }): string {
@@ -42,19 +54,10 @@ export function jsonLd(data: unknown): string {
 }
 
 export type Crumb = {
-  name: string;
-  path: string;
+  label: string;
+  href: string;
 };
 
-export function breadcrumbJsonLd(items: readonly Crumb[]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: item.name,
-      item: canonicalUrl(item.path),
-    })),
-  };
+export function pageCrumbs(items: readonly Crumb[]): Crumb[] {
+  return [{ label: "Home", href: "/" }, ...items];
 }

@@ -1,0 +1,49 @@
+---
+import type { Course } from "../content/courses";
+import type { Guide } from "../content/guides";
+
+interface Props {
+  id?: string;
+  courses?: readonly Course[];
+  guides?: readonly Guide[];
+  band?: boolean;
+}
+
+const { id = "related", courses = [], guides = [], band = false } = Astro.props;
+---
+
+{
+  courses.length > 0 || guides.length > 0 ? (
+    <section class:list={["block", band && "band"]} aria-labelledby={id}>
+      <div class="wrap">
+        <h2 id={id}>Related</h2>
+        {courses.length > 0 ? (
+          <>
+            <h3>Courses</h3>
+            <ul class="related-links">
+              {courses.map((course) => (
+                <li>
+                  <a href={course.path}>{course.title}</a>
+                  <span>{course.summary}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
+        {guides.length > 0 ? (
+          <>
+            <h3>Guides</h3>
+            <ul class="related-links">
+              {guides.map((guide) => (
+                <li>
+                  <a href={guide.path}>{guide.title}</a>
+                  <span>{guide.intro}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
+      </div>
+    </section>
+  ) : null
+}

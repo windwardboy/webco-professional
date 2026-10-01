@@ -115,25 +115,30 @@ The difference from Essential should come mainly from **information architecture
 
 ## Suggested site structure
 
-Recommended routes:
-
 ```text
 /
-/courses
-/courses/category-c-e
-/courses/category-c
-/courses/c1
-/courses/driver-cpc
-/courses/adr
-/locations
-/locations/bristol
-/locations/taunton
-/locations/exeter
-/about
-/contact
+/hgv-training/
+/category-c-training/
+/category-ce-training/
+/driver-cpc/
+/training/
+/training/adr/
+/training/operator-cpc/
+/locations/
+/locations/bristol/
+/locations/taunton/
+/locations/exeter/
+/about/
+/team/
+/reviews/
+/guides/
+/faqs/
+/contact/
 ```
 
-The specific sample courses/locations can change, but the demo must prove dedicated course-page and location-page architecture.
+Category C, Category C+E and Driver CPC are the core routes. ADR and Operator CPC are the published example additional courses. Further course types can sit in `src/content/courses.ts` with `published: false`. They are not linked on the public site, and the public copy does not describe that switch.
+
+Bristol, Taunton and Exeter are example bases. They stay labelled as examples. No street address or map pin is invented.
 
 Do not create fake doorway pages or duplicated city SEO pages.
 
@@ -340,27 +345,21 @@ Do not simply make Professional “the same site with more sections”.
 
 ## First milestone
 
-Build a polished static demo containing:
+The structural master contains:
 
-1. site shell
-2. header/navigation
-3. footer
-4. homepage
-5. courses index
-6. at least 4–5 sample course pages
-7. locations index
-8. at least 3 sample location pages
-9. about page
-10. contact/enquiry page
-11. responsive layout
-12. technical SEO basics
-13. sitemap
-14. robots.txt
-15. favicon
-16. 404 page
-17. clear demonstration-site treatment
+1. site shell, header and footer
+2. homepage in the agreed section order
+3. HGV training overview
+4. Category C, Category C+E and Driver CPC pages from one course template
+5. training catalogue, plus ADR and Operator CPC as labelled example courses
+6. locations index and three labelled example location pages
+7. about, team, reviews, guides, FAQs and contact
+8. responsive layout in the shared slate / off-white family
+9. canonical URLs, sitemap, robots.txt, breadcrumbs and WebSite schema
+10. favicon and 404 page
+11. clear demonstration-site treatment, with no invented addresses, prices, pass rates or instructor names
 
-The first milestone should be polished enough to show prospects and structurally complete enough to prove the multi-course/multi-location model.
+Visual refinement of individual sections comes after this structure is in place.
 
 ## Cursor instruction
 

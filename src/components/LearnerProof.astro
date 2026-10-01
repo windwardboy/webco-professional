@@ -1,0 +1,42 @@
+---
+import type { Testimonial } from "../content/testimonials";
+
+interface Props {
+  id?: string;
+  title: string;
+  intro?: string;
+  items: readonly Testimonial[];
+  band?: boolean;
+}
+
+const { id = "proof", title, intro, items, band = false } = Astro.props;
+---
+
+{
+  items.length > 0 ? (
+    <section class:list={["block", band && "band"]} aria-labelledby={id}>
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id={id}>{title}</h2>
+          {intro ? <p class="section-intro">{intro}</p> : null}
+        </div>
+        <ul class="quotes">
+          {items.map((item) => (
+            <li>
+              <figure>
+                <blockquote>
+                  <p>{item.quote}</p>
+                </blockquote>
+                <footer>
+                  {item.attribution}
+                  <span class="example-tag">Example</span>
+                </footer>
+              </figure>
+              {item.story ? <p class="story">{item.story}</p> : null}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ) : null
+}

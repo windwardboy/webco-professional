@@ -1,0 +1,150 @@
+---
+import CtaBand from "./CtaBand.astro";
+import FacilityList from "./FacilityList.astro";
+import FaqList from "./FaqList.astro";
+import LearnerProof from "./LearnerProof.astro";
+import LocationCard from "./LocationCard.astro";
+import PageHero from "./PageHero.astro";
+import ProcessSteps from "./ProcessSteps.astro";
+import RelatedLinks from "./RelatedLinks.astro";
+import Section from "./Section.astro";
+import TeamCard from "./TeamCard.astro";
+import type { Course } from "../content/courses";
+import { trustPoints } from "../content/trust";
+import { site } from "../config/site";
+import {
+  facilitiesFor,
+  faqsForCourse,
+  locationsForCourse,
+  relatedCourses,
+  relatedGuides,
+  teamForCourse,
+  testimonialsFor,
+  vehiclesFor,
+} from "../lib/catalogue";
+import { enquireHref, pageCrumbs } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+const places = locationsForCourse(course);
+const people = teamForCourse(course);
+const proof = testimonialsFor(course.testimonialIds);
+const courseFaqs = faqsForCourse(course.id);
+const vehicles = vehiclesFor(course.vehicleIds);
+const facilityItems = facilitiesFor(course.facilityIds);
+const durationText = course.duration || "How long the training takes is confirmed when you enquire.";
+const priceText =
+  course.priceNote ||
+  (course.kind === "licence"
+    ? "Ask for a quote. No fee is listed on this page. Medicals, theory tests and the practical test are separate costs."
+    : "Ask for a quote. No fee or date is listed on this page.");
+const crumbs = pageCrumbs([
+  course.group === "core"
+    ? { label: "HGV training", href: "/hgv-training/" }
+    : { label: "Training", href: "/training/" },
+  { label: course.navLabel, href: course.path },
+]);
+---
+
+<BaseLayout title={course.metaTitle} description={course.metaDescription} crumbs={crumbs}>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow={course.sample ? `Example course · ${course.kicker}` : course.kicker}
+    title={course.metaTitle}
+    lede={course.summary}
+  >
+    <div class="actions">
+      <a class="button" href={enquireHref({ course: course.id })}>Enquire about {course.title}</a>
+      <a class="button button-quiet" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+    </div>
+    {
+      course.sample ? (
+        <p class="example-caption">Example course on this demonstration. It is not a booking for a real centre.</p>
+      ) : null
+    }
+  </PageHero>
+
+  <Section id="explanation" title="In plain English" narrow={true}>
+    <p>{course.explanation}</p>
+  </Section>
+
+  <Section id="who" title="Who it is for" intro={course.audience} band={true} narrow={true} />
+
+  <Section id="permits" title="What it covers" narrow={true}>
+    <ul class="prose-list">
+      {course.permits.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>{course.permitsNote}</p>
+  </Section>
+
+  <Section id="eligibility" title="Eligibility and prerequisites" intro="General guidance, not a check of your licence." band={true} narrow={true}>
+    <ul class="prose-list">
+      {course.eligibility.map((item) => <li>{item}</li>)}
+    </ul>
+  </Section>
+
+  <Section id="includes" title="What the training includes" narrow={true}>
+    <ul class="prose-list">
+      {course.includes.map((item) => <li>{item}</li>)}
+    </ul>
+  </Section>
+
+  <ProcessSteps id="process" title="How the course works" steps={course.steps} band={true} />
+
+  <Section id="format" title="Training format" intro={course.format} narrow={true} />
+
+  <Section id="cost" title="Duration and cost" band={true} narrow={true}>
+    <p>{durationText}</p>
+    <p>{priceText}</p>
+  </Section>
+
+  <Section id="locations" title="Where this course runs" intro="Example bases only. No street address is published.">
+    <ul class="cards">
+      {places.map((location) => <LocationCard location={location} courseId={course.id} />)}
+    </ul>
+  </Section>
+
+  <Section id="why" title="Why train here" band={true}>
+    <ul class="trust">
+      {
+        trustPoints.map((point) => (
+          <li>
+            <h3>{point.title}</h3>
+            <p>{point.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  {
+    vehicles.length > 0 || facilityItems.length > 0 ? (
+      <Section id="operations" title="Vehicles and facilities">
+        <FacilityList vehicles={vehicles} facilities={facilityItems} />
+      </Section>
+    ) : null
+  }
+
+  {
+    people.length > 0 ? (
+      <Section id="instructors" title="Instructors" intro="Example profiles. No instructor is named." band={true}>
+        <ul class="cards">
+          {people.map((person) => <TeamCard person={person} />)}
+        </ul>
+      </Section>
+    ) : null
+  }
+
+  <LearnerProof id="learner" title="Learner feedback" intro="Example wording. Not a real review." items={proof} />
+  <FaqList id="course-faq" title="Questions about this course" items={courseFaqs} band={true} />
+  <RelatedLinks courses={relatedCourses(course)} guides={relatedGuides(course)} />
+  <CtaBand
+    title={`Ask about ${course.title}`}
+    lede="Say which example base you prefer, and how you would like to be contacted."
+    courseSlug={course.id}
+  />
+</BaseLayout>

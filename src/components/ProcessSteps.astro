@@ -1,0 +1,32 @@
+---
+import type { Step } from "../content/types";
+
+interface Props {
+  id: string;
+  title: string;
+  intro?: string;
+  steps: readonly Step[];
+  band?: boolean;
+}
+
+const { id, title, intro, steps, band = false } = Astro.props;
+---
+
+<section class:list={["block", band && "band"]} aria-labelledby={id}>
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id={id}>{title}</h2>
+      {intro ? <p class="section-intro">{intro}</p> : null}
+    </div>
+    <ol class="steps">
+      {
+        steps.map((step) => (
+          <li>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,65 @@
+---
+import CtaBand from "./CtaBand.astro";
+import PageHero from "./PageHero.astro";
+import RelatedLinks from "./RelatedLinks.astro";
+import type { Guide } from "../content/guides";
+import { coursesForGuide, relatedGuidesForGuide } from "../lib/catalogue";
+import { pageCrumbs } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+interface Props {
+  guide: Guide;
+}
+
+const { guide } = Astro.props;
+const showToc = guide.sections.length > 2;
+const crumbs = pageCrumbs([
+  { label: "Guides", href: "/guides/" },
+  { label: guide.title, href: guide.path },
+]);
+---
+
+<BaseLayout title={guide.metaTitle} description={guide.metaDescription} crumbs={crumbs}>
+  <PageHero crumbs={crumbs} eyebrow="Guide" title={guide.title} lede={guide.intro} />
+  <div class="block">
+    <div class="wrap guide-layout">
+      {
+        showToc ? (
+          <nav class="toc" aria-label="On this page">
+            <p class="toc-label">On this page</p>
+            <ol>
+              {guide.sections.map((section) => (
+                <li>
+                  <a href={`#${section.id}`}>{section.heading}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        ) : null
+      }
+      <article class="guide-body">
+        {
+          guide.sections.map((section) => (
+            <section class="guide-section" aria-labelledby={section.id}>
+              <h2 id={section.id}>{section.heading}</h2>
+              {section.paragraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+              {section.links && section.links.length > 0 ? (
+                <ul class="prose-list">
+                  {section.links.map((link) => (
+                    <li>
+                      <a href={link.href}>{link.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </section>
+          ))
+        }
+      </article>
+    </div>
+  </div>
+  <RelatedLinks courses={coursesForGuide(guide)} guides={relatedGuidesForGuide(guide)} band={true} />
+  <CtaBand title="Ask about training" lede="If you know which course you need, say so. If you are not sure, say that too." />
+</BaseLayout>

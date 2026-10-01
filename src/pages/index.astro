@@ -1,22 +1,40 @@
 ---
-import CourseCard from "../components/CourseCard.astro";
 import CtaBand from "../components/CtaBand.astro";
+import CourseCard from "../components/CourseCard.astro";
+import FaqList from "../components/FaqList.astro";
+import FacilityList from "../components/FacilityList.astro";
+import GuideCard from "../components/GuideCard.astro";
+import LearnerProof from "../components/LearnerProof.astro";
 import LocationCard from "../components/LocationCard.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
 import ResponsiveImage from "../components/ResponsiveImage.astro";
+import RouteSelector from "../components/RouteSelector.astro";
+import Section from "../components/Section.astro";
+import TeamCard from "../components/TeamCard.astro";
+import TrustStrip from "../components/TrustStrip.astro";
+import { facilities } from "../content/facilities";
 import { homepage } from "../content/homepage";
-import { courses } from "../content/courses";
-import { locations } from "../content/locations";
-import { testimonials } from "../content/testimonials";
+import { trainingJourney } from "../content/process";
 import { trustPoints } from "../content/trust";
+import { vehicles } from "../content/vehicles";
 import { site } from "../config/site";
+import {
+  additionalCourses,
+  coreCourses,
+  featuredGuides,
+  homeFaqs,
+  publishedLocations,
+  testimonials,
+  visibleTeam,
+} from "../lib/catalogue";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const image = site.heroImage;
 ---
 
 <BaseLayout
-  title="Multi-site HGV training demonstration"
-  description="Demonstration of a Webco Professional website: dedicated pages for several HGV courses and training locations, with a structured enquiry path."
+  title="HGV training"
+  description="Demonstration of an HGV and transport training website: Category C, Category C+E, Driver CPC, ADR and Operator CPC, with example bases at Bristol, Taunton and Exeter."
 >
   <section class="hero">
     <div class="wrap hero-grid">
@@ -26,12 +44,10 @@ const image = site.heroImage;
         <p class="lede">{homepage.lede}</p>
         <div class="actions">
           <a class="button" href="/contact/#enquiry">Enquire now</a>
-          <a class="button button-quiet" href="/courses/">View courses</a>
-          <a class="button button-text" href="/locations/">View locations</a>
+          <a class="button button-quiet" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+          <a class="button button-text" href="/hgv-training/">HGV training</a>
         </div>
-        <p class="example-caption">
-          Bristol, Taunton, Exeter and {site.phoneDisplay} are placeholders. This is not a real training business.
-        </p>
+        <p class="example-caption">{homepage.exampleNote}</p>
       </div>
       <div class="hero-side">
         {
@@ -41,11 +57,11 @@ const image = site.heroImage;
             </div>
           ) : null
         }
-        <aside class="glance" aria-label="Training locations">
-          <h2>Training locations</h2>
+        <aside class="glance" aria-label="Example training locations">
+          <h2>Example bases</h2>
           <ul class="glance-board">
             {
-              locations.map((location) => (
+              publishedLocations().map((location) => (
                 <li>
                   <a href={`/locations/${location.slug}/`}>
                     <span class="glance-title">{location.name}</span>
@@ -60,70 +76,63 @@ const image = site.heroImage;
     </div>
   </section>
 
-  <section class="block band" aria-labelledby="courses-heading">
-    <div class="wrap">
-      <div class="section-head section-head-split">
-        <h2 id="courses-heading">{homepage.coursesTitle}</h2>
-        <p class="section-intro">{homepage.coursesIntro}</p>
-      </div>
-      <ul class="cards">
-        {courses.map((course) => <CourseCard course={course} />)}
-      </ul>
-    </div>
-  </section>
+  <TrustStrip />
 
-  <section class="block" aria-labelledby="locations-heading">
-    <div class="wrap">
-      <div class="section-head section-head-split">
-        <h2 id="locations-heading">{homepage.locationsTitle}</h2>
-        <p class="section-intro">{homepage.locationsIntro}</p>
-      </div>
-      <ul class="cards">
-        {locations.map((location) => <LocationCard location={location} />)}
-      </ul>
-    </div>
-  </section>
+  <RouteSelector title={homepage.routesTitle} intro={homepage.routesIntro} band={true} />
 
-  <section class="block band" aria-labelledby="trust-heading">
-    <div class="wrap">
-      <div class="section-head section-head-split">
-        <h2 id="trust-heading">{homepage.trustTitle}</h2>
-        <p class="section-intro">{homepage.trustIntro}</p>
-      </div>
-      <ul class="trust">
-        {
-          trustPoints.map((point) => (
-            <li>
-              <h3>{point.title}</h3>
-              <p>{point.text}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
+  <Section id="core" title={homepage.coreTitle} intro={homepage.coreIntro}>
+    <ul class="cards">
+      {coreCourses().map((course) => <CourseCard course={course} />)}
+    </ul>
+    <p class="section-more"><a href="/hgv-training/">Compare the HGV routes</a></p>
+  </Section>
 
-  <section class="block" aria-labelledby="testimonials-heading">
-    <div class="wrap">
-      <div class="section-head section-head-split">
-        <h2 id="testimonials-heading">{homepage.testimonialsTitle}</h2>
-        <p class="section-intro">{homepage.testimonialsIntro}</p>
-      </div>
-      <ul class="quotes">
-        {
-          testimonials.map((item) => (
-            <li>
-              <p class="quote-flag">Sample</p>
-              <blockquote>
-                <p>{item.quote}</p>
-                <footer>{item.attribution}</footer>
-              </blockquote>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
+  <Section id="further" title={homepage.furtherTitle} intro={homepage.furtherIntro} band={true}>
+    <ul class="cards">
+      {additionalCourses().map((course) => <CourseCard course={course} />)}
+    </ul>
+    <p class="section-more"><a href="/training/">View all training</a></p>
+  </Section>
 
+  <Section id="why" title={homepage.whyTitle} intro={homepage.whyIntro}>
+    <ul class="trust">
+      {
+        trustPoints.map((point) => (
+          <li>
+            <h3>{point.title}</h3>
+            <p>{point.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <ProcessSteps id="how" title={homepage.howTitle} intro={homepage.howIntro} steps={trainingJourney} band={true} />
+
+  <Section id="locations" title={homepage.locationsTitle} intro={homepage.locationsIntro}>
+    <ul class="cards">
+      {publishedLocations().map((location) => <LocationCard location={location} />)}
+    </ul>
+  </Section>
+
+  <LearnerProof title={homepage.proofTitle} intro={homepage.proofIntro} items={testimonials} band={true} />
+  <p class="wrap section-more"><a href="/reviews/">Read the reviews page</a></p>
+
+  <Section id="operations" title={homepage.operationsTitle} intro={homepage.operationsIntro}>
+    <ul class="cards">
+      {visibleTeam().map((person) => <TeamCard person={person} />)}
+    </ul>
+    <FacilityList vehicles={vehicles} facilities={facilities} />
+    <p class="section-more"><a href="/team/">Team</a></p>
+  </Section>
+
+  <Section id="guides" title={homepage.guidesTitle} intro={homepage.guidesIntro} band={true}>
+    <ul class="cards">
+      {featuredGuides().map((guide) => <GuideCard guide={guide} />)}
+    </ul>
+    <p class="section-more"><a href="/guides/">All guides</a></p>
+  </Section>
+
+  <FaqList title={homepage.faqTitle} items={homeFaqs()} />
   <CtaBand title={homepage.ctaTitle} lede={homepage.ctaLede} />
 </BaseLayout>

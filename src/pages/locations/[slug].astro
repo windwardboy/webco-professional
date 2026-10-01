@@ -1,21 +1,33 @@
 ---
 import CourseCard from "../../components/CourseCard.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import FacilityList from "../../components/FacilityList.astro";
 import FaqList from "../../components/FaqList.astro";
+import LearnerProof from "../../components/LearnerProof.astro";
 import MapPlaceholder from "../../components/MapPlaceholder.astro";
 import PageHero from "../../components/PageHero.astro";
 import ResponsiveImage from "../../components/ResponsiveImage.astro";
+import TeamCard from "../../components/TeamCard.astro";
 import { locations, type TrainingLocation } from "../../content/locations";
 import { site } from "../../config/site";
-import { coursesForLocation } from "../../lib/catalogue";
-import { breadcrumbJsonLd, enquireHref } from "../../lib/links";
+import {
+  coursesForLocation,
+  facilitiesFor,
+  faqsForLocation,
+  teamForLocation,
+  testimonialsForLocation,
+  vehiclesFor,
+} from "../../lib/catalogue";
+import { enquireHref, pageCrumbs } from "../../lib/links";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export function getStaticPaths() {
-  return locations.map((location) => ({
-    params: { slug: location.slug },
-    props: { location },
-  }));
+  return locations
+    .filter((location) => location.published)
+    .map((location) => ({
+      params: { slug: location.slug },
+      props: { location },
+    }));
 }
 
 interface Props {
@@ -24,38 +36,46 @@ interface Props {
 
 const { location } = Astro.props;
 const offered = coursesForLocation(location);
-const crumbs = [
-  { name: "Home", path: "/" },
-  { name: "Locations", path: "/locations/" },
-  { name: location.name, path: `/locations/${location.slug}/` },
-];
+const people = teamForLocation(location);
+const proof = testimonialsForLocation(location.id);
+const crumbs = pageCrumbs([
+  { label: "Locations", href: "/locations/" },
+  { label: location.name, href: `/locations/${location.slug}/` },
+]);
 ---
 
-<BaseLayout
-  title={`${location.name} training`}
-  description={`${location.summary} Example location page on the Webco Professional demonstration. Not a real training site.`}
-  jsonLd={[breadcrumbJsonLd(crumbs)]}
->
+<BaseLayout title={location.metaTitle} description={location.metaDescription} crumbs={crumbs}>
   <PageHero
-    eyebrow={`${location.region} · Example location`}
+    crumbs={crumbs}
+    eyebrow={location.sample ? `Example location · ${location.region}` : location.region}
     title={location.name}
     lede={location.summary}
-    crumbs={crumbs.map((crumb) => ({
-      label: crumb.name,
-      href: crumb.path,
-    }))}
-  />
-  <div class="block block-follow">
-    <div class="wrap detail-layout">
-      <article class="detail-main">
-        <section class="detail-section" aria-labelledby="about-site">
-          <h2 id="about-site">This site</h2>
-          <p class="measure">{location.context}</p>
-        </section>
-        <section class="detail-section" aria-labelledby="address">
-          <h2 id="address">Address and directions</h2>
-          <div class="place-grid">
-            <div>
+  >
+    <div class="actions">
+      <a class="button" href={enquireHref({ location: location.slug })}>Enquire about {location.name}</a>
+      <a class="button button-quiet" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+    </div>
+    {
+      location.sample ? (
+        <p class="example-caption">Example location. Not a real training site. No street address is published.</p>
+      ) : null
+    }
+  </PageHero>
+
+  <section class="block" aria-labelledby="about-site">
+    <div class="wrap measure">
+      <h2 id="about-site">This base</h2>
+      <p>{location.intro}</p>
+    </div>
+  </section>
+
+  <section class="block band" aria-labelledby="address">
+    <div class="wrap">
+      <h2 id="address">Address and access</h2>
+      <div class="place-grid">
+        <div>
+          {
+            location.addressLines.length > 0 ? (
               <p class="address">
                 {location.addressLines.map((line) => (
                   <>
@@ -64,48 +84,73 @@ const crumbs = [
                   </>
                 ))}
               </p>
-              <p class="example-caption">Example address. Not a real training site.</p>
-              <h3>Getting there</h3>
-              <p class="measure">{location.directions}</p>
-            </div>
-            {
-              location.image?.src ? (
-                <ResponsiveImage image={location.image} sizes="(min-width: 56rem) 32rem, 100vw" />
-              ) : (
-                <MapPlaceholder />
-              )
-            }
-          </div>
-        </section>
-        <section class="detail-section" aria-labelledby="facilities">
-          <h2 id="facilities">Facilities</h2>
-          <ul class="prose-list">
-            {location.facilities.map((item) => <li>{item}</li>)}
-          </ul>
-        </section>
-        <section class="detail-section" aria-labelledby="courses-here">
-          <h2 id="courses-here">Courses at {location.name}</h2>
-          <p class="measure">Only the courses linked to this site. Other courses in the catalogue run elsewhere.</p>
-          <ul class="cards">
-            {offered.map((course) => <CourseCard course={course} locationSlug={location.slug} />)}
-          </ul>
-        </section>
-        <FaqList faqs={location.faqs} />
-      </article>
-      <aside class="detail-aside" aria-labelledby="enquire-heading">
-        <h2 id="enquire-heading">Enquire about {location.name}</h2>
-        <p>The form can be set to this site. The same example phone number is used for every location on this demonstration.</p>
-        <div class="actions">
-          <a class="button" href={enquireHref({ location: location.slug })}>Enquire about this location</a>
-          <a class="button button-quiet" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+            ) : (
+              <p>No street address is published.</p>
+            )
+          }
+          <p class="example-caption">Example location. Not a real training site.</p>
+          <h3>Getting there</h3>
+          <p>{location.access}</p>
+          <h3>Parking</h3>
+          <p>{location.parking}</p>
         </div>
-        <p class="example-caption">{site.phoneDisplay} is an example number.</p>
-      </aside>
+        {
+          location.image?.src ? (
+            <ResponsiveImage image={location.image} sizes="(min-width: 56rem) 32rem, 100vw" />
+          ) : (
+            <MapPlaceholder />
+          )
+        }
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="block" aria-labelledby="courses-here">
+    <div class="wrap">
+      <h2 id="courses-here">Courses at {location.name}</h2>
+      <p class="measure">Only the courses linked to this example base.</p>
+      <ul class="cards">
+        {offered.map((course) => <CourseCard course={course} locationSlug={location.slug} />)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="block band" aria-labelledby="facilities">
+    <div class="wrap">
+      <h2 id="facilities">Facilities and vehicles</h2>
+      <FacilityList
+        facilities={facilitiesFor(location.facilityIds, location.id)}
+        vehicles={vehiclesFor(location.vehicleIds, location.id)}
+      />
+    </div>
+  </section>
+
+  {
+    people.length > 0 ? (
+      <section class="block" aria-labelledby="instructors">
+        <div class="wrap">
+          <h2 id="instructors">Instructors</h2>
+          <p class="section-intro">Example profiles associated with this base. No instructor is named.</p>
+          <ul class="cards">
+            {people.map((person) => <TeamCard person={person} />)}
+          </ul>
+        </div>
+      </section>
+    ) : null
+  }
+
+  <section class="block band" aria-labelledby="local-context">
+    <div class="wrap measure">
+      <h2 id="local-context">Local context</h2>
+      <p>{location.localContext}</p>
+    </div>
+  </section>
+
+  <LearnerProof id="local-proof" title="Learner feedback" intro="Example wording linked to this base." items={proof} />
+  <FaqList id="location-faq" title={`Questions about ${location.name}`} items={faqsForLocation(location.id)} band={true} />
   <CtaBand
     title={`Ask about training at ${location.name}`}
-    lede="Choose a course offered at this site, and how you would like to be contacted."
+    lede="Choose a course offered at this example base, and how you would like to be contacted."
     locationSlug={location.slug}
   />
 </BaseLayout>

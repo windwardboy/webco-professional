@@ -1,6 +1,14 @@
 # 20i Linux hosting serves this static site from the document root.
 ErrorDocument 404 /404.html
 
+# Former /courses/ URLs from the first Professional demo.
+RedirectMatch 301 ^/courses/?$ /training/
+RedirectMatch 301 ^/courses/category-c-e/?$ /category-ce-training/
+RedirectMatch 301 ^/courses/category-c/?$ /category-c-training/
+RedirectMatch 301 ^/courses/driver-cpc/?$ /driver-cpc/
+RedirectMatch 301 ^/courses/adr/?$ /training/adr/
+RedirectMatch 301 ^/courses/c1/?$ /training/
+
 <IfModule mod_headers.c>
   <FilesMatch "\.(css|js|svg|webp|avif|woff2)$">
     Header set Cache-Control "public, max-age=604800"

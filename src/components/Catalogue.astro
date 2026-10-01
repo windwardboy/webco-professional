@@ -1,0 +1,18 @@
+---
+import CourseCard from "./CourseCard.astro";
+import { additionalCourses, coreCourses } from "../lib/catalogue";
+---
+
+<div class="catalogue">
+  <h2 id="core-courses">HGV training</h2>
+  <ul class="cards">
+    {coreCourses().map((course) => <CourseCard course={course} />)}
+  </ul>
+</div>
+<div class="catalogue">
+  <h2 id="further-courses">Further training</h2>
+  <p class="section-intro">ADR and Operator CPC.</p>
+  <ul class="cards">
+    {additionalCourses().map((course) => <CourseCard course={course} />)}
+  </ul>
+</div>

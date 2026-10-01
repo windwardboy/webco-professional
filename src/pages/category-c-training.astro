@@ -1,0 +1,8 @@
+---
+import CoursePage from "../components/CoursePage.astro";
+import { requireCourse } from "../lib/catalogue";
+
+const course = requireCourse("category-c");
+---
+
+<CoursePage course={course} />

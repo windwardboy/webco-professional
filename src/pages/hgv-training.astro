@@ -1,0 +1,119 @@
+---
+import CtaBand from "../components/CtaBand.astro";
+import CourseCard from "../components/CourseCard.astro";
+import FaqList from "../components/FaqList.astro";
+import LearnerProof from "../components/LearnerProof.astro";
+import LocationCard from "../components/LocationCard.astro";
+import PageHero from "../components/PageHero.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import Section from "../components/Section.astro";
+import { licenceStages, trainingJourney } from "../content/process";
+import { site } from "../config/site";
+import { coreCourses, overviewFaqs, publishedLocations, testimonialsForCourse } from "../lib/catalogue";
+import { pageCrumbs } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "HGV training", href: "/hgv-training/" }]);
+const courses = coreCourses();
+const proof = courses.flatMap((course) => testimonialsForCourse(course.id));
+---
+
+<BaseLayout
+  title="HGV training overview"
+  description="Compare Category C, Category C+E and Driver CPC. Example bases at Bristol, Taunton and Exeter. No fees, durations or eligibility decisions are published."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="HGV training"
+    title="HGV training"
+    lede="Category C, Category C+E and Driver CPC. This page compares the routes. It does not confirm eligibility, a price or a course length."
+  >
+    <div class="actions">
+      <a class="button" href="/contact/#enquiry">Enquire now</a>
+      <a class="button button-quiet" href="#which-licence">Which licence?</a>
+    </div>
+    <p class="example-caption">
+      {site.phoneDisplay} is an example number. Bristol, Taunton and Exeter are example bases.
+    </p>
+  </PageHero>
+
+  <Section
+    id="comparison"
+    title="Licence comparison"
+    intro="Three routes. Each has its own page, so this overview stays a comparison."
+    band={true}
+  >
+    <ul class="trust">
+      {
+        courses.map((course) => (
+          <li>
+            <h3>
+              <a href={course.path}>{course.title}</a>
+            </h3>
+            <p>{course.permits[0]}</p>
+            <p>{course.eligibility[0]}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section id="which-licence" title="Which licence is right for me?">
+    <ul class="choices">
+      {
+        courses.map((course) => (
+          <li>
+            <a href={course.path}>
+              <span class="choice-title">{course.title}</span>
+              <span class="choice-text">{course.audience}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <ProcessSteps
+    id="pathway"
+    title="Training pathway"
+    intro="The same sequence, whichever of the three routes you are on."
+    steps={trainingJourney}
+    band={true}
+  />
+
+  <Section id="stages" title="Medical, theory, practical training and the test">
+    <ol class="steps">
+      {licenceStages.map((step) => (
+        <li>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section id="courses" title="Core courses" band={true}>
+    <ul class="cards">
+      {courses.map((course) => <CourseCard course={course} />)}
+    </ul>
+  </Section>
+
+  <Section id="cost" title="Costs" intro="No fee is listed. Ask for a quote for the training you need." narrow={true}>
+    <p>
+      Medicals, theory tests and the practical test are separate costs where they apply. Those figures are not listed
+      on this demonstration.
+    </p>
+    <p><a href="/contact/#enquiry">Ask for a quote</a></p>
+  </Section>
+
+  <Section id="locations" title="Training locations" intro="Example bases. A course appears here only when that base lists it." band={true}>
+    <ul class="cards">
+      {publishedLocations().map((location) => <LocationCard location={location} />)}
+    </ul>
+  </Section>
+
+  <LearnerProof title="Learner feedback" intro="Example wording. Not a real review, and no score is shown." items={proof} />
+  <FaqList title="Questions" items={overviewFaqs()} band={true} />
+  <CtaBand title="Ask which route fits" lede="Say what you want to drive, or say that you are not sure yet." />
+</BaseLayout>

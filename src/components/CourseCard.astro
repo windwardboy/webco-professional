@@ -1,6 +1,6 @@
 ---
 import type { Course } from "../content/courses";
-import { categoryLabel, locationsForCourse } from "../lib/catalogue";
+import { locationsForCourse } from "../lib/catalogue";
 import { enquireHref, joinList } from "../lib/links";
 
 interface Props {
@@ -13,11 +13,9 @@ const placeNames = locationsForCourse(course).map((location) => location.name);
 ---
 
 <li class="card">
-  <p class="card-kicker">{categoryLabel(course.category)}</p>
-  <h3><a href={`/courses/${course.slug}/`}>{course.title}</a></h3>
+  <p class="card-kicker">{course.sample ? `Example course · ${course.kicker}` : course.kicker}</p>
+  <h3><a href={course.path}>{course.title}</a></h3>
   <p>{course.summary}</p>
   <p class="card-meta">Offered at {joinList(placeNames)}</p>
-  <a class="text-link" href={enquireHref({ course: course.slug, location: locationSlug })}>
-    Enquire about this course
-  </a>
+  <a class="text-link" href={enquireHref({ course: course.id, location: locationSlug })}>Enquire about this course</a>
 </li>

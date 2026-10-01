@@ -1,0 +1,9 @@
+---
+import { trustStrip } from "../content/trust";
+---
+
+<section class="trust-strip-wrap" aria-label="In brief">
+  <ul class="trust-strip wrap">
+    {trustStrip.map((label) => <li>{label}</li>)}
+  </ul>
+</section>

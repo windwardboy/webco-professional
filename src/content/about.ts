@@ -4,62 +4,39 @@ export type AboutSection = {
   paragraphs: readonly string[];
 };
 
+export const aboutIntro = {
+  eyebrow: "About",
+  title: "HGV training from three example bases",
+  lede: "Category C, Category C+E and Driver CPC, with ADR and Operator CPC. Bristol, Taunton and Exeter are example locations. No company history is invented here.",
+};
+
 export const aboutSections: readonly AboutSection[] = [
   {
-    id: "history",
-    heading: "Example history",
+    id: "story",
+    heading: "What this training covers",
     paragraphs: [
-      "The wording on this page is an example. It does not describe a real training business.",
-      "On a live Professional site, this is where an established provider says what they do and where they do it. This demonstration does not invent a founding year.",
+      "Rigid lorries, articulated and drawbar work, and periodic Driver CPC, plus example courses for ADR and Operator CPC.",
+      "Each course runs only at the example bases that list it. A town that is merely nearby does not get a page.",
     ],
   },
   {
     id: "philosophy",
-    heading: "Training philosophy",
+    heading: "Training approach",
     paragraphs: [
-      "Explain the licence, the site and the next step before anyone is asked to commit.",
-      "Time in the vehicle, or a clearly described classroom module, matters more than a long list of claims.",
+      "The entitlement, the practical work and the next step are explained before anyone is asked to commit.",
+      "Time in the vehicle, or a clearly described classroom course, matters more than a list of claims.",
+    ],
+  },
+  {
+    id: "experience",
+    heading: "Experience",
+    paragraphs: ["Example wording only. No years of trading, no learner numbers and no pass rate are shown."],
+  },
+  {
+    id: "qualifications",
+    heading: "Qualifications and accreditations",
+    paragraphs: [
+      "None are shown. No approval number, DVSA status or accreditation badge is claimed on this demonstration.",
     ],
   },
 ];
-
-export const instructors = [
-  {
-    id: "rigid-artic",
-    title: "Rigid and articulated",
-    text: "Example instructor role for Category C and Category C+E. Not a real person, and no career history is invented here.",
-  },
-  {
-    id: "lighter",
-    title: "Lighter vehicles",
-    text: "Example instructor role for Category C1. Not a real person.",
-  },
-  {
-    id: "classroom",
-    title: "Classroom modules",
-    text: "Example instructor role for periodic Driver CPC. Not a real person, and no approval number is shown.",
-  },
-] as const;
-
-export const fleet = [
-  {
-    id: "rigid",
-    title: "Rigid goods vehicles",
-    text: "Described for Category C. No fleet size is stated.",
-  },
-  {
-    id: "artic",
-    title: "Articulated combinations",
-    text: "Described for Category C+E, at the sites that list that course.",
-  },
-  {
-    id: "c1",
-    title: "Lighter vehicles",
-    text: "Described for Category C1, between 3.5 and 7.5 tonnes.",
-  },
-  {
-    id: "classroom",
-    title: "Classroom space",
-    text: "Described only at sites that list Driver CPC or ADR.",
-  },
-] as const;

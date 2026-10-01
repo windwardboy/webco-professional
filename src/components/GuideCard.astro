@@ -1,0 +1,15 @@
+---
+import type { Guide } from "../content/guides";
+
+interface Props {
+  guide: Guide;
+}
+
+const { guide } = Astro.props;
+---
+
+<li class="card">
+  <p class="card-kicker">Guide</p>
+  <h3><a href={guide.path}>{guide.title}</a></h3>
+  <p>{guide.intro}</p>
+</li>

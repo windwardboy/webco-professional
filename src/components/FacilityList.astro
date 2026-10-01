@@ -1,0 +1,29 @@
+---
+import type { Facility } from "../content/facilities";
+import type { Vehicle } from "../content/vehicles";
+
+interface Props {
+  facilities?: readonly Facility[];
+  vehicles?: readonly Vehicle[];
+}
+
+const { facilities = [], vehicles = [] } = Astro.props;
+const items = [
+  ...vehicles.map((item) => ({ ...item, kind: "Example vehicle" })),
+  ...facilities.map((item) => ({ ...item, kind: "Example facility" })),
+];
+---
+
+{
+  items.length > 0 ? (
+    <ul class="trust">
+      {items.map((item) => (
+        <li>
+          <p class="card-kicker">{item.supplied ? item.kind.replace("Example ", "") : item.kind}</p>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </li>
+      ))}
+    </ul>
+  ) : null
+}

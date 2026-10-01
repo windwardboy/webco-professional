@@ -1,32 +1,40 @@
 ---
 import EnquiryForm from "../components/EnquiryForm.astro";
+import MapPlaceholder from "../components/MapPlaceholder.astro";
 import PageHero from "../components/PageHero.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import { publishedLocations } from "../content/locations";
+import { afterEnquiry } from "../content/process";
 import { site } from "../config/site";
-import { breadcrumbJsonLd } from "../lib/links";
+import { hasMultipleLocations } from "../lib/catalogue";
+import { httpsUrl, pageCrumbs } from "../lib/links";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const crumbs = [
-  { name: "Home", path: "/" },
-  { name: "Contact", path: "/contact/" },
-];
+const crumbs = pageCrumbs([{ label: "Contact", href: "/contact/" }]);
+const mapUrl = httpsUrl(site.mapEmbedUrl);
 ---
 
 <BaseLayout
   title="Contact"
-  description="Example phone, email and an enquiry form that asks for a course, a preferred location and a contact method. Messages are not sent."
-  jsonLd={[breadcrumbJsonLd(crumbs)]}
+  description="Enquire about HGV training. Example phone, email and bases at Bristol, Taunton and Exeter. The form does not send a message on this demonstration."
+  crumbs={crumbs}
 >
   <PageHero
-    eyebrow="Example contact"
+    crumbs={crumbs}
+    eyebrow="Contact"
     title="Contact"
-    lede="A course, a preferred location and how you would like to be contacted. The details on this page are placeholders, and the form does not send a message."
-    crumbs={crumbs.map((crumb) => ({ label: crumb.name, href: crumb.path }))}
+    lede="Tell us the course, the example base you prefer, and how you would like to be contacted. The details on this page are examples."
   />
   <div class="block block-follow">
     <div class="wrap contact-layout">
-      <address class="contact-card">
-        <h2>Example contact details</h2>
-        <p>One example number for every sample site. A provider with separate site numbers would list them on each location page.</p>
+      <div>
+        <h2 id="enquiry">Enquiry</h2>
+        <div class="enquiry-offset">
+          <EnquiryForm />
+        </div>
+      </div>
+      <div class="contact-card">
+        <h2>Phone and email</h2>
         <ul class="contact-list">
           <li>
             <a href={site.phoneHref}>{site.phoneDisplay}</a>
@@ -39,21 +47,64 @@ const crumbs = [
           {
             site.showWhatsApp ? (
               <li>
-                <a href={site.whatsappHref} rel="noopener noreferrer">
-                  WhatsApp {site.whatsappDisplay}
-                </a>
+                <a href={site.whatsappHref} rel="noopener noreferrer">WhatsApp {site.whatsappDisplay}</a>
                 <span class="example-tag">Example number</span>
               </li>
             ) : null
           }
         </ul>
-      </address>
-      <section aria-labelledby="enquiry">
-        <h2 id="enquiry">Enquiry form</h2>
-        <div class="enquiry-offset">
-          <EnquiryForm />
-        </div>
-      </section>
+        <h2>Example bases</h2>
+        <p>No street address is published.</p>
+        <ul class="contact-list">
+          {
+            publishedLocations().map((location) => (
+              <li>
+                <a href={`/locations/${location.slug}/`}>{location.name}</a>
+                <span class="example-tag">Example location</span>
+              </li>
+            ))
+          }
+        </ul>
+        <h2>Hours</h2>
+        <ul class="contact-list">
+          {
+            site.hours.map((row) => (
+              <li>
+                {row.label}
+                <span class="example-tag">{row.value}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="example-caption">{site.hoursNote}</p>
+      </div>
     </div>
   </div>
+  <section class="block band" aria-labelledby="map-heading">
+    <div class="wrap">
+      <h2 id="map-heading">Map</h2>
+      {
+        mapUrl ? (
+          <iframe class="map-frame" title="Training location map" src={mapUrl} loading="lazy" referrerpolicy="no-referrer"></iframe>
+        ) : (
+          <MapPlaceholder />
+        )
+      }
+    </div>
+  </section>
+  <section class="block" aria-labelledby="areas">
+    <div class="wrap measure">
+      <h2 id="areas">Areas served</h2>
+      <p>{site.areasNote}</p>
+      <ul class="prose-list">
+        {site.areasServed.map((area) => <li>{area} — example base</li>)}
+      </ul>
+      {
+        hasMultipleLocations() ? null : (
+          <p>Training is arranged from one base.</p>
+        )
+      }
+    </div>
+  </section>
+  <ProcessSteps id="next" title="What happens next" steps={afterEnquiry} band={true} />
 </BaseLayout>

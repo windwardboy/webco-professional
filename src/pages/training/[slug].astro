@@ -1,0 +1,20 @@
+---
+import CoursePage from "../../components/CoursePage.astro";
+import type { Course } from "../../content/courses";
+import { additionalCourses } from "../../lib/catalogue";
+
+export function getStaticPaths() {
+  return additionalCourses().map((course) => ({
+    params: { slug: course.slug },
+    props: { course },
+  }));
+}
+
+interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+---
+
+<CoursePage course={course} />

@@ -3,10 +3,10 @@ interface Props {
   label?: string;
 }
 
-const { label = "Map placeholder. No real training site is shown." } = Astro.props;
+const { label = "Example location. No address and no map pin are shown." } = Astro.props;
 ---
 
 <div class="map-placeholder" role="img" aria-label={label}>
-  <p class="map-placeholder-title">Map placeholder</p>
-  <p>A live site would show this training location. This demonstration does not.</p>
+  <p class="map-placeholder-title">No map</p>
+  <p>Example location. No address and no map pin are shown.</p>
 </div>

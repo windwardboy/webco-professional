@@ -2,24 +2,31 @@
 import type { Faq } from "../content/types";
 
 interface Props {
-  faqs: readonly Faq[];
-  heading?: string;
-  headingId?: string;
+  id?: string;
+  title?: string;
+  intro?: string;
+  items: readonly Faq[];
+  band?: boolean;
 }
 
-const { faqs, heading = "Questions", headingId = "questions" } = Astro.props;
+const { id = "faq", title = "Questions", intro, items, band = false } = Astro.props;
 ---
 
 {
-  faqs.length > 0 ? (
-    <section class="faq" aria-labelledby={headingId}>
-      <h2 id={headingId}>{heading}</h2>
-      {faqs.map((faq) => (
-        <details>
-          <summary>{faq.question}</summary>
-          <p>{faq.answer}</p>
-        </details>
-      ))}
+  items.length > 0 ? (
+    <section class:list={["block", "faq", band && "band"]} aria-labelledby={id}>
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id={id}>{title}</h2>
+          {intro ? <p class="section-intro">{intro}</p> : null}
+        </div>
+        {items.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
     </section>
   ) : null
 }

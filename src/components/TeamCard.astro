@@ -1,0 +1,40 @@
+---
+import type { TeamMember } from "../content/team";
+import { locationById, publishedCourses } from "../lib/catalogue";
+import { joinList } from "../lib/links";
+import ResponsiveImage from "./ResponsiveImage.astro";
+
+interface Props {
+  person: TeamMember;
+}
+
+const { person } = Astro.props;
+const example = !person.published || person.name.length === 0;
+const linkedCourses = publishedCourses().filter((course) => person.courseIds.includes(course.id));
+const placeNames = person.locationIds.flatMap((id) => {
+  const location = locationById(id);
+  return location?.published ? [location.name] : [];
+});
+---
+
+<li class="card team-card">
+  {
+    person.photo?.src ? (
+      <ResponsiveImage image={person.photo} sizes="(min-width: 40rem) 16rem, 100vw" />
+    ) : (
+      <div class="portrait-slot" role="img" aria-label="Example. No photograph.">
+        <p>No photograph</p>
+      </div>
+    )
+  }
+  <p class="card-kicker">{example ? "Example profile" : person.role}</p>
+  <h3>{example ? person.role : person.name}</h3>
+  <p>{person.background}</p>
+  {person.qualifications.length > 0 ? (
+    <ul class="prose-list">
+      {person.qualifications.map((item) => <li>{item}</li>)}
+    </ul>
+  ) : null}
+  {linkedCourses.length > 0 ? <p class="card-meta">{joinList(linkedCourses.map((course) => course.shortTitle))}</p> : null}
+  {placeNames.length > 0 ? <p class="card-meta">{joinList(placeNames)}</p> : null}
+</li>

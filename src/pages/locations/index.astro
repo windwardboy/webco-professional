@@ -1,28 +1,35 @@
 ---
+import CtaBand from "../../components/CtaBand.astro";
 import LocationCard from "../../components/LocationCard.astro";
 import PageHero from "../../components/PageHero.astro";
-import { locations } from "../../content/locations";
+import { publishedLocations } from "../../lib/catalogue";
+import { pageCrumbs } from "../../lib/links";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "Locations", href: "/locations/" }]);
+const places = publishedLocations();
 ---
 
 <BaseLayout
   title="Training locations"
-  description="Example training locations at Bristol, Taunton and Exeter. Each site lists only the sample courses offered there."
+  description="Example training bases at Bristol, Taunton and Exeter. Each page lists only the courses offered there. No street address is published."
+  crumbs={crumbs}
 >
   <PageHero
-    eyebrow="Example sites"
+    crumbs={crumbs}
+    eyebrow="Example locations"
     title="Training locations"
-    lede="One page for each training site. The course list on the card is the list on the page — nothing is added to catch a nearby town."
-    crumbs={[
-      { label: "Home", href: "/" },
-      { label: "Locations" },
-    ]}
+    lede="Three example bases. The courses on the card are the courses on the page. Nearby towns do not have their own pages, and no street address is published."
   />
   <div class="block block-follow">
     <div class="wrap">
       <ul class="cards">
-        {locations.map((location) => <LocationCard location={location} />)}
+        {places.map((location) => <LocationCard location={location} />)}
       </ul>
     </div>
   </div>
+  <CtaBand
+    title="Ask about a base"
+    lede={places.length > 1 ? "Choose the example base you prefer, and the course you want." : "Ask about training at this base."}
+  />
 </BaseLayout>

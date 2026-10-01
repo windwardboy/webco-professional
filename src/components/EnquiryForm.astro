@@ -1,11 +1,18 @@
 ---
-import { courseGroups, courses } from "../content/courses";
-import { locations } from "../content/locations";
+import { courseGroups } from "../content/courses";
+import { publishedLocations } from "../content/locations";
 import { site } from "../config/site";
+import { additionalCourses, coreCourses, hasMultipleLocations } from "../lib/catalogue";
 import { enquiryAction } from "../lib/links";
 
 const action = enquiryAction(site.enquiryEndpoint);
 const demo = action === null;
+const multipleLocations = hasMultipleLocations();
+const groups = [
+  { ...courseGroups[0], courses: coreCourses() },
+  { ...courseGroups[1], courses: additionalCourses() },
+];
+const onlyLocation = publishedLocations()[0];
 ---
 
 <form
@@ -33,31 +40,39 @@ const demo = action === null;
   </div>
   <div class="field-row">
     <div class="field">
-      <label for="enquiry-course">Course <span class="req">Required</span></label>
+      <label for="enquiry-course">Course interest <span class="req">Required</span></label>
       <select id="enquiry-course" name="course" required>
         <option value="" selected disabled>Choose a course</option>
         {
-          courseGroups.map((group) => (
-            <optgroup label={group.label}>
-              {courses
-                .filter((course) => course.category === group.id)
-                .map((course) => (
-                  <option value={course.slug}>{course.title}</option>
+          groups.map((group) =>
+            group.courses.length > 0 ? (
+              <optgroup label={group.label}>
+                {group.courses.map((course) => (
+                  <option value={course.id}>{course.title}</option>
                 ))}
-            </optgroup>
-          ))
+              </optgroup>
+            ) : null,
+          )
         }
         <option value="not-sure">Not sure yet</option>
       </select>
     </div>
-    <div class="field">
-      <label for="enquiry-location">Preferred location <span class="req">Required</span></label>
-      <select id="enquiry-location" name="location" required>
-        <option value="" selected disabled>Choose a location</option>
-        {locations.map((location) => <option value={location.slug}>{location.name}</option>)}
-        <option value="no-preference">No preference yet</option>
-      </select>
-    </div>
+    {
+      multipleLocations ? (
+        <div class="field">
+          <label for="enquiry-location">Preferred location <span class="req">Required</span></label>
+          <select id="enquiry-location" name="location" required>
+            <option value="" selected disabled>Choose a location</option>
+            {publishedLocations().map((location) => (
+              <option value={location.slug}>{location.name}</option>
+            ))}
+            <option value="no-preference">No preference yet</option>
+          </select>
+        </div>
+      ) : onlyLocation ? (
+        <input type="hidden" name="location" value={onlyLocation.slug} />
+      ) : null
+    }
   </div>
   <fieldset class="contact-method">
     <legend>Preferred contact method <span class="req">Required</span></legend>

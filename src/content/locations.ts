@@ -1,108 +1,96 @@
-import type { ContentImage, Faq } from "./types";
+import type { ContentImage } from "./types";
 
 export type TrainingLocation = {
+  id: string;
   slug: string;
   name: string;
-  town: string;
   region: string;
+  /** Example bases stay labelled. A cloned client site sets this false for a real base. */
+  sample: boolean;
+  published: boolean;
+  metaTitle: string;
+  metaDescription: string;
   summary: string;
-  context: string;
+  intro: string;
+  /** Leave empty unless a real street address is supplied. Do not invent one. */
   addressLines: readonly string[];
-  directions: string;
-  facilities: readonly string[];
-  faqs: readonly Faq[];
+  access: string;
+  parking: string;
+  localContext: string;
+  facilityIds: readonly string[];
+  vehicleIds: readonly string[];
+  instructorIds: readonly string[];
   image?: ContentImage;
 };
 
 /**
- * Sample training locations for the demonstration.
- *
- * To add a location, add an object here, then list its slug on the courses
- * that are actually offered there. The location page is generated from this
- * list. Publish a page only for a genuine training site.
+ * Example bases for the demonstration.
+ * Publish a page only for a genuine training location. Do not add a town
+ * because it is nearby.
  */
 export const locations: readonly TrainingLocation[] = [
   {
+    id: "bristol",
     slug: "bristol",
     name: "Bristol",
-    town: "Bristol",
     region: "Bristol",
-    summary: "The widest sample course list, including articulated training and ADR.",
-    context:
-      "Set out as the main example site. Articulated vehicles, rigid vehicles and classroom modules are described here because those courses are linked to Bristol.",
-    addressLines: ["Example Yard", "Sample Road", "Bristol"],
-    directions:
-      "Treated as a yard with room for articulated vehicles on the edge of the city. A live site would give real approach directions. None are published here.",
-    facilities: [
-      "Yard space marked for articulated combinations",
-      "Space for rigid vehicles",
-      "A classroom for periodic and specialist modules",
-      "Car parking",
-    ],
-    faqs: [
-      {
-        question: "Which courses are listed here?",
-        answer: "Category C+E, Category C, Driver CPC and ADR.",
-      },
-      {
-        question: "How do I get directions?",
-        answer: "The address is an example. Directions would be sent when a visit is confirmed.",
-      },
-    ],
+    sample: true,
+    published: true,
+    metaTitle: "Bristol HGV training",
+    metaDescription:
+      "Example Bristol training base. Category C, Category C+E, Driver CPC, ADR and Operator CPC. No street address is published.",
+    summary: "The widest course list: rigid, articulated, Driver CPC, ADR and Operator CPC.",
+    intro: "Example base. Practical licence training and the classroom courses are both listed here.",
+    addressLines: [],
+    access: "Example location. No approach directions are published.",
+    parking: "Example location. Parking is not described, because this is not a real yard.",
+    localContext: "Example base for the Bristol area. No test centre and no local route is named.",
+    facilityIds: ["yard", "classroom", "parking"],
+    vehicleIds: ["rigid", "artic"],
+    instructorIds: ["driving", "classroom"],
   },
   {
+    id: "taunton",
     slug: "taunton",
     name: "Taunton",
-    town: "Taunton",
     region: "Somerset",
-    summary: "Rigid, C1 and periodic Driver CPC. Articulated training is not listed here.",
-    context:
-      "Set out as a Somerset site for rigid vehicles, C1 and classroom modules. The course list is shorter than Bristol on purpose.",
-    addressLines: ["Example Depot", "Sample Lane", "Taunton"],
-    directions:
-      "Treated as a smaller yard for rigid and 7.5 tonne vehicles. Approach details would be sent after an enquiry. This is not a real address.",
-    facilities: [
-      "A smaller yard for rigid and 7.5 tonne vehicles",
-      "Classroom space for Driver CPC",
-      "Car parking",
-    ],
-    faqs: [
-      {
-        question: "Which courses are listed here?",
-        answer: "Category C, Category C1 and Driver CPC. Articulated training and ADR are not listed at Taunton.",
-      },
-      {
-        question: "How do I get directions?",
-        answer: "The address is an example. Directions would be sent when a visit is confirmed.",
-      },
-    ],
+    sample: true,
+    published: true,
+    metaTitle: "Taunton HGV training",
+    metaDescription:
+      "Example Taunton training base. Category C, Driver CPC and Operator CPC. Articulated training is not listed here. No street address is published.",
+    summary: "Category C, Driver CPC and Operator CPC. Articulated training is not listed here.",
+    intro: "Example base. The course list is shorter than Bristol on purpose: rigid training and classroom courses, not C+E.",
+    addressLines: [],
+    access: "Example location. No approach directions are published.",
+    parking: "Example location. Parking is not described, because this is not a real yard.",
+    localContext: "Example base for the Taunton area. No test centre and no local route is named.",
+    facilityIds: ["yard", "classroom", "parking"],
+    vehicleIds: ["rigid"],
+    instructorIds: ["driving", "classroom"],
   },
   {
+    id: "exeter",
     slug: "exeter",
     name: "Exeter",
-    town: "Exeter",
     region: "Devon",
-    summary: "Licence training for articulated, rigid and 7.5 tonne vehicles.",
-    context:
-      "Set out as a Devon site for practical licence training, including articulated vehicles. Classroom courses are not linked to Exeter.",
-    addressLines: ["Example Yard", "Sample Way", "Exeter"],
-    directions:
-      "Treated as a yard that can take an articulated combination as well as lighter vehicles. No real approach route is published.",
-    facilities: [
-      "Yard space for an articulated combination",
-      "A separate area for lighter vehicles",
-      "Car parking",
-      "No classroom listed — periodic modules are not offered here",
-    ],
-    faqs: [
-      {
-        question: "Which courses are listed here?",
-        answer: "Category C+E, Category C and Category C1. Driver CPC and ADR are not listed at Exeter.",
-      },
-      {
-        question: "How do I get directions?",
-        answer: "The address is an example. Directions would be sent when a visit is confirmed.",
-      },
-    ],
+    sample: true,
+    published: true,
+    metaTitle: "Exeter HGV training",
+    metaDescription:
+      "Example Exeter training base. Category C and Category C+E. Classroom courses are not listed here. No street address is published.",
+    summary: "Category C and Category C+E. Driver CPC, ADR and Operator CPC are not listed here.",
+    intro: "Example base for practical licence training, including articulated vehicles. Classroom courses are listed at Bristol and Taunton.",
+    addressLines: [],
+    access: "Example location. No approach directions are published.",
+    parking: "Example location. Parking is not described, because this is not a real yard.",
+    localContext: "Example base for the Exeter area. No test centre and no local route is named.",
+    facilityIds: ["yard", "parking"],
+    vehicleIds: ["rigid", "artic"],
+    instructorIds: ["driving"],
   },
 ];
+
+export function publishedLocations(): TrainingLocation[] {
+  return locations.filter((location) => location.published);
+}

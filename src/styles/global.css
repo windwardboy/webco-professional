@@ -300,6 +300,12 @@ a:hover {
   font-weight: 650;
 }
 
+.submenu {
+  margin: 0 0 0.2rem;
+  padding: 0 0 0 0.65rem;
+  list-style: none;
+}
+
 .nav .button {
   margin-top: 0.35rem;
   width: 100%;
@@ -327,14 +333,62 @@ a:hover {
 
   .nav-desktop .nav {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-end;
     gap: 0.1rem;
   }
 
-  .nav-desktop .nav a[aria-current="page"] {
+  .nav-desktop .nav > li > a[aria-current="page"],
+  .nav-desktop .nav > li > a.is-section {
     background: transparent;
     box-shadow: inset 0 -2px 0 var(--navy);
     border-radius: 0;
+  }
+
+  .nav-desktop .submenu a[aria-current="page"],
+  .nav-desktop .submenu a.is-section {
+    background: var(--soft);
+    box-shadow: none;
+    border-radius: 6px;
+  }
+
+  .nav-desktop .nav-sub {
+    position: relative;
+  }
+
+  .nav-desktop .nav-sub::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 0.45rem;
+  }
+
+  .nav-desktop .submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 30;
+    min-width: 16.5rem;
+    margin: 0;
+    padding: 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .nav-desktop .nav-sub:hover .submenu,
+  .nav-desktop .nav-sub:focus-within .submenu {
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .nav-desktop .submenu a {
+    white-space: nowrap;
   }
 
   .nav-desktop .nav .button {
@@ -1370,4 +1424,183 @@ textarea:user-invalid {
 
 .footer-nav li + li {
   margin-top: 0.1rem;
+}
+
+.trust-strip-wrap {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.trust-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin: 0;
+  padding-block: 0.85rem;
+  list-style: none;
+  color: var(--navy);
+  font-size: var(--text-sm);
+  font-weight: 650;
+}
+
+.choices {
+  display: grid;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .choices {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.choices a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  height: 100%;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+.choices a:hover {
+  border-color: var(--navy);
+}
+
+.choice-title {
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.choice-text {
+  color: var(--muted);
+}
+
+.steps {
+  display: grid;
+  gap: 0;
+  margin: var(--space-lg) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+@media (min-width: 52rem) {
+  .steps {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+}
+
+.steps li {
+  position: relative;
+  padding: 1rem 0 1rem 2.75rem;
+  border-top: 1px solid var(--line);
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.section-more {
+  margin-top: var(--space-md);
+  font-weight: 650;
+}
+
+.portrait-slot {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--soft);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.portrait-slot p {
+  margin: 0;
+}
+
+.guide-layout {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 64rem) {
+  .guide-layout {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 7.5rem;
+  }
+}
+
+.toc-label {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toc a {
+  display: flex;
+  align-items: center;
+  min-height: 2.4rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+.guide-section + .guide-section {
+  margin-top: var(--space-xl);
+}
+
+.guide-body {
+  max-width: 42rem;
+}
+
+.quotes .story {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+}
+
+.map-frame {
+  display: block;
+  width: 100%;
+  min-height: 18rem;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--soft);
+}
+
+.about-section + .about-section {
+  margin-top: var(--space-xl);
 }

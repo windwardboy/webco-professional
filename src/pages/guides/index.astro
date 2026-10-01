@@ -1,0 +1,29 @@
+---
+import GuideCard from "../../components/GuideCard.astro";
+import PageHero from "../../components/PageHero.astro";
+import { guides } from "../../content/guides";
+import { pageCrumbs } from "../../lib/links";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "Guides", href: "/guides/" }]);
+---
+
+<BaseLayout
+  title="Guides"
+  description="Guides to HGV licences, the medical, Driver CPC and the driving test, with links to the relevant training pages."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Guides"
+    title="Guides"
+    lede="Plain explanations of the licence, the medical, Driver CPC and the practical test. Each one links to the course it relates to."
+  />
+  <div class="block block-follow">
+    <div class="wrap">
+      <ul class="cards">
+        {guides.map((guide) => <GuideCard guide={guide} />)}
+      </ul>
+    </div>
+  </div>
+</BaseLayout>

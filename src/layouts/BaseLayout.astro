@@ -3,17 +3,17 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { site } from "../config/site";
 import "../lib/catalogue";
-import { analyticsMeasurementId, canonicalUrl, jsonLd } from "../lib/links";
+import { analyticsMeasurementId, canonicalUrl, jsonLd, type Crumb } from "../lib/links";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description: string;
   noindex?: boolean;
-  jsonLd?: unknown[];
+  crumbs?: readonly Crumb[];
 }
 
-const { title, description, noindex = false, jsonLd: extraJsonLd = [] } = Astro.props;
+const { title, description, noindex = false, crumbs = [] } = Astro.props;
 const pageTitle = title === site.name ? site.name : `${title} — ${site.name}`;
 const canonical = canonicalUrl(Astro.url.pathname);
 const analyticsId = analyticsMeasurementId(site.analyticsId);
@@ -24,7 +24,19 @@ const website = {
   url: site.url,
   description: site.description,
 };
-const structuredData = [website, ...extraJsonLd];
+const breadcrumb =
+  crumbs.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: crumbs.map((crumb, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: crumb.label,
+          item: canonicalUrl(crumb.href),
+        })),
+      }
+    : null;
 ---
 
 <!doctype html>
@@ -49,11 +61,8 @@ const structuredData = [website, ...extraJsonLd];
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:locale" content="en_GB" />
-    {
-      structuredData.map((entry) => (
-        <script type="application/ld+json" set:html={jsonLd(entry)} />
-      ))
-    }
+    <script type="application/ld+json" set:html={jsonLd(website)} />
+    {breadcrumb ? <script type="application/ld+json" set:html={jsonLd(breadcrumb)} /> : null}
     {
       analyticsId ? (
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`} />
