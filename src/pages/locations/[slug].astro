@@ -60,6 +60,21 @@ const crumbs = pageCrumbs([
         <p class="example-caption">Example location. Not a real training site. No street address is published.</p>
       ) : null
     }
+    <aside class="glance" slot="aside" aria-label={`Courses at ${location.name}`}>
+      <h2>Courses here</h2>
+      <ul class="glance-board">
+        {
+          offered.map((course) => (
+            <li>
+              <a href={course.path}>
+                <span class="glance-title">{course.shortTitle}</span>
+                <span class="glance-region">{course.kicker}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
   </PageHero>
 
   <section class="block" aria-labelledby="about-site">

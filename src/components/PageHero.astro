@@ -10,14 +10,26 @@ interface Props {
 }
 
 const { title, lede, eyebrow, crumbs } = Astro.props;
+const hasAside = Astro.slots.has("aside");
 ---
 
-<header class="page-hero">
+<header class:list={["page-hero", hasAside && "has-aside"]}>
   <div class="wrap">
     {crumbs && crumbs.length > 0 ? <Breadcrumbs crumbs={crumbs} /> : null}
-    {eyebrow ? <p class="eyebrow">{eyebrow}</p> : null}
-    <h1>{title}</h1>
-    <p class="lede">{lede}</p>
-    <slot />
+    <div class="page-hero-grid">
+      <div class="page-hero-main">
+        {eyebrow ? <p class="eyebrow">{eyebrow}</p> : null}
+        <h1>{title}</h1>
+        <p class="lede">{lede}</p>
+        <slot />
+      </div>
+      {
+        hasAside ? (
+          <div class="page-hero-aside">
+            <slot name="aside" />
+          </div>
+        ) : null
+      }
+    </div>
   </div>
 </header>

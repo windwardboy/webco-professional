@@ -61,7 +61,21 @@ export type NavItem = {
 };
 
 const locationNav: readonly NavItem[] =
-  publishedLocations().length > 1 ? [{ href: "/locations/", label: "Locations" }] : [];
+  publishedLocations().length > 1
+    ? [
+        {
+          href: "/locations/",
+          label: "Locations",
+          children: [
+            ...publishedLocations().map((location) => ({
+              href: `/locations/${location.slug}/`,
+              label: location.name,
+            })),
+            { href: "/locations/", label: "All locations" },
+          ],
+        },
+      ]
+    : [];
 
 export const nav: readonly NavItem[] = [
   { href: "/hgv-training/", label: "Training", children: trainingNav },

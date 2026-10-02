@@ -7,21 +7,29 @@ const remainder = rest.join(" ");
 ---
 
 <a class="skip" href="#content">Skip to content</a>
-<div class="top-stack">
-  <div class="demo-bar">
-    <p class="wrap">
+<div class="utility-bar">
+  <div class="wrap utility-inner">
+    <p class="utility-note">
       Demonstration website by{" "}
       {site.webcoMediaUrl ? <a href={site.webcoMediaUrl}>Webco Media</a> : "Webco Media"}. Sample content only.
     </p>
+    <ul class="utility-links">
+      <li><a href={site.phoneHref}>Call {site.phoneDisplay}</a></li>
+      <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+    </ul>
   </div>
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="logo" href="/">
-        <img src="/favicon.svg" width="32" height="32" alt="" />
-        <span class="logo-word">
-          <span class="logo-strong">{lead}</span>{remainder ? ` ${remainder}` : ""}
-        </span>
-      </a>
+</div>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="/" aria-label={site.name}>
+      <img src="/favicon.svg" width="40" height="40" alt="" />
+      <span class="logo-word">
+        <span class="logo-strong">{lead}</span>
+        {remainder ? <span class="logo-sub">{remainder}</span> : null}
+      </span>
+    </a>
+    <div class="header-actions">
+      <a class="header-call" href={site.phoneHref}>Call</a>
       <details class="nav-mobile">
         <summary class="nav-summary">Menu</summary>
         <div class="nav-panel">
@@ -30,9 +38,9 @@ const remainder = rest.join(" ");
           </nav>
         </div>
       </details>
-      <nav class="nav-desktop" aria-label="Primary">
-        <NavLinks />
-      </nav>
     </div>
-  </header>
-</div>
+    <nav class="nav-desktop" aria-label="Primary">
+      <NavLinks />
+    </nav>
+  </div>
+</header>

@@ -48,6 +48,18 @@ const crumbs = pageCrumbs([
     : { label: "Training", href: "/training/" },
   { label: course.navLabel, href: course.path },
 ]);
+const jumpLinks = [
+  { id: "explanation", label: "Overview" },
+  { id: "who", label: "Who it is for" },
+  { id: "permits", label: "What it covers" },
+  { id: "eligibility", label: "Eligibility" },
+  { id: "includes", label: "Training" },
+  { id: "process", label: "How it works" },
+  { id: "cost", label: "Duration and cost" },
+  { id: "locations", label: "Locations" },
+  ...(people.length > 0 ? [{ id: "instructors", label: "Instructors" }] : []),
+  ...(courseFaqs.length > 0 ? [{ id: "course-faq", label: "Questions" }] : []),
+];
 ---
 
 <BaseLayout title={course.metaTitle} description={course.metaDescription} crumbs={crumbs}>
@@ -66,7 +78,28 @@ const crumbs = pageCrumbs([
         <p class="example-caption">Example course on this demonstration. It is not a booking for a real centre.</p>
       ) : null
     }
+    <aside class="glance" slot="aside" aria-label="Where this course runs">
+      <h2>Offered at</h2>
+      <ul class="glance-board">
+        {
+          places.map((location) => (
+            <li>
+              <a href={`/locations/${location.slug}/`}>
+                <span class="glance-title">{location.name}</span>
+                <span class="glance-region">{location.region}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
   </PageHero>
+
+  <nav class="subnav" aria-label="On this page">
+    <ul class="wrap subnav-list">
+      {jumpLinks.map((link) => <li><a href={`#${link.id}`}>{link.label}</a></li>)}
+    </ul>
+  </nav>
 
   <Section id="explanation" title="In plain English" narrow={true}>
     <p>{course.explanation}</p>
@@ -108,7 +141,7 @@ const crumbs = pageCrumbs([
     </ul>
   </Section>
 
-  <Section id="why" title="Why train here" band={true}>
+  <Section id="why" title="Why train here" dark={true}>
     <ul class="trust">
       {
         trustPoints.map((point) => (

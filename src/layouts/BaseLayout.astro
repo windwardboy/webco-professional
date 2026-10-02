@@ -4,6 +4,9 @@ import Header from "../components/Header.astro";
 import { site } from "../config/site";
 import "../lib/catalogue";
 import { analyticsMeasurementId, canonicalUrl, jsonLd, type Crumb } from "../lib/links";
+import "@fontsource-variable/public-sans/wght.css";
+import "@fontsource-variable/source-serif-4/wght.css";
+import "@fontsource-variable/source-serif-4/wght-italic.css";
 import "../styles/global.css";
 
 interface Props {
@@ -48,7 +51,7 @@ const breadcrumb =
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#17344d" />
+    <meta name="theme-color" content="#0f2f28" />
     {noindex && <meta name="robots" content="noindex" />}
     {
       site.googleSiteVerification ? (

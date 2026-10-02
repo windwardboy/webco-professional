@@ -5,17 +5,22 @@ interface Props {
   intro?: string;
   band?: boolean;
   narrow?: boolean;
+  dark?: boolean;
 }
 
-const { id, title, intro, band = false, narrow = false } = Astro.props;
+const { id, title, intro, band = false, narrow = false, dark = false } = Astro.props;
+const hasBody = Astro.slots.has("default");
+// A narrow section with no body shows its intro as the body, beside the heading.
+const introAsBody = narrow && !hasBody && Boolean(intro);
 ---
 
-<section class:list={["block", band && "band"]} aria-labelledby={id}>
+<section class:list={["block", band && "band", dark && "block-dark"]} aria-labelledby={id}>
   <div class:list={["wrap", narrow && "measure"]}>
     <div class="section-head">
       <h2 id={id}>{title}</h2>
-      {intro ? <p class="section-intro">{intro}</p> : null}
+      {intro && !introAsBody ? <p class="section-intro">{intro}</p> : null}
     </div>
+    {introAsBody ? <p class="section-intro section-body-text">{intro}</p> : null}
     <slot />
   </div>
 </section>

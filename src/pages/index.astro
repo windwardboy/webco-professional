@@ -94,7 +94,7 @@ const image = site.heroImage;
     <p class="section-more"><a href="/training/">View all training</a></p>
   </Section>
 
-  <Section id="why" title={homepage.whyTitle} intro={homepage.whyIntro}>
+  <Section id="why" title={homepage.whyTitle} intro={homepage.whyIntro} dark={true}>
     <ul class="trust">
       {
         trustPoints.map((point) => (
@@ -107,18 +107,18 @@ const image = site.heroImage;
     </ul>
   </Section>
 
-  <ProcessSteps id="how" title={homepage.howTitle} intro={homepage.howIntro} steps={trainingJourney} band={true} />
+  <ProcessSteps id="how" title={homepage.howTitle} intro={homepage.howIntro} steps={trainingJourney} />
 
-  <Section id="locations" title={homepage.locationsTitle} intro={homepage.locationsIntro}>
+  <Section id="locations" title={homepage.locationsTitle} intro={homepage.locationsIntro} band={true}>
     <ul class="cards">
       {publishedLocations().map((location) => <LocationCard location={location} />)}
     </ul>
   </Section>
 
-  <LearnerProof title={homepage.proofTitle} intro={homepage.proofIntro} items={testimonials} band={true} />
+  <LearnerProof title={homepage.proofTitle} intro={homepage.proofIntro} items={testimonials} />
   <p class="wrap section-more"><a href="/reviews/">Read the reviews page</a></p>
 
-  <Section id="operations" title={homepage.operationsTitle} intro={homepage.operationsIntro}>
+  <Section id="operations" title={homepage.operationsTitle} intro={homepage.operationsIntro} band={true}>
     <ul class="cards">
       {visibleTeam().map((person) => <TeamCard person={person} />)}
     </ul>
@@ -126,13 +126,13 @@ const image = site.heroImage;
     <p class="section-more"><a href="/team/">Team</a></p>
   </Section>
 
-  <Section id="guides" title={homepage.guidesTitle} intro={homepage.guidesIntro} band={true}>
+  <Section id="guides" title={homepage.guidesTitle} intro={homepage.guidesIntro}>
     <ul class="cards">
       {featuredGuides().map((guide) => <GuideCard guide={guide} />)}
     </ul>
     <p class="section-more"><a href="/guides/">All guides</a></p>
   </Section>
 
-  <FaqList title={homepage.faqTitle} items={homeFaqs()} />
+  <FaqList title={homepage.faqTitle} items={homeFaqs()} band={true} />
   <CtaBand title={homepage.ctaTitle} lede={homepage.ctaLede} />
 </BaseLayout>

@@ -1,12 +1,21 @@
 ---
 import { site } from "../config/site";
 import { additionalCourses, coreCourses, featuredGuides, publishedLocations } from "../lib/catalogue";
+
+const [lead, ...rest] = site.name.split(" ");
+const remainder = rest.join(" ");
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-grid">
-    <div>
-      <p class="footer-brand">{site.name}</p>
+    <div class="footer-about">
+      <a class="footer-logo" href="/" aria-label={site.name}>
+        <img src="/favicon.svg" width="40" height="40" alt="" />
+        <span class="logo-word">
+          <span class="logo-strong">{lead}</span>
+          {remainder ? <span class="logo-sub">{remainder}</span> : null}
+        </span>
+      </a>
       <p>{site.demoLine}. {site.footerSummary}</p>
       {
         site.webcoMediaUrl ? (
@@ -68,7 +77,7 @@ import { additionalCourses, coreCourses, featuredGuides, publishedLocations } fr
         <li><a href="/faqs/">FAQs</a></li>
       </ul>
     </div>
-    <div>
+    <div class="footer-contact">
       <p class="footer-label">Example contact</p>
       <ul class="footer-nav">
         <li><a href="/contact/#enquiry">Enquiry form</a></li>
@@ -90,5 +99,8 @@ import { additionalCourses, coreCourses, featuredGuides, publishedLocations } fr
         }
       </ul>
     </div>
+  </div>
+  <div class="wrap footer-base">
+    <p>&copy; {new Date().getFullYear()} {site.name}. {site.demoLine}.</p>
   </div>
 </footer>

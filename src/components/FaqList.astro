@@ -20,12 +20,14 @@ const { id = "faq", title = "Questions", intro, items, band = false } = Astro.pr
           <h2 id={id}>{title}</h2>
           {intro ? <p class="section-intro">{intro}</p> : null}
         </div>
-        {items.map((item) => (
-          <details>
-            <summary>{item.question}</summary>
-            <p>{item.answer}</p>
-          </details>
-        ))}
+        <div class="faq-list">
+          {items.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   ) : null
