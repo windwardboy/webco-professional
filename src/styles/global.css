@@ -892,14 +892,35 @@ a:hover {
     object-position: right center;
   }
 
+  /* Eased fade (many stops, no hard edge): solid behind the copy, then a long soft
+     release into the photograph. */
   .hero-media::after {
-    background: linear-gradient(90deg, rgba(9, 49, 41, 0.94) 0%, rgba(9, 49, 41, 0.82) 40%, rgba(9, 49, 41, 0) 76%);
+    background: linear-gradient(
+      90deg,
+      rgba(9, 49, 41, 0.97) 0%,
+      rgba(9, 49, 41, 0.95) 46%,
+      rgba(9, 49, 41, 0.86) 56%,
+      rgba(9, 49, 41, 0.66) 66%,
+      rgba(9, 49, 41, 0.42) 76%,
+      rgba(9, 49, 41, 0.18) 86%,
+      rgba(9, 49, 41, 0) 96%
+    );
   }
 }
 
 @media (min-width: 80rem) {
   .hero-media::after {
-    background: linear-gradient(90deg, rgba(9, 49, 41, 0.9) 0%, rgba(9, 49, 41, 0.72) 30%, rgba(9, 49, 41, 0) 54%);
+    background: linear-gradient(
+      90deg,
+      rgba(9, 49, 41, 0.97) 0%,
+      rgba(9, 49, 41, 0.95) 36%,
+      rgba(9, 49, 41, 0.86) 44%,
+      rgba(9, 49, 41, 0.68) 52%,
+      rgba(9, 49, 41, 0.44) 60%,
+      rgba(9, 49, 41, 0.22) 68%,
+      rgba(9, 49, 41, 0.08) 76%,
+      rgba(9, 49, 41, 0) 84%
+    );
   }
 }
 
