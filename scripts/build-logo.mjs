@@ -1,117 +1,147 @@
-/* Generates the Webco Professional logo SVGs in /public.
+/* Builds the production logo files in /public from the supplied artwork.
 
    Run with: node scripts/build-logo.mjs
 
-   The wordmark is converted to outlined paths from the same fonts the site
-   uses (Source Serif 4 and Public Sans, 600 weight), so the SVGs render identically
-   everywhere and never depend on a font being installed or loaded.
+   Sources (in /brand, transparent PNG masters):
+     brand/logo-source.png   horizontal logo: pin, "Webco", "PROFESSIONAL"
+     brand/icon-source.png   pin icon on its own
 
-   Outputs:
-     public/logo.svg           primary horizontal logo, for light backgrounds
-     public/logo-reversed.svg  horizontal logo for dark green backgrounds
-     public/logo-mark.svg      icon mark only, for light backgrounds
-     public/favicon.svg        icon mark on a green tile */
+   Outputs (in /public):
+     logo.png            horizontal logo for light backgrounds (header)
+     logo-reversed.png   horizontal logo for dark green backgrounds (footer)
+     logo-mark.png       pin icon on its own (very narrow screens)
+     favicon.png         32px browser icon
+     favicon.ico         legacy browser icon (PNG-in-ICO)
+     icon-192.png        192px icon
+     apple-touch-icon.png  180px icon on an ivory tile
 
-import { readFileSync, writeFileSync } from "node:fs";
-import { create } from "fontkitten";
+   The reversed logo is recoloured, not redrawn. Each pixel is split into its
+   share of the three flat brand colours (green, cream, terracotta) and
+   rebuilt with green and cream swapped, so anti-aliased edges stay smooth. */
 
-const out = new URL("../public/", import.meta.url);
-const font = (file) => create(readFileSync(new URL(`../node_modules/@fontsource/${file}`, import.meta.url)));
+import { writeFileSync } from "node:fs";
+import sharp from "sharp";
 
-const serif = font("source-serif-4/files/source-serif-4-latin-600-normal.woff");
-const sans = font("public-sans/files/public-sans-latin-600-normal.woff");
+const root = new URL("../", import.meta.url);
+const read = (name) => new URL(name, root).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const pub = (name) => read(`public/${name}`);
 
-const round = (n) => Math.round(n * 100) / 100;
+const IVORY = [0xf7, 0xf3, 0xea];
+const FOREST = [0x0a, 0x21, 0x1d];
 
-/** Outline a string as one SVG path, baseline at y, starting at x. Returns the path and its width. */
-function outline(f, text, size, x, y, tracking = 0) {
-  const scale = size / f.unitsPerEm;
-  let cursor = x;
-  let d = "";
-  const px = (v) => round(cursor + v * scale);
-  const py = (v) => round(y - v * scale);
-  const glyphs = f.glyphsForString(text);
-  glyphs.forEach((glyph, index) => {
-    for (const { command, args } of glyph.path.commands) {
-      if (command === "moveTo") d += `M${px(args[0])} ${py(args[1])}`;
-      else if (command === "lineTo") d += `L${px(args[0])} ${py(args[1])}`;
-      else if (command === "quadraticCurveTo") d += `Q${px(args[0])} ${py(args[1])} ${px(args[2])} ${py(args[3])}`;
-      else if (command === "bezierCurveTo")
-        d += `C${px(args[0])} ${py(args[1])} ${px(args[2])} ${py(args[3])} ${px(args[4])} ${py(args[5])}`;
-      else if (command === "closePath") d += "Z";
+async function load(file) {
+  const { data, info } = await sharp(read(file)).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  return { data, width: info.width, height: info.height };
+}
+
+function bounds({ data, width, height }) {
+  let x0 = width, y0 = height, x1 = 0, y1 = 0;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (data[(y * width + x) * 4 + 3] > 8) {
+        if (x < x0) x0 = x;
+        if (x > x1) x1 = x;
+        if (y < y0) y0 = y;
+        if (y > y1) y1 = y;
+      }
     }
-    cursor += glyph.advanceWidth * scale + (index < glyphs.length - 1 ? tracking : 0);
-  });
-  return { d, width: cursor - x };
+  }
+  return { left: x0, top: y0, width: x1 - x0 + 1, height: y1 - y0 + 1 };
 }
 
-/* Icon mark, drawn on a 48 x 60 grid: map pin, front-facing HGV, road. */
-const PIN = "M24 2C35 2 44 11 44 22C44 34 32 46 24 58C16 46 4 34 4 22C4 11 13 2 24 2Z";
-
-function mark({ id, pin, edge, truck, cut, road, accent }) {
-  return `<clipPath id="${id}"><path d="${PIN}"/></clipPath>
-<path d="${PIN}" fill="${pin}"${edge ? ` stroke="${edge}" stroke-width="1.5" stroke-linejoin="round"` : ""}/>
-<g fill="${truck}">
-<rect x="14.5" y="8.5" width="19" height="16" rx="2.5"/>
-<rect x="11.5" y="11" width="2" height="5.5" rx="1"/>
-<rect x="34.5" y="11" width="2" height="5.5" rx="1"/>
-<rect x="16" y="23.5" width="4.5" height="5" rx="1.2"/>
-<rect x="27.5" y="23.5" width="4.5" height="5" rx="1.2"/>
-</g>
-<g fill="${cut}">
-<rect x="17.5" y="11.5" width="13" height="6" rx="1.2"/>
-<rect x="18.5" y="20.2" width="11" height="1.8" rx="0.9"/>
-</g>
-<g clip-path="url(#${id})">
-<path d="M0 32Q24 42 48 32V35.5Q24 45.5 0 35.5Z" fill="${road}"/>
-<path d="M0 38.5Q24 48.5 48 38.5V42Q24 52 0 42Z" fill="${accent}"/>
-</g>`;
+/** Mean colour of the solid pixels that satisfy a test. */
+function mean({ data }, test) {
+  let r = 0, g = 0, b = 0, n = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] < 250) continue;
+    if (test(data[i], data[i + 1], data[i + 2])) {
+      r += data[i]; g += data[i + 1]; b += data[i + 2]; n++;
+    }
+  }
+  return [r / n, g / n, b / n];
 }
 
-const ivory = "#f7f3ea";
-const forest = "#0f2f28";
-const forestLift = "#164236";
-const terracotta = "#b4401c";
-const terracottaBright = "#f2905f";
-
-const primaryMark = { id: "p", pin: forest, truck: ivory, cut: forest, road: ivory, accent: terracotta };
-const reversedMark = { id: "p", pin: forestLift, edge: ivory, truck: ivory, cut: forestLift, road: ivory, accent: terracottaBright };
-
-/** Horizontal lockup: mark, then "Webco" over spaced "PROFESSIONAL". */
-function lockup(markColors, wordColor, subColor, label) {
-  const textX = 61;
-  const word = outline(serif, "Webco", 35, textX, 34);
-  const sub = outline(sans, "PROFESSIONAL", 10.4, textX + 0.6, 51, 2.5);
-  const width = Math.ceil(Math.max(textX + word.width, textX + 0.6 + sub.width) + 1);
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 ${width + 1} 62" role="img" aria-label="${label}">
-${mark(markColors)}
-<path d="${word.d}" fill="${wordColor}"/>
-<path d="${sub.d}" fill="${subColor}"/>
-</svg>
-`;
+function reverse(image) {
+  const G = mean(image, (r, g, b) => Math.max(r, g, b) < 80);
+  const C = mean(image, (r, g, b) => r > 235 && g > 225 && b > 205);
+  const T = mean(image, (r, g, b) => r > 170 && g < 120 && b < 80);
+  // c - T = a (G - T) + b (C - T), solved by least squares.
+  const u = G.map((v, k) => v - T[k]);
+  const v = C.map((x, k) => x - T[k]);
+  const uu = u[0] * u[0] + u[1] * u[1] + u[2] * u[2];
+  const vv = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+  const uv = u[0] * v[0] + u[1] * v[1] + u[2] * v[2];
+  const det = uu * vv - uv * uv;
+  const out = Buffer.from(image.data);
+  for (let i = 0; i < out.length; i += 4) {
+    if (out[i + 3] === 0) continue;
+    const w = [out[i] - T[0], out[i + 1] - T[1], out[i + 2] - T[2]];
+    const wu = w[0] * u[0] + w[1] * u[1] + w[2] * u[2];
+    const wv = w[0] * v[0] + w[1] * v[1] + w[2] * v[2];
+    let a = (wu * vv - wv * uv) / det;
+    let b = (wv * uu - wu * uv) / det;
+    a = Math.max(0, a);
+    b = Math.max(0, b);
+    const sum = a + b;
+    if (sum > 1) { a /= sum; b /= sum; }
+    const t = 1 - a - b;
+    // green becomes ivory, cream becomes the footer green, terracotta stays.
+    for (let k = 0; k < 3; k++) {
+      out[i + k] = Math.round(Math.min(255, Math.max(0, a * IVORY[k] + b * FOREST[k] + t * T[k])));
+    }
+  }
+  return { ...image, data: out };
 }
 
-function markOnly(markColors, label) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 50 62" role="img" aria-label="${label}">
-${mark(markColors)}
-</svg>
-`;
+const toSharp = (image) => sharp(image.data, { raw: { width: image.width, height: image.height, channels: 4 } });
+
+const logo = await load("brand/logo-source.png");
+const icon = await load("brand/icon-source.png");
+const logoBox = bounds(logo);
+const iconBox = bounds(icon);
+
+const trimmed = (image, box) => toSharp(image).extract(box);
+
+// Logo: 3x the largest displayed height (52px) is plenty.
+const logoHeight = 160;
+const dims = {};
+
+for (const [name, image] of [["logo.png", logo], ["logo-reversed.png", reverse(logo)]]) {
+  const info = await trimmed(image, logoBox)
+    .resize({ height: logoHeight, kernel: "lanczos3" })
+    .png({ compressionLevel: 9, palette: true, colours: 128, quality: 100, effort: 10, dither: 0.5 })
+    .toFile(pub(name));
+  dims[name] = [info.width, info.height];
 }
 
-function favicon() {
-  const tile = mark({ id: "p", pin: ivory, truck: forest, cut: ivory, road: forest, accent: terracotta });
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Webco Professional">
-<rect width="64" height="64" rx="12" fill="${forest}"/>
-<g transform="translate(12.8 8) scale(0.8)">
-${tile}
-</g>
-</svg>
-`;
+const mark = await trimmed(icon, iconBox)
+  .resize({ height: 160, kernel: "lanczos3" })
+  .png({ compressionLevel: 9, palette: true, colours: 128, quality: 100, effort: 10, dither: 0.5 })
+  .toFile(pub("logo-mark.png"));
+dims["logo-mark.png"] = [mark.width, mark.height];
+
+// Square icons: the pin centred with a little air.
+async function square(size, background) {
+  const inner = Math.round(size * 0.86);
+  const pin = await trimmed(icon, iconBox).resize({ height: inner, kernel: "lanczos3" }).png().toBuffer();
+  return sharp({
+    create: { width: size, height: size, channels: 4, background: background ?? { r: 0, g: 0, b: 0, alpha: 0 } },
+  })
+    .composite([{ input: pin, gravity: "centre" }])
+    .png({ compressionLevel: 9 });
 }
 
-const name = "Webco Professional";
-writeFileSync(new URL("logo.svg", out), lockup(primaryMark, forest, terracotta, name));
-writeFileSync(new URL("logo-reversed.svg", out), lockup(reversedMark, ivory, terracottaBright, name));
-writeFileSync(new URL("logo-mark.svg", out), markOnly(primaryMark, name));
-writeFileSync(new URL("favicon.svg", out), favicon());
-console.log("Logo assets written to public/");
+await (await square(32)).toFile(pub("favicon.png"));
+await (await square(192)).toFile(pub("icon-192.png"));
+await (await square(180, { r: IVORY[0], g: IVORY[1], b: IVORY[2], alpha: 1 })).toFile(pub("apple-touch-icon.png"));
+
+// favicon.ico: a 32px PNG inside an ICO container.
+const png32 = await (await square(32)).toBuffer();
+const head = Buffer.alloc(22);
+head.writeUInt16LE(0, 0); head.writeUInt16LE(1, 2); head.writeUInt16LE(1, 4);
+head[6] = 32; head[7] = 32; head[8] = 0; head[9] = 0;
+head.writeUInt16LE(1, 10); head.writeUInt16LE(32, 12);
+head.writeUInt32LE(png32.length, 14); head.writeUInt32LE(22, 18);
+writeFileSync(pub("favicon.ico"), Buffer.concat([head, png32]));
+
+console.log("Logo assets written to public/", JSON.stringify(dims));
