@@ -45,12 +45,12 @@ export const site = {
   /** GA4 measurement id, such as G-XXXXXXXX. Leave empty until issued. */
   analyticsId: "",
   heroImage: {
-    src: "/images/hero.jpg",
-    webp: "/images/hero.webp",
-    avif: "/images/hero.avif",
+    src: "/images/hero-2072.jpg",
+    webp: "/images/hero-900.webp 900w, /images/hero-1400.webp 1400w, /images/hero-2072.webp 2072w",
+    avif: "/images/hero-900.avif 900w, /images/hero-1400.avif 1400w, /images/hero-2072.avif 2072w",
     alt: "A white HGV working through a cone-marked training course outside a modern training centre at sunrise, with an instructor in a high-visibility vest watching.",
-    width: 1024,
-    height: 375,
+    width: 2072,
+    height: 759,
   },
 } as const;
 
