@@ -4,9 +4,11 @@ import type { ContentImage } from "../content/types";
 interface Props {
   image: ContentImage;
   sizes?: string;
+  /** Above-the-fold image: load immediately and at high priority. */
+  priority?: boolean;
 }
 
-const { image, sizes = "(min-width: 56rem) 38vw, 100vw" } = Astro.props;
+const { image, sizes = "(min-width: 56rem) 38vw, 100vw", priority = false } = Astro.props;
 ---
 
 {
@@ -20,7 +22,9 @@ const { image, sizes = "(min-width: 56rem) 38vw, 100vw" } = Astro.props;
         width={image.width}
         height={image.height}
         sizes={sizes}
-        decoding="async"
+        decoding={priority ? "sync" : "async"}
+        loading={priority ? "eager" : undefined}
+        fetchpriority={priority ? "high" : undefined}
       />
     </picture>
   ) : null

@@ -45,12 +45,12 @@ export const site = {
   /** GA4 measurement id, such as G-XXXXXXXX. Leave empty until issued. */
   analyticsId: "",
   heroImage: {
-    src: "",
-    webp: "",
-    avif: "",
-    alt: "",
-    width: 1600,
-    height: 1067,
+    src: "/images/hero.jpg",
+    webp: "/images/hero.webp",
+    avif: "/images/hero.avif",
+    alt: "A white HGV working through a cone-marked training course outside a modern training centre at sunrise, with an instructor in a high-visibility vest watching.",
+    width: 1024,
+    height: 375,
   },
 } as const;
 

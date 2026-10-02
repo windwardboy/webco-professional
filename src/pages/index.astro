@@ -36,7 +36,14 @@ const image = site.heroImage;
   title="HGV training"
   description="Demonstration of an HGV and transport training website: Category C, Category C+E, Driver CPC, ADR and Operator CPC, with example bases at Bristol, Taunton and Exeter."
 >
-  <section class="hero">
+  <section class:list={["hero", image.src && "has-media"]}>
+    {
+      image.src ? (
+        <div class="hero-media">
+          <ResponsiveImage image={image} sizes="100vw" priority={true} />
+        </div>
+      ) : null
+    }
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">{homepage.eyebrow}</p>
@@ -48,30 +55,6 @@ const image = site.heroImage;
           <a class="button button-text" href="/hgv-training/">HGV training</a>
         </div>
         <p class="example-caption">{homepage.exampleNote}</p>
-      </div>
-      <div class="hero-side">
-        {
-          image.src ? (
-            <div class="hero-photo">
-              <ResponsiveImage image={image} />
-            </div>
-          ) : null
-        }
-        <aside class="glance" aria-label="Example training locations">
-          <h2>Example bases</h2>
-          <ul class="glance-board">
-            {
-              publishedLocations().map((location) => (
-                <li>
-                  <a href={`/locations/${location.slug}/`}>
-                    <span class="glance-title">{location.name}</span>
-                    <span class="glance-region">{location.region}</span>
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </aside>
       </div>
     </div>
   </section>

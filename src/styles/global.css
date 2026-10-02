@@ -788,12 +788,6 @@ a:hover {
     padding-top: var(--space-2xl);
   }
 
-  .hero-grid {
-    grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.65fr);
-    gap: 4.5rem;
-    align-items: end;
-  }
-
   .page-hero.has-aside .page-hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.6fr);
@@ -817,15 +811,96 @@ a:hover {
   }
 }
 
-.hero-photo {
-  margin-bottom: var(--space-md);
+/* Hero photograph. The left of the supplied image is flat brand green, so the
+   hero takes that colour and the text sits on it. On small screens the photo
+   drops below the text instead. */
+
+.hero.has-media {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+  background: #093129;
 }
 
-.hero-photo img {
+.hero.has-media::before {
+  display: none;
+}
+
+.hero.has-media > .wrap {
+  order: 1;
+}
+
+.hero-media {
+  position: relative;
+  order: 2;
+  height: 15rem;
+  margin-top: var(--space-xl);
+}
+
+.hero-media picture {
   display: block;
   width: 100%;
-  border-radius: var(--radius);
+  height: 100%;
+}
+
+.hero-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: 72% center;
+}
+
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #093129 0%, rgba(9, 49, 41, 0) 45%);
+  pointer-events: none;
+}
+
+@media (min-width: 48rem) {
+  .hero-media {
+    height: 22rem;
+  }
+}
+
+@media (min-width: 62rem) {
+  .hero.has-media {
+    display: block;
+    min-height: 34rem;
+    padding-bottom: calc(var(--space-2xl) + 2.5rem);
+  }
+
+  .hero.has-media .hero-copy {
+    max-width: 37rem;
+  }
+
+  .hero.has-media h1 {
+    max-width: 10em;
+    font-size: clamp(2.6rem, 4.3vw, 3.75rem);
+  }
+
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    height: auto;
+    margin-top: 0;
+  }
+
+  .hero-media img {
+    object-position: right center;
+  }
+
+  .hero-media::after {
+    background: linear-gradient(90deg, rgba(9, 49, 41, 0.94) 0%, rgba(9, 49, 41, 0.82) 40%, rgba(9, 49, 41, 0) 76%);
+  }
+}
+
+@media (min-width: 80rem) {
+  .hero-media::after {
+    background: linear-gradient(90deg, rgba(9, 49, 41, 0.9) 0%, rgba(9, 49, 41, 0.72) 30%, rgba(9, 49, 41, 0) 54%);
+  }
 }
 
 .actions {
