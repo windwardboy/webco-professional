@@ -317,9 +317,8 @@ a:hover {
 
 .logo img,
 .footer-logo img {
-  width: 2.5rem;
-  height: 2.5rem;
   display: block;
+  width: auto;
   flex: none;
 }
 
@@ -328,28 +327,20 @@ a:hover {
   color: inherit;
 }
 
-.logo-word {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  white-space: nowrap;
+/* The full logo is the default. The icon mark alone stands in only on the narrowest screens. */
+.logo-full {
+  height: 2.75rem;
 }
 
-.logo-strong {
-  font-family: var(--serif);
-  font-size: 1.45rem;
-  font-weight: 650;
-  letter-spacing: -0.02em;
-  line-height: 1;
+.logo .logo-icon {
+  display: none;
+  height: 2.5rem;
 }
 
-.logo-sub {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.26em;
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--accent);
+@media (min-width: 64rem) {
+  .logo-full {
+    height: 3.25rem;
+  }
 }
 
 .header-actions {
@@ -372,24 +363,6 @@ a:hover {
 }
 
 @media (max-width: 29.99rem) {
-  .logo img {
-    width: 2.15rem;
-    height: 2.15rem;
-  }
-
-  .logo {
-    gap: 0.55rem;
-  }
-
-  .logo-strong {
-    font-size: 1.3rem;
-  }
-
-  .logo-sub {
-    font-size: 0.625rem;
-    letter-spacing: 0.16em;
-  }
-
   .header-inner {
     gap: 0.5rem;
   }
@@ -405,6 +378,16 @@ a:hover {
   .nav-summary {
     gap: 0.4rem;
     padding-inline: 0.7rem;
+  }
+}
+
+@media (max-width: 19.99rem) {
+  .logo .logo-full {
+    display: none;
+  }
+
+  .logo .logo-icon {
+    display: block;
   }
 }
 
@@ -2492,12 +2475,8 @@ textarea:user-invalid {
   }
 }
 
-.footer-logo {
-  color: var(--on-dark);
-}
-
-.footer-logo .logo-sub {
-  color: var(--accent-bright);
+.footer-logo .logo-full {
+  height: 3rem;
 }
 
 .footer-label {

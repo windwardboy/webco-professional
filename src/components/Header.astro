@@ -1,9 +1,6 @@
 ---
 import NavLinks from "./NavLinks.astro";
 import { site } from "../config/site";
-
-const [lead, ...rest] = site.name.split(" ");
-const remainder = rest.join(" ");
 ---
 
 <a class="skip" href="#content">Skip to content</a>
@@ -22,11 +19,8 @@ const remainder = rest.join(" ");
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="logo" href="/" aria-label={site.name}>
-      <img src="/favicon.svg" width="40" height="40" alt="" />
-      <span class="logo-word">
-        <span class="logo-strong">{lead}</span>
-        {remainder ? <span class="logo-sub">{remainder}</span> : null}
-      </span>
+      <img class="logo-full" src="/logo.svg" width="180" height="62" alt="" />
+      <img class="logo-icon" src="/logo-mark.svg" width="50" height="62" alt="" />
     </a>
     <div class="header-actions">
       <a class="header-call" href={site.phoneHref}>Call</a>

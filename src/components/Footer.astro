@@ -1,20 +1,13 @@
 ---
 import { site } from "../config/site";
 import { additionalCourses, coreCourses, featuredGuides, publishedLocations } from "../lib/catalogue";
-
-const [lead, ...rest] = site.name.split(" ");
-const remainder = rest.join(" ");
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div class="footer-about">
       <a class="footer-logo" href="/" aria-label={site.name}>
-        <img src="/favicon.svg" width="40" height="40" alt="" />
-        <span class="logo-word">
-          <span class="logo-strong">{lead}</span>
-          {remainder ? <span class="logo-sub">{remainder}</span> : null}
-        </span>
+        <img class="logo-full" src="/logo-reversed.svg" width="180" height="62" alt="" />
       </a>
       <p>{site.demoLine}. {site.footerSummary}</p>
       {
