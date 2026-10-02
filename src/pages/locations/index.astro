@@ -12,14 +12,14 @@ const places = publishedLocations();
 
 <BaseLayout
   title="Training locations"
-  description="Example training bases at Bristol, Taunton and Exeter. Each page lists only the courses offered there. No street address is published."
+  description="HGV training bases at Bristol, Taunton and Exeter. Each base page lists the courses offered there and how to enquire."
   crumbs={crumbs}
 >
   <PageHero
     crumbs={crumbs}
-    eyebrow="Example locations"
+    eyebrow="Our bases"
     title="Training locations"
-    lede="Three example bases. The courses on the card are the courses on the page. Nearby towns do not have their own pages, and no street address is published."
+    lede="Three training bases across Bristol, Somerset and Devon. Each card shows the courses you can take at that base."
   />
   <div class="block block-follow">
     <div class="wrap">
@@ -30,6 +30,6 @@ const places = publishedLocations();
   </div>
   <CtaBand
     title="Ask about a base"
-    lede={places.length > 1 ? "Choose the example base you prefer, and the course you want." : "Ask about training at this base."}
+    lede={places.length > 1 ? "Choose the base you prefer, and the course you want." : "Ask about training at this base."}
   />
 </BaseLayout>

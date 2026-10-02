@@ -36,12 +36,16 @@ const proof = testimonialsFor(course.testimonialIds);
 const courseFaqs = faqsForCourse(course.id);
 const vehicles = vehiclesFor(course.vehicleIds);
 const facilityItems = facilitiesFor(course.facilityIds);
-const durationText = course.duration || "How long the training takes is confirmed when you enquire.";
+const durationText =
+  course.duration ||
+  (course.kind === "licence"
+    ? "How long training takes depends on the licence you already hold and your experience in this type of vehicle. We confirm it when you enquire."
+    : "We confirm the length of the course and the next available dates when you enquire.");
 const priceText =
   course.priceNote ||
   (course.kind === "licence"
-    ? "Ask for a quote. No fee is listed on this page. Medicals, theory tests and the practical test are separate costs."
-    : "Ask for a quote. No fee or date is listed on this page.");
+    ? "We quote once we know the licence you hold and the training you need. Medicals, theory tests and the practical test are separate costs where they apply."
+    : "We confirm the fee when you enquire, along with the dates available.");
 const crumbs = pageCrumbs([
   course.group === "core"
     ? { label: "HGV training", href: "/hgv-training/" }
@@ -65,7 +69,7 @@ const jumpLinks = [
 <BaseLayout title={course.metaTitle} description={course.metaDescription} crumbs={crumbs}>
   <PageHero
     crumbs={crumbs}
-    eyebrow={course.sample ? `Example course · ${course.kicker}` : course.kicker}
+    eyebrow={course.sample ? `Sample course · ${course.kicker}` : course.kicker}
     title={course.metaTitle}
     lede={course.summary}
   >
@@ -73,11 +77,6 @@ const jumpLinks = [
       <a class="button" href={enquireHref({ course: course.id })}>Enquire about {course.title}</a>
       <a class="button button-quiet" href={site.phoneHref}>Call {site.phoneDisplay}</a>
     </div>
-    {
-      course.sample ? (
-        <p class="example-caption">Example course on this demonstration. It is not a booking for a real centre.</p>
-      ) : null
-    }
     <aside class="glance" slot="aside" aria-label="Where this course runs">
       <h2>Offered at</h2>
       <ul class="glance-board">
@@ -114,7 +113,7 @@ const jumpLinks = [
     <p>{course.permitsNote}</p>
   </Section>
 
-  <Section id="eligibility" title="Eligibility and prerequisites" intro="General guidance, not a check of your licence." band={true} narrow={true}>
+  <Section id="eligibility" title="Eligibility and prerequisites" intro="A general guide. We check your own licence when you enquire." band={true} narrow={true}>
     <ul class="prose-list">
       {course.eligibility.map((item) => <li>{item}</li>)}
     </ul>
@@ -135,7 +134,7 @@ const jumpLinks = [
     <p>{priceText}</p>
   </Section>
 
-  <Section id="locations" title="Where this course runs" intro="Example bases only. No street address is published.">
+  <Section id="locations" title="Where this course runs" intro="This course runs at the bases below. Each one has its own page.">
     <ul class="cards">
       {places.map((location) => <LocationCard location={location} courseId={course.id} />)}
     </ul>
@@ -164,7 +163,7 @@ const jumpLinks = [
 
   {
     people.length > 0 ? (
-      <Section id="instructors" title="Instructors" intro="Example profiles. No instructor is named." band={true}>
+      <Section id="instructors" title="Instructors" intro="The team who deliver this course." band={true}>
         <ul class="cards">
           {people.map((person) => <TeamCard person={person} />)}
         </ul>
@@ -172,12 +171,12 @@ const jumpLinks = [
     ) : null
   }
 
-  <LearnerProof id="learner" title="Learner feedback" intro="Example wording. Not a real review." items={proof} />
+  <LearnerProof id="learner" title="Learner feedback" intro="What learners say about this course." items={proof} />
   <FaqList id="course-faq" title="Questions about this course" items={courseFaqs} band={true} />
   <RelatedLinks courses={relatedCourses(course)} guides={relatedGuides(course)} />
   <CtaBand
     title={`Ask about ${course.title}`}
-    lede="Say which example base you prefer, and how you would like to be contacted."
+    lede="Tell us which base you prefer, and how you would like to be contacted."
     courseSlug={course.id}
   />
 </BaseLayout>

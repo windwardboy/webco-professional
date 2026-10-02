@@ -6,37 +6,40 @@ export type AboutSection = {
 
 export const aboutIntro = {
   eyebrow: "About",
-  title: "HGV training from three example bases",
-  lede: "Category C, Category C+E and Driver CPC, with ADR and Operator CPC. Bristol, Taunton and Exeter are example locations. No company history is invented here.",
+  title: "About Webco Professional",
+  lede: "We train drivers for the licences and qualifications that professional lorry work needs, from our bases in Bristol, Taunton and Exeter.",
 };
 
 export const aboutSections: readonly AboutSection[] = [
   {
     id: "story",
-    heading: "What this training covers",
+    heading: "What we train",
     paragraphs: [
-      "Rigid lorries, articulated and drawbar work, and periodic Driver CPC, plus example courses for ADR and Operator CPC.",
-      "Each course runs only at the example bases that list it. A town that is merely nearby does not get a page.",
+      "We provide practical training for Category C rigid lorries and Category C+E articulated and drawbar work, periodic Driver CPC for working drivers, and ADR and Operator CPC courses for drivers and transport managers.",
+      "Licence training is delivered in the vehicle, in the yard and on the road. Driver CPC, ADR and Operator CPC are classroom courses. Each course page shows which of our bases runs it.",
     ],
   },
   {
     id: "philosophy",
-    heading: "Training approach",
+    heading: "How we train",
     paragraphs: [
-      "The entitlement, the practical work and the next step are explained before anyone is asked to commit.",
-      "Time in the vehicle, or a clearly described classroom course, matters more than a list of claims.",
+      "We explain the entitlement, the practical work and the next step before anyone is asked to commit, so you know what each session covers and what comes after it.",
+      "Licence training is built around time in the vehicle. Our classroom courses are described just as plainly: who they are for, what they cover and what they lead to.",
     ],
   },
   {
     id: "experience",
-    heading: "Experience",
-    paragraphs: ["Example wording only. No years of trading, no learner numbers and no pass rate are shown."],
+    heading: "Who we train",
+    paragraphs: [
+      "Learners come to us from different starting points: drivers moving up from a car licence to their first lorry, Category C drivers adding a trailer, working drivers who need periodic hours, and managers preparing for the transport-manager qualification.",
+      "We begin by looking at the licence you already hold and the work you want to do, then recommend the course that fits.",
+    ],
   },
   {
     id: "qualifications",
-    heading: "Qualifications and accreditations",
+    heading: "Official requirements",
     paragraphs: [
-      "None are shown. No approval number, DVSA status or accreditation badge is claimed on this demonstration.",
+      "Licence entitlements, the medical, the theory and practical tests, and Driver CPC are set by the DVLA and DVSA. We explain how those requirements apply to each course, and point you to the official guidance for your own circumstances.",
     ],
   },
 ];

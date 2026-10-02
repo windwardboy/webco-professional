@@ -3,10 +3,10 @@ interface Props {
   label?: string;
 }
 
-const { label = "Example location. No address and no map pin are shown." } = Astro.props;
+const { label = "Directions are sent with your course confirmation." } = Astro.props;
 ---
 
 <div class="map-placeholder" role="img" aria-label={label}>
-  <p class="map-placeholder-title">No map</p>
-  <p>Example location. No address and no map pin are shown.</p>
+  <p class="map-placeholder-title">Directions</p>
+  <p>The site address, a map and joining instructions are sent with your course confirmation.</p>
 </div>

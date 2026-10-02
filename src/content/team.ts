@@ -2,7 +2,7 @@ import type { ContentImage } from "./types";
 
 export type TeamMember = {
   id: string;
-  /** False until a real name is supplied. Example cards stay labelled. */
+  /** False until a real name is supplied. Unnamed entries describe a team, not a person. */
   published: boolean;
   name: string;
   role: string;
@@ -14,7 +14,7 @@ export type TeamMember = {
 };
 
 /**
- * Example roles only. Do not invent a name, a photograph or a qualification.
+ * Team profiles. Do not invent a name, a photograph or a qualification.
  * When a provider supplies a real person, set published to true and fill name.
  */
 export const team: readonly TeamMember[] = [
@@ -22,9 +22,10 @@ export const team: readonly TeamMember[] = [
     id: "driving",
     published: false,
     name: "",
-    role: "Driving instructor",
+    role: "Driving instructors",
     qualifications: [],
-    background: "Example profile for Category C and Category C+E instruction. Not a real person.",
+    background:
+      "Our driving instructors take learners through Category C and Category C+E training: getting to know the vehicle, yard manoeuvres, coupling and uncoupling, and road driving. They also explain what the practical test involves.",
     courseIds: ["category-c", "category-ce"],
     locationIds: ["bristol", "taunton", "exeter"],
   },
@@ -32,9 +33,10 @@ export const team: readonly TeamMember[] = [
     id: "classroom",
     published: false,
     name: "",
-    role: "Classroom instructor",
+    role: "Classroom instructors",
     qualifications: [],
-    background: "Example profile for Driver CPC, ADR and Operator CPC. Not a real person, and no approval number is shown.",
+    background:
+      "Our classroom instructors run the Driver CPC, ADR and Operator CPC courses. They explain what each course covers, who it is for, and how it differs from the licence routes.",
     courseIds: ["driver-cpc", "adr", "operator-cpc"],
     locationIds: ["bristol", "taunton"],
   },

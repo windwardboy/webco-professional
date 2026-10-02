@@ -10,14 +10,14 @@ export const vehicles: readonly Vehicle[] = [
   {
     id: "rigid",
     title: "Rigid goods vehicle",
-    text: "Example vehicle for Category C. No make, model or fleet size is stated.",
+    text: "The training vehicle for Category C, used for yard exercises and road driving.",
     locationIds: ["bristol", "taunton", "exeter"],
     supplied: false,
   },
   {
     id: "artic",
     title: "Articulated combination",
-    text: "Example vehicle for Category C+E. No unit or trailer is named.",
+    text: "Tractor unit and trailer for Category C+E, used for coupling, uncoupling, reversing and road driving.",
     locationIds: ["bristol", "exeter"],
     supplied: false,
   },

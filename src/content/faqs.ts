@@ -5,7 +5,7 @@ export const faqTopics: readonly { id: FaqTopic; label: string }[] = [
   { id: "licence", label: "Licences" },
   { id: "medical", label: "Medical, theory and testing" },
   { id: "pricing", label: "Pricing and process" },
-  { id: "provider", label: "This demonstration" },
+  { id: "provider", label: "About this website" },
 ];
 
 export const faqs: readonly Faq[] = [
@@ -20,8 +20,9 @@ export const faqs: readonly Faq[] = [
   },
   {
     id: "prices",
-    question: "Do you publish prices?",
-    answer: "No fee is listed. Ask for a quote for the course you want. Medicals, theory tests and the practical test are separate where they apply.",
+    question: "How much does training cost?",
+    answer:
+      "We quote for each course once we know the licence you hold and the training you need. Medicals, theory tests and the practical test are separate costs where they apply.",
     topics: ["pricing"],
     home: true,
     overview: true,
@@ -30,23 +31,8 @@ export const faqs: readonly Faq[] = [
     id: "where",
     question: "Where does the training take place?",
     answer:
-      "At the example bases in Bristol, Taunton and Exeter. Not every course runs at every base. No street address is published.",
-    topics: ["general", "provider"],
-    home: true,
-  },
-  {
-    id: "reviews-real",
-    question: "Are the reviews real?",
-    answer: "No. The quotations are examples for the layout. No rating and no review count are shown.",
-    topics: ["provider"],
-    home: true,
-  },
-  {
-    id: "real-business",
-    question: "Is this a real training company?",
-    answer:
-      "No. This is a demonstration website by Webco Media. The courses, bases, reviews and contact details are examples.",
-    topics: ["provider"],
+      "At our bases in Bristol, Taunton and Exeter. Not every course runs at every base, so each course page shows where it is offered. We send the site address and joining details when your course is agreed.",
+    topics: ["general"],
     home: true,
   },
   {
@@ -55,6 +41,7 @@ export const faqs: readonly Faq[] = [
     answer:
       "Category C is the rigid lorry entitlement. Category C+E adds a trailer, for articulated lorries and drawbar outfits. C+E training normally follows Category C.",
     topics: ["licence"],
+    home: true,
     overview: true,
   },
   {
@@ -67,8 +54,9 @@ export const faqs: readonly Faq[] = [
   },
   {
     id: "eligibility",
-    question: "Can this site tell me if I am eligible?",
-    answer: "No. It is general guidance. The licence you hold is checked when you enquire.",
+    question: "Can you tell me if I am eligible?",
+    answer:
+      "We can once we know the licence you hold and the work you want to do. The information on this website is general guidance, so we check your own position when you enquire.",
     topics: ["licence"],
     overview: true,
   },
@@ -76,8 +64,9 @@ export const faqs: readonly Faq[] = [
     id: "medical",
     question: "Do I need a medical?",
     answer:
-      "A medical report is normally required before a lorry practical test. Whether it applies to you depends on the entitlement and on current DVLA rules. This site does not confirm a medical result.",
+      "A medical report is normally required before a lorry practical test. Whether it applies to you depends on the entitlement and on current DVLA rules.",
     topics: ["medical"],
+    home: true,
     overview: true,
   },
   {
@@ -91,16 +80,29 @@ export const faqs: readonly Faq[] = [
     id: "test",
     question: "What happens on the practical test?",
     answer:
-      "The practical test looks at vehicle control, including manoeuvres, and driving on the road. Vehicle safety questions are part of it. The current test is set officially. The guide on this site explains that in more detail, and no pass is claimed.",
+      "The practical test looks at vehicle control, including manoeuvres, and driving on the road. Vehicle safety questions are part of it. The current test is set officially, and our guide to the HGV driving test explains it in more detail.",
     topics: ["medical"],
   },
   {
     id: "after-enquiry",
     question: "What happens after I enquire?",
     answer:
-      "You choose a course, a preferred example base and a contact method. The form does not book a test, and on this demonstration it does not send a message.",
+      "You tell us the course you want, your preferred base and how to contact you. We reply using that method to talk through the licence you hold and the next step. The form does not book a test.",
     topics: ["pricing"],
     home: true,
+  },
+  {
+    id: "reviews-real",
+    question: "Are the reviews real?",
+    answer: "No. The reviews and learner comments on this website are samples written for the demonstration.",
+    topics: ["provider"],
+  },
+  {
+    id: "real-business",
+    question: "Is Webco Professional a real training company?",
+    answer:
+      "No. Webco Professional is a demonstration website by Webco Media, showing how a multi-location HGV training provider could present its courses. The courses, bases, reviews and contact details are samples.",
+    topics: ["provider"],
   },
   {
     id: "c-drive",
@@ -112,7 +114,8 @@ export const faqs: readonly Faq[] = [
   {
     id: "c-duration",
     question: "How long does Category C take, and what does it cost?",
-    answer: "No duration and no fee are listed. Both are confirmed when you enquire. Medicals, theory tests and the practical test are separate costs.",
+    answer:
+      "How long Category C takes depends on your starting point, and the fee depends on the training you need. We confirm both when you enquire. Medicals, theory tests and the practical test are separate costs.",
     topics: ["pricing"],
     courseId: "category-c",
   },
@@ -125,8 +128,8 @@ export const faqs: readonly Faq[] = [
   },
   {
     id: "ce-where",
-    question: "Where is Category C+E listed?",
-    answer: "At the Bristol and Exeter example bases. It is not listed at Taunton.",
+    question: "Where is Category C+E available?",
+    answer: "At our Bristol and Exeter bases.",
     topics: ["general"],
     courseId: "category-ce",
   },
@@ -134,15 +137,16 @@ export const faqs: readonly Faq[] = [
     id: "cpc-difference",
     question: "What is the difference between initial and periodic Driver CPC?",
     answer:
-      "Initial CPC is for a new professional driver. Periodic CPC is ongoing training for someone who already holds a Driver Qualification Card. The course listed here is periodic training. No module code or date is published.",
+      "Initial CPC is for a new professional driver. Periodic CPC is ongoing training for someone who already holds a Driver Qualification Card. Our course is periodic training.",
     topics: ["licence"],
     courseId: "driver-cpc",
   },
   {
-    id: "adr-approval",
-    question: "Is this an approved ADR centre?",
-    answer: "No approval is claimed. This is an example course. Classes, dates and fees are not listed.",
-    topics: ["provider"],
+    id: "adr-who",
+    question: "Who needs ADR training?",
+    answer:
+      "Drivers who carry dangerous goods by road. The course you need depends on the classes of goods and whether they travel in packages or in tanks, and we confirm this when you enquire.",
+    topics: ["licence"],
     courseId: "adr",
   },
   {
@@ -155,44 +159,44 @@ export const faqs: readonly Faq[] = [
   },
   {
     id: "bristol-courses",
-    question: "Which courses are listed at the Bristol example base?",
+    question: "Which courses can I take at Bristol?",
     answer: "Category C, Category C+E, Driver CPC, ADR and Operator CPC.",
     topics: ["general"],
     locationId: "bristol",
   },
   {
     id: "taunton-courses",
-    question: "Which courses are listed at the Taunton example base?",
-    answer: "Category C, Driver CPC and Operator CPC. Category C+E and ADR are not listed at Taunton.",
+    question: "Which courses can I take at Taunton?",
+    answer: "Category C, Driver CPC and Operator CPC. Category C+E runs at Bristol and Exeter, and ADR at Bristol.",
     topics: ["general"],
     locationId: "taunton",
   },
   {
     id: "exeter-courses",
-    question: "Which courses are listed at the Exeter example base?",
-    answer: "Category C and Category C+E. Driver CPC, ADR and Operator CPC are not listed at Exeter.",
+    question: "Which courses can I take at Exeter?",
+    answer: "Category C and Category C+E. Our classroom courses run at Bristol and Taunton.",
     topics: ["general"],
     locationId: "exeter",
   },
   {
     id: "bristol-address",
-    question: "Is the Bristol address real?",
-    answer: "No. Bristol is an example location. No street address and no map pin are published.",
-    topics: ["provider"],
+    question: "Where is the Bristol base?",
+    answer: "Bristol is one of our three training bases. We send the site address and directions when your course is agreed.",
+    topics: ["general"],
     locationId: "bristol",
   },
   {
     id: "taunton-address",
-    question: "Is the Taunton address real?",
-    answer: "No. Taunton is an example location. No street address and no map pin are published.",
-    topics: ["provider"],
+    question: "Where is the Taunton base?",
+    answer: "Taunton is one of our three training bases. We send the site address and directions when your course is agreed.",
+    topics: ["general"],
     locationId: "taunton",
   },
   {
     id: "exeter-address",
-    question: "Is the Exeter address real?",
-    answer: "No. Exeter is an example location. No street address and no map pin are published.",
-    topics: ["provider"],
+    question: "Where is the Exeter base?",
+    answer: "Exeter is one of our three training bases. We send the site address and directions when your course is agreed.",
+    topics: ["general"],
     locationId: "exeter",
   },
 ];

@@ -16,10 +16,10 @@ export const site = {
   name: "Webco Professional",
   url: "https://webco-professional.co.uk",
   description:
-    "Demonstration of a Webco Professional website for an HGV and transport training provider: Category C, Category C+E, Driver CPC, ADR and Operator CPC, with example bases at Bristol, Taunton and Exeter.",
+    "HGV and transport training: Category C, Category C+E, Driver CPC, ADR and Operator CPC, from training bases in Bristol, Taunton and Exeter.",
   demoLine: "Demonstration website by Webco Media",
   footerSummary:
-    "Category C, Category C+E, Driver CPC, ADR and Operator CPC, with example bases at Bristol, Taunton and Exeter.",
+    "HGV and transport training at Bristol, Taunton and Exeter: Category C, Category C+E, Driver CPC, ADR and Operator CPC.",
   webcoMediaUrl: "",
   phoneDisplay: "01632 960214",
   phoneHref: "tel:+441632960214",
@@ -30,12 +30,12 @@ export const site = {
   /** POST URL for a small PHP form handler. Empty on this demonstration. */
   enquiryEndpoint: "",
   hours: [
-    { label: "Monday to Friday", value: "Example hours" },
-    { label: "Saturday and Sunday", value: "Example hours" },
+    { label: "Monday to Friday", value: "08:00 to 17:00" },
+    { label: "Saturday and Sunday", value: "Closed" },
   ],
-  hoursNote: "Example hours. Not a real opening schedule.",
+  hoursNote: "Outside these hours, use the enquiry form and we will reply on the next working day.",
   areasServed: ["Bristol", "Taunton", "Exeter"],
-  areasNote: "Example bases only. Nearby towns do not have their own pages.",
+  areasNote: "Our training bases serve learners in and around Bristol, Taunton and Exeter.",
   /** HTTPS map embed URL. Empty on this demonstration: no pin is shown. */
   mapEmbedUrl: "",
   /** Empty until a real Google reviews URL is supplied. No rating is stored. */

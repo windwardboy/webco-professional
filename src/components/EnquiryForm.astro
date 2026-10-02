@@ -60,9 +60,9 @@ const onlyLocation = publishedLocations()[0];
     {
       multipleLocations ? (
         <div class="field">
-          <label for="enquiry-location">Preferred location <span class="req">Required</span></label>
+          <label for="enquiry-location">Preferred base <span class="req">Required</span></label>
           <select id="enquiry-location" name="location" required>
-            <option value="" selected disabled>Choose a location</option>
+            <option value="" selected disabled>Choose a base</option>
             {publishedLocations().map((location) => (
               <option value={location.slug}>{location.name}</option>
             ))}

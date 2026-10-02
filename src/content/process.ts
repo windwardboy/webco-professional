@@ -3,26 +3,26 @@ import type { Step } from "./types";
 export const trainingJourney: readonly Step[] = [
   {
     title: "Say what you want to drive",
-    text: "Category C, Category C+E, Driver CPC, or one of the further courses. If you are not sure, say so.",
+    text: "Category C, Category C+E, Driver CPC, or one of the further courses. If you are not sure, tell us and we will help you choose.",
   },
   {
-    title: "Check the licence you hold",
-    text: "The current entitlement decides the medical, theory and practical steps. Nothing on this site confirms that a particular person qualifies.",
+    title: "We check the licence you hold",
+    text: "What you already hold decides the medical, theory and practical steps. We go through it with you before anything is arranged.",
   },
   {
-    title: "Train at the base that offers it",
-    text: "Each course lists the example bases where it runs. A base does not list a course it does not offer.",
+    title: "Train at the right base",
+    text: "Each course runs at the bases shown on its page, so you train where the course is offered.",
   },
   {
     title: "Prepare for the next step",
-    text: "That may be a practical test or periodic training hours. How booking works is explained when you enquire. No result is claimed here.",
+    text: "That may be a practical test or periodic training hours. We explain how booking works when you enquire.",
   },
 ];
 
 export const licenceStages: readonly Step[] = [
   {
     title: "Medical",
-    text: "A medical report is normally required before a lorry practical test. The current rules depend on the driver. This site does not confirm that anyone will pass.",
+    text: "A medical report is normally required before a lorry practical test. The requirements depend on the driver, so check current DVLA guidance for your own circumstances.",
   },
   {
     title: "Theory",
@@ -30,29 +30,29 @@ export const licenceStages: readonly Step[] = [
   },
   {
     title: "Practical training",
-    text: "Yard manoeuvres and road driving, in the kind of vehicle the course is for. No timetable is published here.",
+    text: "Yard manoeuvres and road driving, in the kind of vehicle the course is for. We agree dates with you when you enquire.",
   },
   {
     title: "Practical test",
-    text: "The test covers vehicle control and driving on the road. Test content is set officially. This site does not claim a pass.",
+    text: "The test covers vehicle control and driving on the road. Test content is set officially, and we explain what to expect.",
   },
 ];
 
 export const afterEnquiry: readonly Step[] = [
   {
     title: "You get in touch",
-    text: "Send the form, call, or email. Say which course you are asking about, and which example base you prefer, or say that you are not sure.",
+    text: "Send the form, call or email. Tell us which course you are asking about and which base you prefer, or say that you are not sure.",
   },
   {
     title: "We reply",
-    text: "Using the contact method you chose. This demonstration does not promise a response time.",
+    text: "We reply using the contact method you chose.",
   },
   {
-    title: "You agree what to discuss",
-    text: "The licence, the course and what you already hold. Nothing is booked from the form alone.",
+    title: "We talk through your options",
+    text: "The licence you hold, the course that fits and what comes next. Nothing is booked from the form alone.",
   },
   {
-    title: "Directions are not on this page",
-    text: "These are example bases, so no street address is published. Ask when you enquire.",
+    title: "You receive your joining details",
+    text: "Once a course is agreed, we send the site address, directions and parking details for your base.",
   },
 ];

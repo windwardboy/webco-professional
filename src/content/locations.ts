@@ -5,7 +5,7 @@ export type TrainingLocation = {
   slug: string;
   name: string;
   region: string;
-  /** Example bases stay labelled. A cloned client site sets this false for a real base. */
+  /** Sample bases stay labelled. A cloned client site sets this false for a real base. */
   sample: boolean;
   published: boolean;
   metaTitle: string;
@@ -24,7 +24,7 @@ export type TrainingLocation = {
 };
 
 /**
- * Example bases for the demonstration.
+ * Sample bases for the demonstration.
  * Publish a page only for a genuine training location. Do not add a town
  * because it is nearby.
  */
@@ -36,15 +36,18 @@ export const locations: readonly TrainingLocation[] = [
     region: "Bristol",
     sample: true,
     published: true,
-    metaTitle: "Bristol HGV training",
+    metaTitle: "HGV training in Bristol",
     metaDescription:
-      "Example Bristol training base. Category C, Category C+E, Driver CPC, ADR and Operator CPC. No street address is published.",
-    summary: "The widest course list: rigid, articulated, Driver CPC, ADR and Operator CPC.",
-    intro: "Example base. Practical licence training and the classroom courses are both listed here.",
+      "HGV training at our Bristol base: Category C, Category C+E, Driver CPC, ADR and Operator CPC. See what runs here and how to enquire.",
+    summary: "Our widest course list: Category C, Category C+E, Driver CPC, ADR and Operator CPC.",
+    intro:
+      "Our Bristol base brings practical licence training and classroom courses together. You can take Category C and Category C+E in the vehicle, and attend Driver CPC, ADR and Operator CPC in the classroom.",
     addressLines: [],
-    access: "Example location. No approach directions are published.",
-    parking: "Example location. Parking is not described, because this is not a real yard.",
-    localContext: "Example base for the Bristol area. No test centre and no local route is named.",
+    access:
+      "We send directions to the Bristol site when your course is confirmed, including the best approach if you are arriving by car.",
+    parking: "Learner car parking is available at the Bristol base. We confirm where to park when you book.",
+    localContext:
+      "Road driving from Bristol reflects the area around the base, with city traffic, main roads and the routes a working driver uses to move goods in and out of the city.",
     facilityIds: ["yard", "classroom", "parking"],
     vehicleIds: ["rigid", "artic"],
     instructorIds: ["driving", "classroom"],
@@ -56,15 +59,18 @@ export const locations: readonly TrainingLocation[] = [
     region: "Somerset",
     sample: true,
     published: true,
-    metaTitle: "Taunton HGV training",
+    metaTitle: "HGV training in Taunton",
     metaDescription:
-      "Example Taunton training base. Category C, Driver CPC and Operator CPC. Articulated training is not listed here. No street address is published.",
-    summary: "Category C, Driver CPC and Operator CPC. Articulated training is not listed here.",
-    intro: "Example base. The course list is shorter than Bristol on purpose: rigid training and classroom courses, not C+E.",
+      "HGV training at our Taunton base: Category C rigid lorry training, plus Driver CPC and Operator CPC classroom courses. See what runs here and how to enquire.",
+    summary: "Category C rigid lorry training, with Driver CPC and Operator CPC classroom courses.",
+    intro:
+      "Our Taunton base offers Category C rigid training alongside Driver CPC and Operator CPC in the classroom. If you need Category C+E or ADR, those run at our other bases.",
     addressLines: [],
-    access: "Example location. No approach directions are published.",
-    parking: "Example location. Parking is not described, because this is not a real yard.",
-    localContext: "Example base for the Taunton area. No test centre and no local route is named.",
+    access:
+      "We send directions to the Taunton site when your course is confirmed, including the best approach if you are arriving by car.",
+    parking: "Learner car parking is available at the Taunton base. We confirm where to park when you book.",
+    localContext:
+      "Road driving from Taunton covers the town and the Somerset roads around it, so you practise on the mix of town, main-road and country driving a working lorry driver meets.",
     facilityIds: ["yard", "classroom", "parking"],
     vehicleIds: ["rigid"],
     instructorIds: ["driving", "classroom"],
@@ -76,15 +82,18 @@ export const locations: readonly TrainingLocation[] = [
     region: "Devon",
     sample: true,
     published: true,
-    metaTitle: "Exeter HGV training",
+    metaTitle: "HGV training in Exeter",
     metaDescription:
-      "Example Exeter training base. Category C and Category C+E. Classroom courses are not listed here. No street address is published.",
-    summary: "Category C and Category C+E. Driver CPC, ADR and Operator CPC are not listed here.",
-    intro: "Example base for practical licence training, including articulated vehicles. Classroom courses are listed at Bristol and Taunton.",
+      "HGV licence training at our Exeter base: Category C and Category C+E, covering rigid and articulated vehicles. See what runs here and how to enquire.",
+    summary: "Category C and Category C+E licence training, covering rigid and articulated vehicles.",
+    intro:
+      "Our Exeter base focuses on practical licence training, from a first rigid lorry licence to the trailer entitlement. Our classroom courses run at the Bristol and Taunton bases.",
     addressLines: [],
-    access: "Example location. No approach directions are published.",
-    parking: "Example location. Parking is not described, because this is not a real yard.",
-    localContext: "Example base for the Exeter area. No test centre and no local route is named.",
+    access:
+      "We send directions to the Exeter site when your course is confirmed, including the best approach if you are arriving by car.",
+    parking: "Learner car parking is available at the Exeter base. We confirm where to park when you book.",
+    localContext:
+      "Road driving from Exeter covers city traffic and the roads out into Devon, so you practise on the kinds of route a working driver uses day to day.",
     facilityIds: ["yard", "parking"],
     vehicleIds: ["rigid", "artic"],
     instructorIds: ["driving"],

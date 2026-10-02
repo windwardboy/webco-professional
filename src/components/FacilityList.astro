@@ -9,8 +9,8 @@ interface Props {
 
 const { facilities = [], vehicles = [] } = Astro.props;
 const items = [
-  ...vehicles.map((item) => ({ ...item, kind: "Example vehicle" })),
-  ...facilities.map((item) => ({ ...item, kind: "Example facility" })),
+  ...vehicles.map((item) => ({ ...item, kind: "Vehicle" })),
+  ...facilities.map((item) => ({ ...item, kind: "Facility" })),
 ];
 ---
 
@@ -19,7 +19,7 @@ const items = [
     <ul class="trust">
       {items.map((item) => (
         <li>
-          <p class="card-kicker">{item.supplied ? item.kind.replace("Example ", "") : item.kind}</p>
+          <p class="card-kicker">{item.kind}</p>
           <h3>{item.title}</h3>
           <p>{item.text}</p>
         </li>

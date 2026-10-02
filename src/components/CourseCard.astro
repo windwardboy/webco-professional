@@ -13,7 +13,7 @@ const placeNames = locationsForCourse(course).map((location) => location.name);
 ---
 
 <li class="card">
-  <p class="card-kicker">{course.sample ? `Example course · ${course.kicker}` : course.kicker}</p>
+  <p class="card-kicker">{course.sample ? `Sample course · ${course.kicker}` : course.kicker}</p>
   <h3><a href={course.path}>{course.title}</a></h3>
   <p>{course.summary}</p>
   <p class="card-meta">Offered at {joinList(placeNames)}</p>

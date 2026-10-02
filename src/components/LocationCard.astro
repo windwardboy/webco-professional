@@ -13,7 +13,7 @@ const courseNames = coursesForLocation(location).map((course) => course.shortTit
 ---
 
 <li class="card">
-  <p class="card-kicker">{location.sample ? `Example location · ${location.region}` : location.region}</p>
+  <p class="card-kicker">{location.sample ? `Sample location · ${location.region}` : location.region}</p>
   <h3><a href={`/locations/${location.slug}/`}>{location.name}</a></h3>
   <p>{location.summary}</p>
   <p class="card-meta">{joinList(courseNames)}</p>

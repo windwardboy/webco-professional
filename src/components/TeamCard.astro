@@ -22,12 +22,12 @@ const placeNames = person.locationIds.flatMap((id) => {
     person.photo?.src ? (
       <ResponsiveImage image={person.photo} sizes="(min-width: 40rem) 16rem, 100vw" />
     ) : (
-      <div class="portrait-slot" role="img" aria-label="Example. No photograph.">
-        <p>No photograph</p>
+      <div class="portrait-slot" role="img" aria-label={person.role}>
+        <p>{person.role}</p>
       </div>
     )
   }
-  <p class="card-kicker">{example ? "Example profile" : person.role}</p>
+  <p class="card-kicker">{example ? "Instructor team" : person.role}</p>
   <h3>{example ? person.role : person.name}</h3>
   <p>{person.background}</p>
   {person.qualifications.length > 0 ? (

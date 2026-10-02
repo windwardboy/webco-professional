@@ -3,7 +3,6 @@ export type Facility = {
   title: string;
   text: string;
   locationIds: readonly string[];
-  /** False while the wording is an example, not a real yard. */
   supplied: boolean;
 };
 
@@ -11,21 +10,21 @@ export const facilities: readonly Facility[] = [
   {
     id: "yard",
     title: "Training yard",
-    text: "Example facility for vehicle manoeuvres. No yard is named.",
+    text: "Off-road space for vehicle familiarisation, reversing and manoeuvres, so the basics are secure before time on the road.",
     locationIds: ["bristol", "taunton", "exeter"],
     supplied: false,
   },
   {
     id: "classroom",
     title: "Classroom",
-    text: "Example room for Driver CPC, ADR and Operator CPC. No centre number is shown.",
+    text: "A classroom for Driver CPC, ADR and Operator CPC sessions.",
     locationIds: ["bristol", "taunton"],
     supplied: false,
   },
   {
     id: "parking",
     title: "Parking",
-    text: "Example note. Parking arrangements are not described.",
+    text: "Learner car parking at the base. We confirm where to park when your course is agreed.",
     locationIds: ["bristol", "taunton", "exeter"],
     supplied: false,
   },

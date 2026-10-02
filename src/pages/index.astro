@@ -33,8 +33,8 @@ const image = site.heroImage;
 ---
 
 <BaseLayout
-  title="HGV training"
-  description="Demonstration of an HGV and transport training website: Category C, Category C+E, Driver CPC, ADR and Operator CPC, with example bases at Bristol, Taunton and Exeter."
+  title="HGV training in Bristol, Taunton and Exeter"
+  description="Category C and Category C+E licence training, plus Driver CPC, ADR and Operator CPC courses, from training bases in Bristol, Taunton and Exeter. Enquire online or by phone."
 >
   <section class:list={["hero", image.src && "has-media"]}>
     {
@@ -99,14 +99,14 @@ const image = site.heroImage;
   </Section>
 
   <LearnerProof title={homepage.proofTitle} intro={homepage.proofIntro} items={testimonials} />
-  <p class="wrap section-more"><a href="/reviews/">Read the reviews page</a></p>
+  <p class="wrap section-more"><a href="/reviews/">Read more learner feedback</a></p>
 
   <Section id="operations" title={homepage.operationsTitle} intro={homepage.operationsIntro} band={true}>
     <ul class="cards">
       {visibleTeam().map((person) => <TeamCard person={person} />)}
     </ul>
     <FacilityList vehicles={vehicles} facilities={facilities} />
-    <p class="section-more"><a href="/team/">Team</a></p>
+    <p class="section-more"><a href="/team/">Instructors and team</a></p>
   </Section>
 
   <Section id="guides" title={homepage.guidesTitle} intro={homepage.guidesIntro}>

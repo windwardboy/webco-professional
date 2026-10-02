@@ -47,7 +47,7 @@ const crumbs = pageCrumbs([
 <BaseLayout title={location.metaTitle} description={location.metaDescription} crumbs={crumbs}>
   <PageHero
     crumbs={crumbs}
-    eyebrow={location.sample ? `Example location · ${location.region}` : location.region}
+    eyebrow={location.sample ? `Sample location · ${location.region}` : location.region}
     title={location.name}
     lede={location.summary}
   >
@@ -55,11 +55,6 @@ const crumbs = pageCrumbs([
       <a class="button" href={enquireHref({ location: location.slug })}>Enquire about {location.name}</a>
       <a class="button button-quiet" href={site.phoneHref}>Call {site.phoneDisplay}</a>
     </div>
-    {
-      location.sample ? (
-        <p class="example-caption">Example location. Not a real training site. No street address is published.</p>
-      ) : null
-    }
     <aside class="glance" slot="aside" aria-label={`Courses at ${location.name}`}>
       <h2>Courses here</h2>
       <ul class="glance-board">
@@ -86,7 +81,7 @@ const crumbs = pageCrumbs([
 
   <section class="block band" aria-labelledby="address">
     <div class="wrap">
-      <h2 id="address">Address and access</h2>
+      <h2 id="address">Getting here</h2>
       <div class="place-grid">
         <div>
           {
@@ -99,11 +94,8 @@ const crumbs = pageCrumbs([
                   </>
                 ))}
               </p>
-            ) : (
-              <p>No street address is published.</p>
-            )
+            ) : null
           }
-          <p class="example-caption">Example location. Not a real training site.</p>
           <h3>Getting there</h3>
           <p>{location.access}</p>
           <h3>Parking</h3>
@@ -123,7 +115,7 @@ const crumbs = pageCrumbs([
   <section class="block" aria-labelledby="courses-here">
     <div class="wrap">
       <h2 id="courses-here">Courses at {location.name}</h2>
-      <p class="measure">Only the courses linked to this example base.</p>
+      <p class="measure">The courses we run at {location.name}.</p>
       <ul class="cards">
         {offered.map((course) => <CourseCard course={course} locationSlug={location.slug} />)}
       </ul>
@@ -145,7 +137,7 @@ const crumbs = pageCrumbs([
       <section class="block" aria-labelledby="instructors">
         <div class="wrap">
           <h2 id="instructors">Instructors</h2>
-          <p class="section-intro">Example profiles associated with this base. No instructor is named.</p>
+          <p class="section-intro">The teams who deliver training at this base.</p>
           <ul class="cards">
             {people.map((person) => <TeamCard person={person} />)}
           </ul>
@@ -156,16 +148,16 @@ const crumbs = pageCrumbs([
 
   <section class="block band" aria-labelledby="local-context">
     <div class="wrap measure">
-      <h2 id="local-context">Local context</h2>
+      <h2 id="local-context">Local knowledge</h2>
       <p>{location.localContext}</p>
     </div>
   </section>
 
-  <LearnerProof id="local-proof" title="Learner feedback" intro="Example wording linked to this base." items={proof} />
+  <LearnerProof id="local-proof" title="Learner feedback" intro={`What learners say about training at ${location.name}.`} items={proof} />
   <FaqList id="location-faq" title={`Questions about ${location.name}`} items={faqsForLocation(location.id)} band={true} />
   <CtaBand
     title={`Ask about training at ${location.name}`}
-    lede="Choose a course offered at this example base, and how you would like to be contacted."
+    lede="Tell us which course you are interested in, and how you would like to be contacted."
     locationSlug={location.slug}
   />
 </BaseLayout>

@@ -15,8 +15,8 @@ const crumbs = pageCrumbs([{ label: "About", href: "/about/" }]);
 ---
 
 <BaseLayout
-  title="About"
-  description="About this HGV training demonstration: the courses, the example bases, and what is not claimed. No accreditation or pass rate is shown."
+  title="About us"
+  description="Webco Professional provides HGV and transport training: Category C, Category C+E, Driver CPC, ADR and Operator CPC, from bases in Bristol, Taunton and Exeter."
   crumbs={crumbs}
 >
   <PageHero crumbs={crumbs} eyebrow={aboutIntro.eyebrow} title={aboutIntro.title} lede={aboutIntro.lede} />
@@ -38,7 +38,7 @@ const crumbs = pageCrumbs([{ label: "About", href: "/about/" }]);
     <div class="wrap">
       <div class="section-head">
         <h2 id="facilities">Facilities and vehicles</h2>
-        <p class="section-intro">Examples only. No yard, make or fleet size is named.</p>
+        <p class="section-intro">The vehicles and facilities our bases use for practical and classroom training.</p>
       </div>
       <FacilityList facilities={facilities} vehicles={vehicles} />
     </div>
@@ -47,7 +47,7 @@ const crumbs = pageCrumbs([{ label: "About", href: "/about/" }]);
     <div class="wrap">
       <div class="section-head">
         <h2 id="local">Where training runs</h2>
-        <p class="section-intro">Three example bases. Nearby towns are not given their own pages.</p>
+        <p class="section-intro">Three bases across Bristol, Somerset and Devon, each with its own local roads and routes.</p>
       </div>
       <ul class="cards">
         {publishedLocations().map((location) => <LocationCard location={location} />)}
@@ -58,20 +58,20 @@ const crumbs = pageCrumbs([{ label: "About", href: "/about/" }]);
     <div class="wrap">
       <div class="section-head">
         <h2 id="team-preview">Instructors</h2>
-        <p class="section-intro">Example profiles. No name or qualification is shown.</p>
+        <p class="section-intro">The teams who deliver our licence and classroom courses.</p>
       </div>
       <ul class="cards">
         {visibleTeam().map((person) => <TeamCard person={person} />)}
       </ul>
-      <p class="section-more"><a href="/team/">Team page</a></p>
+      <p class="section-more"><a href="/team/">Instructors and team</a></p>
     </div>
   </section>
   <section class="block" aria-labelledby="proof-link">
     <div class="wrap measure">
       <h2 id="proof-link">Learner feedback</h2>
-      <p>The reviews on this site are examples. No rating is shown.</p>
-      <p><a href="/reviews/">Read the reviews page</a></p>
+      <p>Read what learners say about training with us.</p>
+      <p><a href="/reviews/">Read learner feedback</a></p>
     </div>
   </section>
-  <CtaBand title="Ask about training" lede="Say which course you want, and which example base you prefer." />
+  <CtaBand title="Ask about training" lede="Tell us which course you want, and which base you prefer." />
 </BaseLayout>

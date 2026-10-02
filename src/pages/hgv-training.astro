@@ -8,7 +8,6 @@ import PageHero from "../components/PageHero.astro";
 import ProcessSteps from "../components/ProcessSteps.astro";
 import Section from "../components/Section.astro";
 import { licenceStages, trainingJourney } from "../content/process";
-import { site } from "../config/site";
 import { coreCourses, overviewFaqs, publishedLocations, testimonialsForCourse } from "../lib/catalogue";
 import { pageCrumbs } from "../lib/links";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -20,28 +19,25 @@ const proof = courses.flatMap((course) => testimonialsForCourse(course.id));
 
 <BaseLayout
   title="HGV training overview"
-  description="Compare Category C, Category C+E and Driver CPC. Example bases at Bristol, Taunton and Exeter. No fees, durations or eligibility decisions are published."
+  description="Compare Category C, Category C+E and Driver CPC: what each covers, who it is for and how to choose between them. Training at Bristol, Taunton and Exeter."
   crumbs={crumbs}
 >
   <PageHero
     crumbs={crumbs}
     eyebrow="HGV training"
     title="HGV training"
-    lede="Category C, Category C+E and Driver CPC. This page compares the routes. It does not confirm eligibility, a price or a course length."
+    lede="Category C, Category C+E and Driver CPC compared, so you can see which route fits the vehicle you want to drive and the licence you already hold."
   >
     <div class="actions">
       <a class="button" href="/contact/#enquiry">Enquire now</a>
       <a class="button button-quiet" href="#which-licence">Which licence?</a>
     </div>
-    <p class="example-caption">
-      {site.phoneDisplay} is an example number. Bristol, Taunton and Exeter are example bases.
-    </p>
   </PageHero>
 
   <Section
     id="comparison"
     title="Licence comparison"
-    intro="Three routes. Each has its own page, so this overview stays a comparison."
+    intro="Three routes, each with its own page for the full detail."
     band={true}
   >
     <ul class="trust">
@@ -99,21 +95,21 @@ const proof = courses.flatMap((course) => testimonialsForCourse(course.id));
     </ul>
   </Section>
 
-  <Section id="cost" title="Costs" intro="No fee is listed. Ask for a quote for the training you need." narrow={true}>
+  <Section id="cost" title="Costs" intro="We quote for the training you need." narrow={true}>
     <p>
-      Medicals, theory tests and the practical test are separate costs where they apply. Those figures are not listed
-      on this demonstration.
+      We give you a quote once we know the licence you hold and the course you need. Medicals, theory tests and the
+      practical test are separate costs where they apply.
     </p>
     <p><a href="/contact/#enquiry">Ask for a quote</a></p>
   </Section>
 
-  <Section id="locations" title="Training locations" intro="Example bases. A course appears here only when that base lists it." band={true}>
+  <Section id="locations" title="Training locations" intro="Each base lists the courses it runs." band={true}>
     <ul class="cards">
       {publishedLocations().map((location) => <LocationCard location={location} />)}
     </ul>
   </Section>
 
-  <LearnerProof title="Learner feedback" intro="Example wording. Not a real review, and no score is shown." items={proof} />
+  <LearnerProof title="Learner feedback" intro="What learners say about these courses." items={proof} />
   <FaqList title="Questions" items={overviewFaqs()} band={true} />
-  <CtaBand title="Ask which route fits" lede="Say what you want to drive, or say that you are not sure yet." />
+  <CtaBand title="Ask which route fits" lede="Tell us what you want to drive, or say that you are not sure yet." />
 </BaseLayout>

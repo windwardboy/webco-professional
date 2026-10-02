@@ -5,27 +5,27 @@ export type TrustPoint = {
 
 /** Short labels for the homepage strip. No ratings or pass rates. */
 export const trustStrip: readonly string[] = [
-  "Category C",
-  "Category C+E",
-  "Driver CPC",
-  "Example bases: Bristol, Taunton, Exeter",
+  "Category C and Category C+E",
+  "Driver CPC, ADR and Operator CPC",
+  "Bristol, Taunton and Exeter",
+  "Practical and classroom courses",
 ];
 
 export const trustPoints: readonly TrustPoint[] = [
   {
-    title: "The course, stated plainly",
-    text: "Who it is for, what it leads to, and how the training runs, before anyone is asked to commit.",
+    title: "Clear about each course",
+    text: "We explain who a course is for, what it leads to and how it runs before you are asked to commit to anything.",
   },
   {
-    title: "Courses matched to a base",
-    text: "Each course lists the example bases that run it. A base does not advertise training it does not offer.",
+    title: "Courses matched to the right base",
+    text: "Each course page shows which of our bases run it, so you only see training you can actually take.",
   },
   {
     title: "Practical and classroom routes",
-    text: "Licence training is time in the vehicle. Driver CPC, ADR and Operator CPC are set out as their own courses.",
+    text: "Licence training is time in the vehicle. Driver CPC, ADR and Operator CPC are classroom courses, each with its own page.",
   },
   {
-    title: "A straight enquiry",
-    text: "The form asks for a course, a preferred base and how you would like to be contacted. It does not book a test.",
+    title: "A straightforward enquiry",
+    text: "Tell us the course, your preferred base and how to reach you. An enquiry does not book a test or commit you to anything.",
   },
 ];

@@ -52,7 +52,7 @@ const licenceSteps = (name: string): readonly Step[] => [
   },
   {
     title: "Check the licence you hold",
-    text: "The current entitlement is checked before training is arranged. This page does not confirm eligibility.",
+    text: "We check the entitlement you hold before training is arranged, so the plan fits your starting point.",
   },
   {
     title: "Train in the vehicle",
@@ -60,7 +60,7 @@ const licenceSteps = (name: string): readonly Step[] => [
   },
   {
     title: "Prepare for the practical test",
-    text: "How the test is booked is explained when you enquire. This site does not claim a result.",
+    text: "We explain how the test is booked when you enquire, and what to expect on the day.",
   },
 ];
 
@@ -79,7 +79,7 @@ export const courses: readonly Course[] = [
     sample: false,
     metaTitle: "Category C training",
     metaDescription:
-      "Category C rigid lorry training at the example bases that list it. Who it is for, what you can drive, and how to ask for a quote. No fee or duration is published.",
+      "Category C rigid lorry training at our Bristol, Taunton and Exeter bases. Who it is for, what you can drive, and how to ask for a quote.",
     summary: "Practical training for rigid goods vehicles over 3.5 tonnes, for drivers moving up from a car licence.",
     explanation:
       "Category C is the rigid lorry entitlement. It covers goods vehicles over 3.5 tonnes maximum authorised mass that are not articulated. Training is the practical preparation for that test: the vehicle, the manoeuvres and the road driving.",
@@ -89,13 +89,13 @@ export const courses: readonly Course[] = [
       "Rigid goods vehicles such as box wagons, tippers, flatbeds and similar lorries",
       "Not an articulated lorry or a drawbar outfit. That is Category C+E",
     ],
-    permitsNote: "The training vehicle is not named. No make or model is shown on this demonstration.",
+    permitsNote: "Training takes place in a rigid goods vehicle suited to the Category C practical test.",
     eligibility: [
       "A category B car licence is the usual starting point",
       "A medical assessment is normally required before a lorry practical test",
       "Theory tests sit alongside the time in the vehicle",
       "Paid driving work can also require Driver CPC, which is a separate qualification",
-      "Age and medical rules depend on the person and the work. This page does not confirm that someone qualifies",
+      "Age and medical requirements depend on the individual and the work, so we check these with you when you enquire",
     ],
     includes: [
       "Familiarisation with a rigid goods vehicle",
@@ -104,7 +104,7 @@ export const courses: readonly Course[] = [
       "Guidance on what the practical test involves",
     ],
     steps: licenceSteps("Category C"),
-    format: "Yard work and road driving from the bases that list Category C. Dates are agreed when you enquire.",
+    format: "Yard work and road driving, run from each base that offers Category C. We agree dates with you when you enquire.",
     duration: "",
     priceNote: "",
     locationIds: ["bristol", "taunton", "exeter"],
@@ -120,7 +120,7 @@ export const courses: readonly Course[] = [
     slug: "category-ce",
     path: "/category-ce-training/",
     title: "Category C+E",
-    shortTitle: "C+E",
+    shortTitle: "Category C+E",
     navLabel: "Category C+E",
     kicker: "Articulated and drawbar",
     group: "core",
@@ -129,18 +129,18 @@ export const courses: readonly Course[] = [
     sample: false,
     metaTitle: "Category C+E training",
     metaDescription:
-      "Category C+E trailer training for drivers who already hold Category C. Offered at the example bases that list it. No fee or duration is published.",
+      "Category C+E trailer training for drivers who already hold Category C, covering articulated and drawbar combinations, at our Bristol and Exeter bases.",
     summary: "Trailer training for drivers who already hold Category C and need the articulated or drawbar entitlement.",
     explanation:
       "Category C+E adds a trailer to the rigid entitlement. It is the licence used for articulated lorries and for drawbar combinations. It is not the first step up from a car licence.",
     audience: "Drivers who already hold Category C and need to add the trailer entitlement.",
     permits: ["Articulated goods vehicles", "Rigid lorries towing a drawbar trailer"],
-    permitsNote: "The unit and the trailer are not named on this demonstration.",
+    permitsNote: "Coupling and uncoupling are practised in the yard before you drive the combination on the road.",
     eligibility: [
       "Category C is the usual entitlement held before C+E training",
       "The licence you hold is checked before training is arranged",
       "Any medical or theory steps that still apply are explained at that point",
-      "This page is general guidance. It does not confirm eligibility for an individual",
+      "This page is general guidance, and we confirm eligibility with you individually when you enquire",
     ],
     includes: [
       "Coupling and uncoupling",
@@ -150,7 +150,7 @@ export const courses: readonly Course[] = [
     ],
     steps: licenceSteps("Category C+E"),
     format:
-      "Yard work for coupling, uncoupling and reversing, then on-road driving. Offered at the example bases that list Category C+E.",
+      "Yard work for coupling, uncoupling and reversing, then on-road driving. Offered at the bases shown on this page.",
     duration: "",
     priceNote: "",
     locationIds: ["bristol", "exeter"],
@@ -175,7 +175,7 @@ export const courses: readonly Course[] = [
     sample: false,
     metaTitle: "Driver CPC training",
     metaDescription:
-      "Periodic Driver CPC for professional drivers, at the example bases that list it. Not a vehicle category. No module code, date or fee is published.",
+      "Periodic Driver CPC classroom training for professional lorry and bus drivers, at our Bristol and Taunton bases. A professional qualification, not a vehicle category.",
     summary: "Periodic training for professional drivers who need hours towards a Driver Qualification Card.",
     explanation:
       "Driver CPC is the professional qualification for people who drive lorries or buses for a living. It is not a vehicle category. Category C and Category C+E are the licence entitlements. Driver CPC sits alongside that work for drivers who need a Driver Qualification Card.",
@@ -186,17 +186,17 @@ export const courses: readonly Course[] = [
       "Not a licence to drive a larger vehicle. That remains Category C or Category C+E",
     ],
     permitsNote:
-      "Periodic CPC is widely described as 35 hours across five years. Rules change, so a driver should check current official guidance for their own card. This site does not calculate anyone’s hours.",
+      "Periodic Driver CPC is 35 hours of training across a five-year period. Requirements can change, so check current official guidance for your own card.",
     eligibility: [
       "A professional lorry or bus entitlement is the usual starting point for periodic training",
-      "Initial Driver CPC is the route for a new professional driver, and it is not listed as a course here",
-      "No module code, approval number or centre number is published",
+      "Initial Driver CPC is the route for a new professional driver. This course is periodic training only",
+      "We confirm which module suits the hours you still need when you enquire",
     ],
     includes: [
-      "A classroom periodic module",
-      "Who the session is for",
-      "How the hours are described against the five-year requirement",
-      "A way to ask about dates",
+      "A classroom periodic training module",
+      "Clear guidance on who the session is for",
+      "An explanation of how the hours count towards the five-year requirement",
+      "Dates agreed with you when you enquire",
     ],
     steps: [
       {
@@ -209,15 +209,15 @@ export const courses: readonly Course[] = [
       },
       {
         title: "Attend the module",
-        text: "A set block of training. No timetable is published on this page.",
+        text: "A set block of classroom training. We confirm the date and time when you enquire.",
       },
       {
         title: "Keep the record of the hours",
-        text: "How the hours are recorded is explained when you enquire. This page does not check a card.",
+        text: "We explain how your hours are recorded, so you can keep track of them towards your five-year requirement.",
       },
     ],
     format:
-      "Classroom periodic training at the example bases that list it. A practical element is included only when the real module has one. None is named here.",
+      "Classroom periodic training at our Bristol and Taunton bases. We confirm the module and date when you enquire.",
     duration: "",
     priceNote: "",
     locationIds: ["bristol", "taunton"],
@@ -242,24 +242,25 @@ export const courses: readonly Course[] = [
     sample: true,
     metaTitle: "ADR training",
     metaDescription:
-      "Example ADR course for drivers who carry dangerous goods by road. No classes, approval number, fee or date are published.",
-    summary: "Example course for drivers who carry dangerous goods by road.",
+      "ADR training for drivers who carry dangerous goods by road, at our Bristol base. Who the course is for and how to ask about dates.",
+    summary: "Training for drivers who carry dangerous goods by road.",
     explanation:
-      "ADR is the training associated with the carriage of dangerous goods by road. This page is an example course. It does not name classes, tanks or packages, and it does not claim an approval number.",
+      "ADR is the training associated with carrying dangerous goods by road. The course you need depends on what you carry and how it is carried, so we confirm the right one with you before you book.",
     audience:
       "Drivers who need ADR training for the work they do. Whether that is an initial course or a refresher, and which classes apply, is confirmed when you enquire.",
     permits: ["Training towards carrying dangerous goods by road, in the form the course actually covers"],
-    permitsNote: "Classes, packages and tanks are not listed, because none are specified on this example course.",
+    permitsNote:
+      "The right course depends on the classes of goods you carry and whether they travel in packages or in tanks. We confirm this when you enquire.",
     eligibility: [
       "A driving entitlement suited to the vehicle being used",
-      "A note of which ADR classes are needed. None are stated here",
-      "This example page does not confirm that a particular driver needs ADR",
+      "A clear idea of which classes of dangerous goods you carry",
+      "We help you confirm whether ADR applies to the work you do",
     ],
     includes: [
-      "Who the course is for",
-      "Whether it is initial training or a refresher, confirmed when you enquire",
-      "The classes covered, named only when they are real",
-      "The example base that lists the course",
+      "A clear explanation of who the course is for",
+      "Initial or refresher training, confirmed when you enquire",
+      "The classes of dangerous goods the course covers",
+      "Classroom training at our Bristol base",
     ],
     steps: [
       {
@@ -268,18 +269,18 @@ export const courses: readonly Course[] = [
       },
       {
         title: "Confirm the course type",
-        text: "Initial or refresher, packages or tanks, and the classes. None of those are fixed on this example page.",
+        text: "Initial or refresher, packages or tanks, and the classes you need. We agree these with you before you book.",
       },
       {
         title: "Attend the course",
-        text: "Classroom training, with a practical element only where the real course includes one.",
+        text: "Classroom training at the base that runs the course.",
       },
       {
         title: "Ask about the certificate",
-        text: "How a certificate is issued is explained when you enquire. No approval is claimed here.",
+        text: "We explain how your certificate is issued when you enquire.",
       },
     ],
-    format: "Example classroom course at the base that lists ADR. No syllabus code is published.",
+    format: "Classroom course at our Bristol base. We confirm dates when you enquire.",
     duration: "",
     priceNote: "",
     locationIds: ["bristol"],
@@ -304,10 +305,10 @@ export const courses: readonly Course[] = [
     sample: true,
     metaTitle: "Operator CPC training",
     metaDescription:
-      "Example Operator CPC course for transport managers. Separate from Driver CPC. No exam date, fee or pass mark is published.",
-    summary: "Example course for people preparing for the transport-manager qualification.",
+      "Operator CPC preparation for transport managers, at our Bristol and Taunton bases. Separate from Driver CPC.",
+    summary: "Preparation for people working towards the transport-manager qualification.",
     explanation:
-      "Operator CPC is the qualification associated with being a transport manager on a goods-vehicle operator licence. It is not Driver CPC, and it is not a driving entitlement. This page is an example course. It does not state an exam date, a fee or a pass mark.",
+      "Operator CPC is the qualification associated with being a transport manager on a goods-vehicle operator licence. It is not Driver CPC, and it is not a driving entitlement.",
     audience:
       "People who need the transport-manager qualification, or who want to understand what it covers before they book. It is not periodic driver training.",
     permits: [
@@ -315,17 +316,17 @@ export const courses: readonly Course[] = [
       "Not a Driver Qualification Card, and not a Category C or C+E licence",
     ],
     permitsNote:
-      "The examining body and the current exam format should be checked against official guidance. This example page does not set either.",
+      "The examining body and the current exam format are set officially, so check the latest guidance. We explain what the preparation covers when you enquire.",
     eligibility: [
       "No driving entitlement is assumed",
       "The difference between Operator CPC and Driver CPC is explained before anyone books",
-      "This page does not confirm that a person needs the qualification for their licence",
+      "We can talk through whether the qualification applies to your role",
     ],
     includes: [
       "How Operator CPC differs from Driver CPC",
       "What the study covers, in outline",
-      "How to ask about dates",
-      "The example bases that list the course",
+      "Dates agreed with you when you enquire",
+      "Classroom preparation at our Bristol and Taunton bases",
     ],
     steps: [
       {
@@ -334,18 +335,18 @@ export const courses: readonly Course[] = [
       },
       {
         title: "Confirm the exams you are aiming for",
-        text: "The current format is checked against official guidance. It is not stated as a pass mark here.",
+        text: "We check the current exam format against official guidance, so you know what you are preparing for.",
       },
       {
         title: "Study for the qualification",
-        text: "Classroom preparation. No timetable is published on this example page.",
+        text: "Classroom preparation for the exams. We confirm the timetable when you enquire.",
       },
       {
         title: "Ask how the exam is booked",
-        text: "Booking is explained when you enquire. This site does not claim a result.",
+        text: "We explain how the exams are booked when you enquire.",
       },
     ],
-    format: "Example classroom course at the bases that list Operator CPC.",
+    format: "Classroom course at our Bristol and Taunton bases. We confirm dates when you enquire.",
     duration: "",
     priceNote: "",
     locationIds: ["bristol", "taunton"],
