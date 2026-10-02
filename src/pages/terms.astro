@@ -1,0 +1,57 @@
+---
+import PageHero from "../components/PageHero.astro";
+import { site } from "../config/site";
+import { pageCrumbs } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "Website terms", href: "/terms/" }]);
+---
+
+<BaseLayout
+  title="Website terms"
+  description="Example website terms for this demonstration. They are not a contract for HGV training and they do not invent a legal entity."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Example terms"
+    title="Website terms"
+    lede="These are example terms for the Webco Professional demonstration. They are not a contract with a training provider, and they are not legal advice."
+  >
+    <p class="example-caption">
+      They do not state a company number, VAT number, registered office, accreditation or other legal-entity details. Those have not been supplied, and this page does not invent them.
+    </p>
+  </PageHero>
+  <section class="block" aria-labelledby="terms-demo">
+    <div class="wrap legal-copy">
+      <h2 id="terms-demo">The site is a demonstration</h2>
+      <p>
+        Webco Professional is a fictional name used on a demonstration website by Webco Media. The courses, bases, instructor descriptions, reviews, hours and contact details are samples. Using the site does not create an agreement to provide training, a place on a course, or a booking for a test.
+      </p>
+      <h2 id="terms-enquiries">Enquiries</h2>
+      <p>
+        The enquiry form does not send or store what you type. A notice on the form says so. Submitting it does not reserve training and does not oblige anyone to reply. The phone number, email address and WhatsApp number on the site are samples. {site.email} is not presented as a monitored mailbox of a training business.
+      </p>
+      <h2 id="terms-content">Sample information</h2>
+      <p>
+        Course descriptions are general guidance for the demonstration. They are not an eligibility decision, a quote, or a statement of a fee or a duration. Where a fee or a duration is not known, the page says it is confirmed when you enquire. Reviews are labelled as samples. Do not rely on this site as official guidance for a licence, a medical, or a test. Those rules are set elsewhere and can change.
+      </p>
+      <h2 id="terms-use">Using the site</h2>
+      <p>
+        Do not attempt to misuse the form, interfere with the site, or present the sample content as the offer of a real provider. You may read the pages and follow the links.
+      </p>
+      <h2 id="terms-third">Links to other services</h2>
+      <p>
+        A WhatsApp link leaves this site if you choose it. Phone and email links open your own apps. This demonstration does not control those services. No map and no analytics service is embedded while those settings stay empty.
+      </p>
+      <h2 id="terms-liability">Liability of the demonstration</h2>
+      <p>
+        The demonstration is a sample of how a provider’s website could be structured. It is not offered as a source of professional, legal, or licensing advice. To the extent the law allows an example site to say so, Webco Media does not accept responsibility for decisions made in reliance on the sample content. A real provider’s terms would need their own wording, written for that provider.
+      </p>
+      <h2 id="terms-replace">What must be replaced for a real site</h2>
+      <p>
+        Before a customer site goes live, these terms must be replaced with terms written for the real organisation. That replacement would need the organisation’s actual identity and contact details, what the enquiry form really does, and any law and courts that apply to that organisation. This page deliberately does not choose those. The <a href="/privacy/">privacy policy</a> and <a href="/cookies/">cookie policy</a> are example text as well.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,6 +1,14 @@
 import { trainingNav } from "../content/courses";
 import { publishedLocations } from "../content/locations";
 
+function listAnd(items: readonly string[]): string {
+  if (items.length <= 1) return items[0] ?? "";
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
+}
+
+const baseNames = publishedLocations().map((location) => location.name);
+
 /**
  * Site-wide facts for a Professional client site.
  *
@@ -34,15 +42,20 @@ export const site = {
     { label: "Saturday and Sunday", value: "Closed" },
   ],
   hoursNote: "Outside these hours, use the enquiry form and we will reply on the next working day.",
-  areasServed: ["Bristol", "Taunton", "Exeter"],
-  areasNote: "Our training bases serve learners in and around Bristol, Taunton and Exeter.",
+  areasServed: baseNames,
+  areasNote: `Our training bases serve learners in and around ${listAnd(baseNames)}.`,
   /** HTTPS map embed URL. Empty on this demonstration: no pin is shown. */
   mapEmbedUrl: "",
   /** Empty until a real Google reviews URL is supplied. No rating is stored. */
   googleReviewsUrl: "",
   /** Google Search Console verification token. Leave empty until issued. */
   googleSiteVerification: "",
-  /** GA4 measurement id, such as G-XXXXXXXX. Leave empty until issued. */
+  /**
+   * GA4 measurement id, such as G-XXXXXXXX. Leave empty.
+   * A valid id injects the Google tag on every page, which sets cookies.
+   * Do not fill this in until a consent step gates that script.
+   * This demonstration does not load analytics.
+   */
   analyticsId: "",
   heroImage: {
     src: "/images/hero-2072.jpg",
@@ -76,6 +89,12 @@ const locationNav: readonly NavItem[] =
         },
       ]
     : [];
+
+export const legalNav: readonly { href: string; label: string; rel?: string }[] = [
+  { href: "/privacy/", label: "Privacy policy", rel: "privacy-policy" },
+  { href: "/cookies/", label: "Cookie policy" },
+  { href: "/terms/", label: "Website terms", rel: "terms-of-service" },
+];
 
 export const nav: readonly NavItem[] = [
   { href: "/hgv-training/", label: "Training", children: trainingNav },

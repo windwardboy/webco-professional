@@ -18,9 +18,13 @@ export function isNavCurrent(pathname: string, href: string): boolean {
   return current === target || current.startsWith(`${target}/`);
 }
 
-/** Accept only a same-site path or an https URL as the form action. */
+/**
+ * Accept only a same-site path or an https URL as the form action.
+ * Protocol-relative URLs (`//host`) start with `/` but must not be treated as local.
+ */
 export function enquiryAction(endpoint: string): string | null {
-  if (endpoint.startsWith("/") || endpoint.startsWith("https://")) return endpoint;
+  if (endpoint.startsWith("/") && !endpoint.startsWith("//")) return endpoint;
+  if (endpoint.startsWith("https://")) return endpoint;
   return null;
 }
 

@@ -1,3 +1,6 @@
+import { publishedLocations } from "./locations";
+import { joinList } from "../lib/links";
+
 export type TrustPoint = {
   title: string;
   text: string;
@@ -7,7 +10,7 @@ export type TrustPoint = {
 export const trustStrip: readonly string[] = [
   "Category C and Category C+E",
   "Driver CPC, ADR and Operator CPC",
-  "Bristol, Taunton and Exeter",
+  joinList(publishedLocations().map((location) => location.name)),
   "Practical and classroom courses",
 ];
 

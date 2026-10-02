@@ -22,7 +22,7 @@ const onlyLocation = publishedLocations()[0];
   data-demo={demo ? "true" : "false"}
   method={demo ? "dialog" : "post"}
   action={action ?? undefined}
-  aria-describedby={demo ? "enquiry-demo-note" : undefined}
+  aria-describedby={demo ? "enquiry-demo-note" : "enquiry-privacy-note"}
 >
   <div class="field">
     <label for="enquiry-name">Name <span class="req">Required</span></label>
@@ -30,8 +30,16 @@ const onlyLocation = publishedLocations()[0];
   </div>
   <div class="field-row">
     <div class="field">
-      <label for="enquiry-phone">Phone <span class="req">Optional</span></label>
-      <input id="enquiry-phone" name="phone" type="tel" autocomplete="tel" />
+      <label for="enquiry-phone">Phone <span class="req" data-phone-req>Optional</span></label>
+      <input
+        id="enquiry-phone"
+        name="phone"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        pattern="[+0-9() -]{10,30}"
+        title="Use digits, spaces, brackets and a leading + only."
+      />
     </div>
     <div class="field">
       <label for="enquiry-email">Email <span class="req">Required</span></label>
@@ -100,13 +108,21 @@ const onlyLocation = publishedLocations()[0];
   {
     demo ? (
       <p id="enquiry-demo-note" class="form-note">
-        This demonstration form does not send messages. Nothing you type is stored.
+        This demonstration form does not send messages. Nothing you type is stored. See the <a href="/privacy/" rel="privacy-policy">privacy policy</a>.
+      </p>
+    ) : (
+      <p id="enquiry-privacy-note" class="form-note">
+        Read the <a href="/privacy/" rel="privacy-policy">privacy policy</a> before you send this form.
+      </p>
+    )
+  }
+  {
+    demo ? (
+      <p class="form-result" data-enquiry-result role="status" hidden tabindex="-1">
+        This is a demonstration. Your enquiry was not sent.
       </p>
     ) : null
   }
-  <p class="form-result" data-enquiry-result role="status" hidden tabindex="-1">
-    This is a demonstration. Your enquiry was not sent.
-  </p>
   <div class="form-actions">
     <button class="button" type="submit">Send enquiry</button>
   </div>
@@ -117,9 +133,13 @@ const onlyLocation = publishedLocations()[0];
     if (!(node instanceof HTMLFormElement)) return;
     const form = node;
     const params = new URLSearchParams(location.search);
+    const phone = form.querySelector("#enquiry-phone");
+    const name = form.querySelector("#enquiry-name");
+    const message = form.querySelector("#enquiry-message");
+    const phoneReq = form.querySelector("[data-phone-req]");
 
-    const selectValue = (name: string, value: string | null) => {
-      const select = form.querySelector(`select[name='${name}']`);
+    const selectValue = (field: string, value: string | null) => {
+      const select = form.querySelector(`select[name='${field}']`);
       if (!value || !(select instanceof HTMLSelectElement)) return;
       if ([...select.options].some((option) => option.value === value)) {
         select.value = value;
@@ -129,14 +149,73 @@ const onlyLocation = publishedLocations()[0];
     selectValue("course", params.get("course"));
     selectValue("location", params.get("location"));
 
+    const selectedMethod = () => {
+      const picked = form.querySelector("input[name='contact_method']:checked");
+      return picked instanceof HTMLInputElement ? picked.value : "";
+    };
+
+    const phoneError = (value: string, method: string) => {
+      const trimmed = value.trim();
+      const needsPhone = method === "phone" || method === "whatsapp";
+      if (trimmed === "") {
+        if (!needsPhone) return "";
+        return method === "whatsapp" ? "Enter the number to use on WhatsApp." : "Enter a phone number.";
+      }
+      if (!/^[+0-9() -]+$/.test(trimmed)) return "Use digits, spaces, brackets and a leading + only.";
+      const digits = trimmed.replace(/\D/g, "").length;
+      if (digits < 10 || digits > 15) return "Enter a phone number with 10 to 15 digits.";
+      return "";
+    };
+
+    const syncPhone = () => {
+      if (!(phone instanceof HTMLInputElement)) return;
+      const method = selectedMethod();
+      const needsPhone = method === "phone" || method === "whatsapp";
+      phone.required = needsPhone;
+      phone.setCustomValidity(phoneError(phone.value, method));
+      if (phoneReq) phoneReq.textContent = needsPhone ? "Required" : "Optional";
+    };
+
+    form.addEventListener("change", (event) => {
+      const target = event.target;
+      if (target instanceof HTMLInputElement && target.name === "contact_method") syncPhone();
+    });
+
+    form.addEventListener("input", (event) => {
+      const target = event.target;
+      if (target === phone && phone instanceof HTMLInputElement) {
+        const method = selectedMethod();
+        const needsPhone = method === "phone" || method === "whatsapp";
+        phone.required = needsPhone;
+        if (phoneReq) phoneReq.textContent = needsPhone ? "Required" : "Optional";
+        if (phoneError(phone.value, method) === "") phone.setCustomValidity("");
+        return;
+      }
+      if (target === name && name instanceof HTMLInputElement) {
+        if (name.value.trim() !== "") name.setCustomValidity("");
+      }
+      if (target === message && message instanceof HTMLTextAreaElement) {
+        if (message.value.trim() !== "") message.setCustomValidity("");
+      }
+    });
+
     form.addEventListener("submit", (event) => {
-      if (form.dataset.demo !== "true") return;
-      event.preventDefault();
+      const result = form.querySelector("[data-enquiry-result]");
+      if (result instanceof HTMLElement) result.hidden = true;
+      syncPhone();
+      if (name instanceof HTMLInputElement) {
+        name.setCustomValidity(name.value.trim() === "" ? "Enter your name." : "");
+      }
+      if (message instanceof HTMLTextAreaElement) {
+        message.setCustomValidity(message.value.trim() === "" ? "Enter a message." : "");
+      }
       if (!form.checkValidity()) {
+        event.preventDefault();
         form.reportValidity();
         return;
       }
-      const result = form.querySelector("[data-enquiry-result]");
+      if (form.dataset.demo !== "true") return;
+      event.preventDefault();
       if (result instanceof HTMLElement) {
         result.hidden = false;
         result.focus();

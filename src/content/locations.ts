@@ -87,7 +87,7 @@ export const locations: readonly TrainingLocation[] = [
       "HGV licence training at our Exeter base: Category C and Category C+E, covering rigid and articulated vehicles. See what runs here and how to enquire.",
     summary: "Category C and Category C+E licence training, covering rigid and articulated vehicles.",
     intro:
-      "Our Exeter base focuses on practical licence training, from a first rigid lorry licence to the trailer entitlement. Our classroom courses run at the Bristol and Taunton bases.",
+      "Our Exeter base focuses on practical licence training, from a first rigid lorry licence to the trailer entitlement. Driver CPC and Operator CPC run at Bristol and Taunton, and ADR runs at Bristol.",
     addressLines: [],
     access:
       "We send directions to the Exeter site when your course is confirmed, including the best approach if you are arriving by car.",

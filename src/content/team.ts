@@ -25,7 +25,7 @@ export const team: readonly TeamMember[] = [
     role: "Driving instructors",
     qualifications: [],
     background:
-      "Our driving instructors take learners through Category C and Category C+E training: getting to know the vehicle, yard manoeuvres, coupling and uncoupling, and road driving. They also explain what the practical test involves.",
+      "Our driving instructors take learners through practical licence training: getting to know the vehicle, yard manoeuvres, coupling and uncoupling, and road driving. They also explain what the practical test involves.",
     courseIds: ["category-c", "category-ce"],
     locationIds: ["bristol", "taunton", "exeter"],
   },
@@ -36,7 +36,7 @@ export const team: readonly TeamMember[] = [
     role: "Classroom instructors",
     qualifications: [],
     background:
-      "Our classroom instructors run the Driver CPC, ADR and Operator CPC courses. They explain what each course covers, who it is for, and how it differs from the licence routes.",
+      "Our classroom instructors run the classroom courses. They explain what each course covers, who it is for, and how it differs from the licence routes.",
     courseIds: ["driver-cpc", "adr", "operator-cpc"],
     locationIds: ["bristol", "taunton"],
   },

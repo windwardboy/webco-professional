@@ -174,7 +174,7 @@ export const faqs: readonly Faq[] = [
   {
     id: "exeter-courses",
     question: "Which courses can I take at Exeter?",
-    answer: "Category C and Category C+E. Our classroom courses run at Bristol and Taunton.",
+    answer: "Category C and Category C+E. Driver CPC and Operator CPC run at Bristol and Taunton. ADR runs at Bristol.",
     topics: ["general"],
     locationId: "exeter",
   },

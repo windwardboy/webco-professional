@@ -17,7 +17,7 @@ export const facilities: readonly Facility[] = [
   {
     id: "classroom",
     title: "Classroom",
-    text: "A classroom for Driver CPC, ADR and Operator CPC sessions.",
+    text: "A classroom for Driver CPC and Operator CPC. ADR uses the classroom at the Bristol base.",
     locationIds: ["bristol", "taunton"],
     supplied: false,
   },

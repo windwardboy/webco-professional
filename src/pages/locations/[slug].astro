@@ -139,7 +139,7 @@ const crumbs = pageCrumbs([
           <h2 id="instructors">Instructors</h2>
           <p class="section-intro">The teams who deliver training at this base.</p>
           <ul class="cards">
-            {people.map((person) => <TeamCard person={person} />)}
+            {people.map((person) => <TeamCard person={person} locationId={location.id} />)}
           </ul>
         </div>
       </section>

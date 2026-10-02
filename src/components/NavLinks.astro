@@ -26,14 +26,9 @@ const pathname = Astro.url.pathname;
             <ul class="submenu">
               {children.map((child) => {
                 const childExact = isCurrentPath(pathname, child.href);
-                const childSection = isNavCurrent(pathname, child.href) && !childExact;
                 return (
                   <li>
-                    <a
-                      href={child.href}
-                      aria-current={childExact ? "page" : undefined}
-                      class:list={[childSection && "is-section"]}
-                    >
+                    <a href={child.href} aria-current={childExact ? "page" : undefined}>
                       {child.label}
                     </a>
                   </li>

@@ -1,0 +1,61 @@
+---
+import PageHero from "../components/PageHero.astro";
+import { pageCrumbs } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "Cookie policy", href: "/cookies/" }]);
+---
+
+<BaseLayout
+  title="Cookie policy"
+  description="Example cookie policy for this demonstration website. It records that the site does not set cookies or load non-essential tracking."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Example policy"
+    title="Cookie policy"
+    lede="This is example text for the Webco Professional demonstration. It describes the current site, not a live training business."
+  >
+    <p class="example-caption">
+      It does not state a company number, VAT number, registered office, accreditation or other legal-entity details.
+    </p>
+  </PageHero>
+  <section class="block" aria-labelledby="cookies-now">
+    <div class="wrap legal-copy">
+      <h2 id="cookies-now">What the site does now</h2>
+      <p>This demonstration does not set cookies. It also does not use:</p>
+      <ul class="prose-list">
+        <li>local storage or session storage</li>
+        <li>Google Analytics, Google Tag Manager, or any other analytics tag</li>
+        <li>advertising or social pixels</li>
+        <li>an embedded map</li>
+        <li>a chat widget or other third-party script</li>
+      </ul>
+      <p>
+        Fonts are files built with the site, not loaded from a third-party font service. The enquiry form does not write what you type into the browser’s storage. See the <a href="/privacy/">privacy policy</a> for what the form asks for and why it is not sent.
+      </p>
+      <h2 id="cookies-config">Settings that are present but switched off</h2>
+      <p>
+        The site configuration has a place for a Google Analytics measurement id. It is empty. While it is empty, the Google tag is not included in the page and no analytics cookie is set. Putting an id there would load Google’s script on every page before anyone is asked, and that script sets cookies. Do not add an id until a consent step is built so the script stays unloaded until the visitor agrees.
+      </p>
+      <p>
+        The contact page can show a map only when an https embed address is supplied. None is supplied, so no map is embedded and no map provider is contacted. Adding one later can let that provider set cookies. That would need a fresh decision, and this page would need to name it.
+      </p>
+      <p>
+        A Google reviews link is also optional and is empty, so the reviews page does not send you to Google unless a real reviews address is added later.
+      </p>
+      <h2 id="cookies-links">Links that leave the site</h2>
+      <p>
+        Phone and email links open your own apps. A WhatsApp link opens WhatsApp only if you choose it. That is a visit to WhatsApp, not a script running on this site. This page does not control WhatsApp’s cookies.
+      </p>
+      <h2 id="cookies-banner">Why there is no consent banner</h2>
+      <p>
+        A banner is for non-essential cookies or similar tracking that would otherwise load immediately. Nothing like that runs on this demonstration, so a banner is not shown. Adding one for appearance would ask for a choice that does not change anything.
+      </p>
+      <p>
+        If analytics, a map, advertising, or any other non-essential storage is added, it must not load before consent, and this page must be updated to name it. The <a href="/terms/">website terms</a> are example text as well.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

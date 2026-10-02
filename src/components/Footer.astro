@@ -1,12 +1,15 @@
 ---
-import { site } from "../config/site";
+import { legalNav, site } from "../config/site";
 import { additionalCourses, coreCourses, featuredGuides, publishedLocations } from "../lib/catalogue";
+import { isCurrentPath } from "../lib/links";
+
+const pathname = Astro.url.pathname;
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div class="footer-about">
-      <a class="footer-logo" href="/" aria-label={site.name}>
+      <a class="footer-logo" href="/" aria-label={site.name} aria-current={isCurrentPath(pathname, "/") ? "page" : undefined}>
         <img class="logo-full" src="/logo-reversed.png" width="444" height="160" alt="" />
       </a>
       <p>{site.demoLine}. {site.footerSummary}</p>
@@ -94,6 +97,17 @@ import { additionalCourses, coreCourses, featuredGuides, publishedLocations } fr
     </div>
   </div>
   <div class="wrap footer-base">
+    <ul class="footer-legal">
+      {
+        legalNav.map((item) => (
+          <li>
+            <a href={item.href} rel={item.rel} aria-current={isCurrentPath(pathname, item.href) ? "page" : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
     <p>&copy; {new Date().getFullYear()} {site.name}. {site.demoLine}.</p>
   </div>
 </footer>

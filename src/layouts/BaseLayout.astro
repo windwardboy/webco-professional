@@ -69,6 +69,8 @@ const breadcrumb =
     <script type="application/ld+json" set:html={jsonLd(website)} />
     {breadcrumb ? <script type="application/ld+json" set:html={jsonLd(breadcrumb)} /> : null}
     {
+      /* Rendered only when analyticsId is a GA4 id. It is empty here, so the tag is omitted.
+         Do not set an id until a consent step gates this script. */
       analyticsId ? (
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`} />
       ) : null

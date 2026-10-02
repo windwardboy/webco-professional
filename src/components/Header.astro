@@ -1,6 +1,9 @@
 ---
 import NavLinks from "./NavLinks.astro";
 import { site } from "../config/site";
+import { isCurrentPath } from "../lib/links";
+
+const home = isCurrentPath(Astro.url.pathname, "/");
 ---
 
 <a class="skip" href="#content">Skip to content</a>
@@ -18,7 +21,7 @@ import { site } from "../config/site";
 </div>
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="logo" href="/" aria-label={site.name}>
+    <a class="logo" href="/" aria-label={site.name} aria-current={home ? "page" : undefined}>
       <img class="logo-full" src="/logo.png" width="444" height="160" alt="" />
       <img class="logo-icon" src="/logo-mark.png" width="134" height="160" alt="" />
     </a>
@@ -38,3 +41,19 @@ import { site } from "../config/site";
     </nav>
   </div>
 </header>
+
+<script>
+  const menu = document.querySelector(".nav-mobile");
+  if (menu instanceof HTMLDetailsElement) {
+    menu.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !menu.open) return;
+      menu.open = false;
+      const summary = menu.querySelector("summary");
+      if (summary instanceof HTMLElement) summary.focus();
+    });
+    menu.addEventListener("click", (event) => {
+      const target = event.target;
+      if (target instanceof HTMLAnchorElement) menu.open = false;
+    });
+  }
+</script>

@@ -1,0 +1,95 @@
+---
+import PageHero from "../components/PageHero.astro";
+import { site } from "../config/site";
+import { pageCrumbs } from "../lib/links";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const crumbs = pageCrumbs([{ label: "Privacy policy", href: "/privacy/" }]);
+---
+
+<BaseLayout
+  title="Privacy policy"
+  description="Example privacy policy for this demonstration website. It describes the enquiry form and states that the demo does not send or store what you type."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Example policy"
+    title="Privacy policy"
+    lede="This is example text for the Webco Professional demonstration. It is not the privacy notice of a real training provider."
+  >
+    <p class="example-caption">
+      It does not state a company number, VAT number, registered office, accreditation or other legal-entity details. Those have not been supplied, and this page does not invent them.
+    </p>
+  </PageHero>
+  <section class="block" aria-labelledby="privacy-who">
+    <div class="wrap legal-copy">
+      <h2 id="privacy-who">Who this website is</h2>
+      <p>
+        Webco Professional is a fictional training provider. The site is a demonstration by Webco Media. The courses, bases, reviews, prices and contact details are samples. {site.email} is a sample address. The phone and WhatsApp details are sample numbers. They are not a way to reach a real training business.
+      </p>
+      <h2 id="privacy-form">What the enquiry form collects</h2>
+      <p>If you use the enquiry form, it asks for:</p>
+      <ul class="prose-list">
+        <li>Your name</li>
+        <li>Your email address, which is always required</li>
+        <li>A phone number, which is optional unless you ask to be contacted by phone or WhatsApp</li>
+        <li>The course you are interested in, chosen from the published courses, or “Not sure yet”</li>
+        <li>Your preferred base, when more than one base is published, or “No preference yet”</li>
+        <li>How you would like to be contacted: phone, email, or WhatsApp when that option is shown</li>
+        <li>Your message</li>
+      </ul>
+      <p>
+        WhatsApp does not have its own number field. If you choose WhatsApp, the phone number you enter is the number the form would use. Email stays required even if you ask for a call or a WhatsApp message.
+      </p>
+      <p>
+        The form checks that the name and message are not blank, that the email looks like an email address, and that a phone number, when one is required or typed, contains 10 to 15 digits.
+      </p>
+      <h2 id="privacy-preselect">Course and base preselection</h2>
+      <p>
+        Some links open the contact page with a query string, then move to the form. A course link can set “course” to that course’s id. A base link can set “location” to that base’s slug. A course link on a base page can set both.
+      </p>
+      <p>
+        After the page loads, the form selects those values only if they match an option on the form. The options are the published courses and the published bases. An unpublished course, an unknown id, or a value that is not in the list is ignored, and the field stays on “Choose…”. The query string is not saved. On this demonstration it is not sent anywhere.
+      </p>
+      <p>
+        If the site were reduced to one published base, the base question would be hidden and that base’s slug would be included as a hidden field. This demonstration publishes Bristol, Taunton and Exeter, so the base question is shown.
+      </p>
+      <h2 id="privacy-demo">What this demonstration does with it</h2>
+      <p>
+        The form has no delivery address configured. It does not post your details to a server. The page script cancels submission and shows a notice that the enquiry was not sent. Nothing you type is written to a cookie, to local storage, or to session storage.
+      </p>
+      <p>
+        Because nothing is received, this demonstration cannot access, correct, or delete an enquiry. There is no retention period, because there is no message to keep.
+      </p>
+      <p>
+        The pages are static files. This site does not add its own analytics. A host that serves the files may keep ordinary server logs, such as an IP address and the page requested. This privacy page does not name a host, because no host has been appointed here as a processor of enquiry data.
+      </p>
+      <h2 id="privacy-links">Phone, email and WhatsApp links</h2>
+      <p>
+        Call links use your own phone app. Email links use your own email app. WhatsApp links leave this site for WhatsApp when you choose to follow them. The page does not embed WhatsApp, and it does not load a WhatsApp script.
+      </p>
+      <h2 id="privacy-cookies">Cookies</h2>
+      <p>
+        This demonstration does not set cookies and does not load analytics, advertising, or an embedded map. The <a href="/cookies/">cookie policy</a> says what was checked and why there is no consent banner.
+      </p>
+      <h2 id="privacy-live">Before a real customer site goes live</h2>
+      <p>This page would have to be replaced. A real provider would need to decide and then state, without invented numbers:</p>
+      <ul class="prose-list">
+        <li>The organisation’s real name and the contact details it actually uses</li>
+        <li>Whether a company number, VAT number, or registered office applies, and the real values if they do</li>
+        <li>The lawful basis for collecting enquiries, how long messages are kept, and who receives them</li>
+        <li>The form address that will receive posts, which must be a same-site path or an https URL</li>
+        <li>Whether messages are emailed, stored, or passed to another service, and the name of that service</li>
+        <li>How someone can ask for access, correction, or deletion, and who they ask</li>
+        <li>The host that serves the site, if that host logs visits or stores messages</li>
+      </ul>
+      <p>
+        The form note that says nothing is sent would also have to change, because it would no longer be true. If a Google Analytics id or a map address is added, read the cookie policy first: those options are off, and turning them on can set cookies or load a third party.
+      </p>
+      <p>
+        The <a href="/terms/">website terms</a> are example text as well.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

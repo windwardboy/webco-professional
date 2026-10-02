@@ -5,7 +5,7 @@ export const homepage = {
   exampleNote:
     "Demonstration website: Webco Professional is a fictional training provider, and the locations and contact details shown are samples.",
   routesTitle: "What do you want to drive or achieve?",
-  routesIntro: "Pick the route closest to what you need. Each one opens its own course page.",
+  routesIntro: "Pick the route closest to what you need.",
   coreTitle: "Core HGV training",
   coreIntro: "Our three main routes. If you are choosing between licences, the overview compares them side by side.",
   furtherTitle: "Further training",

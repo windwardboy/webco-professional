@@ -6,11 +6,17 @@ import ResponsiveImage from "./ResponsiveImage.astro";
 
 interface Props {
   person: TeamMember;
+  /** When set, only courses offered at this base are listed. */
+  locationId?: string;
 }
 
-const { person } = Astro.props;
+const { person, locationId } = Astro.props;
 const example = !person.published || person.name.length === 0;
-const linkedCourses = publishedCourses().filter((course) => person.courseIds.includes(course.id));
+const linkedCourses = publishedCourses().filter((course) => {
+  if (!person.courseIds.includes(course.id)) return false;
+  if (locationId && !course.locationIds.includes(locationId)) return false;
+  return true;
+});
 const placeNames = person.locationIds.flatMap((id) => {
   const location = locationById(id);
   return location?.published ? [location.name] : [];
