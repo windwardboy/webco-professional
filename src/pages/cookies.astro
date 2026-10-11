@@ -8,7 +8,7 @@ const crumbs = pageCrumbs([{ label: "Cookie policy", href: "/cookies/" }]);
 
 <BaseLayout
   title="Cookie policy"
-  description="Example cookie policy for this demonstration website. It records that the site does not set cookies or load non-essential tracking."
+  description="Example cookie policy for this demonstration website. It records that the site does not set cookies. Visit counting uses a short-lived session-storage flag and does not set an analytics cookie."
   crumbs={crumbs}
 >
   <PageHero
@@ -26,12 +26,15 @@ const crumbs = pageCrumbs([{ label: "Cookie policy", href: "/cookies/" }]);
       <h2 id="cookies-now">What the site does now</h2>
       <p>This demonstration does not set cookies. It also does not use:</p>
       <ul class="prose-list">
-        <li>local storage or session storage</li>
-        <li>Google Analytics, Google Tag Manager, or any other analytics tag</li>
-        <li>advertising or social pixels</li>
+        <li>local storage</li>
+        <li>an analytics cookie or a persistent visitor identifier</li>
+        <li>Google Analytics, Google Tag Manager, or an advertising or social pixel</li>
         <li>an embedded map</li>
-        <li>a chat widget or other third-party script</li>
+        <li>a chat widget</li>
       </ul>
+      <p>
+        Webco Cloud collects daily aggregate page views, estimated visits and purchase-link clicks. The purchase link is the floating “Make this website yours” button. Counting uses a short-lived session-storage flag in the current tab so a visit is estimated only once while the tab stays open. It does not set an analytics cookie and it does not keep a persistent visitor identifier. Closing the tab, or clearing site data, removes the flag. It is not used for advertising. The same kind of session storage remembers whether that floating card is expanded or collapsed. That preference is not a visitor identifier.
+      </p>
       <p>
         Fonts are files built with the site, not loaded from a third-party font service. The enquiry form does not write what you type into the browser’s storage. See the <a href="/privacy/">privacy policy</a> for what the form asks for and why it is not sent.
       </p>
@@ -51,10 +54,10 @@ const crumbs = pageCrumbs([{ label: "Cookie policy", href: "/cookies/" }]);
       </p>
       <h2 id="cookies-banner">Why there is no consent banner</h2>
       <p>
-        A banner is for non-essential cookies or similar tracking that would otherwise load immediately. Nothing like that runs on this demonstration, so a banner is not shown. Adding one for appearance would ask for a choice that does not change anything.
+        A banner is for non-essential cookies or similar tracking that would otherwise load immediately. Webco Cloud’s counting does not set a cookie or keep a persistent visitor identifier, and nothing else of that kind runs on this demonstration, so a banner is not shown. Adding one for appearance would ask for a choice that does not change anything.
       </p>
       <p>
-        If analytics, a map, advertising, or any other non-essential storage is added, it must not load before consent, and this page must be updated to name it. The <a href="/terms/">website terms</a> are example text as well.
+        If Google Analytics, a map, advertising, or any other non-essential cookie is added, it must not load before consent, and this page must be updated to name it. The <a href="/terms/">website terms</a> are example text as well.
       </p>
     </div>
   </section>

@@ -19,7 +19,7 @@ import { purchaseCta as cta } from "../config/purchaseCta";
           <span aria-hidden="true"> — </span>
           <strong>{cta.price}</strong>
         </p>
-        <a class="button purchase-cta-button" href={cta.url}>
+        <a class="button purchase-cta-button" href={cta.url} data-webco-cta>
           {cta.buttonLabel} <span aria-hidden="true">&rarr;</span>
         </a>
         <p class="purchase-cta-note">{cta.note}</p>
