@@ -18,6 +18,7 @@ The public pages read as a finished provider website. Bristol, Taunton and Exete
 - FAQs: `src/content/faqs.ts`
 - Example testimonials: `src/content/testimonials.ts`
 - About copy: `src/content/about.ts`
+- Floating Webco Cloud purchase card (demonstration only): `src/config/purchaseCta.ts`. Set `enabled: false` before this becomes a real customer's site.
 
 To publish an additional course, set `published: true` on its object. The page is generated at `/training/[slug]/` from `src/pages/training/[slug].astro`. Leave `duration` and `priceNote` empty until the provider supplies them. Do not invent a fee, a pass rate, an accreditation or an address.
 

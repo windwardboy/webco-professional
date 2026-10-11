@@ -1,0 +1,112 @@
+---
+import { purchaseCta as cta } from "../config/purchaseCta";
+---
+
+{
+  cta.enabled ? (
+    <aside class="purchase-cta" data-purchase-cta data-storage-key={cta.storageKey} aria-label="Webco Professional website package">
+      {/* Both controls start hidden. The script reveals the right one, so the page is untouched without JavaScript. */}
+      <section class="purchase-cta-card" id="purchase-cta-card" aria-labelledby="purchase-cta-heading" hidden>
+        <button type="button" class="purchase-cta-close" data-purchase-close aria-controls="purchase-cta-card" aria-label="Close this offer">
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+            <path d="M3 3l10 10M13 3L3 13" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+          </svg>
+        </button>
+        <h2 class="purchase-cta-heading" id="purchase-cta-heading" tabindex="-1">{cta.heading}</h2>
+        <p class="purchase-cta-body">{cta.body}</p>
+        <p class="purchase-cta-package">
+          <span>{cta.packageName}</span>
+          <span aria-hidden="true"> — </span>
+          <strong>{cta.price}</strong>
+        </p>
+        <a class="button purchase-cta-button" href={cta.url}>
+          {cta.buttonLabel} <span aria-hidden="true">&rarr;</span>
+        </a>
+        <p class="purchase-cta-note">{cta.note}</p>
+      </section>
+      <button type="button" class="purchase-cta-pill" data-purchase-open aria-expanded="false" aria-controls="purchase-cta-card" hidden>
+        {cta.pillLabel}
+      </button>
+      <noscript>
+        <a class="purchase-cta-pill purchase-cta-pill-link" href={cta.url}>
+          {cta.pillLabel}
+        </a>
+      </noscript>
+    </aside>
+  ) : null
+}
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-purchase-cta]");
+  const card = root?.querySelector<HTMLElement>("#purchase-cta-card");
+  const heading = root?.querySelector<HTMLElement>("#purchase-cta-heading");
+  const pill = root?.querySelector<HTMLButtonElement>("[data-purchase-open]");
+  const closeButton = root?.querySelector<HTMLButtonElement>("[data-purchase-close]");
+
+  if (root && card && heading && pill && closeButton) {
+    const storageKey = root.dataset.storageKey || "webco-purchase-cta";
+    const desktop = window.matchMedia("(min-width: 48rem)");
+
+    const readPreference = (): "open" | "closed" | null => {
+      try {
+        const value = window.sessionStorage.getItem(storageKey);
+        return value === "open" || value === "closed" ? value : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const writePreference = (value: "open" | "closed") => {
+      try {
+        window.sessionStorage.setItem(storageKey, value);
+      } catch {
+        // Storage can be blocked. The card still works for this page.
+      }
+    };
+
+    const render = (expanded: boolean) => {
+      card.hidden = !expanded;
+      pill.hidden = expanded;
+      pill.setAttribute("aria-expanded", String(expanded));
+    };
+
+    const setExpanded = (expanded: boolean, options: { focus?: boolean } = {}) => {
+      render(expanded);
+      writePreference(expanded ? "open" : "closed");
+      if (!options.focus) return;
+      if (expanded) heading.focus({ preventScroll: true });
+      else pill.focus({ preventScroll: true });
+    };
+
+    const isField = (element: Element | null) =>
+      element instanceof HTMLInputElement ||
+      element instanceof HTMLSelectElement ||
+      element instanceof HTMLTextAreaElement ||
+      (element instanceof HTMLElement && element.isContentEditable);
+
+    // Hide the floating UI while a form field is focused so it never covers the field or the keyboard.
+    const syncFieldFocus = () => {
+      root.classList.toggle("is-field-focused", isField(document.activeElement));
+    };
+
+    // First visit: expanded on desktop, collapsed on mobile. Later visits follow the saved choice.
+    const saved = readPreference();
+    render(saved ? saved === "open" : desktop.matches);
+    root.classList.add("is-ready");
+
+    pill.addEventListener("click", () => setExpanded(true, { focus: true }));
+    closeButton.addEventListener("click", () => setExpanded(false, { focus: true }));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || event.defaultPrevented || card.hidden) return;
+      const active = document.activeElement;
+      // Leave Escape alone when it belongs to something else, such as the mobile menu.
+      if (active && active !== document.body && !root.contains(active)) return;
+      const hadFocus = root.contains(active);
+      setExpanded(false, { focus: hadFocus });
+    });
+
+    document.addEventListener("focusin", syncFieldFocus);
+    document.addEventListener("focusout", () => window.setTimeout(syncFieldFocus, 0));
+  }
+</script>
